@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TakePicture : MonoBehaviour {
 	public Camera imageCaptureCamera;
-	public bool takePic;
+	
 	public Texture2D photo; 
 	public MeshRenderer photoModel;
 
@@ -16,12 +16,20 @@ public class TakePicture : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(takePic){
-		photo = WriteRTImage(imageCaptureCamera);
-		photoModel.material.mainTexture = photo;
-		takePic = false; 
-		}
+		if(Input.GetKeyDown(KeyCode.Space))
+        {
+            takePic();
+
+        }
 	} 
+
+    void takePic()
+    {
+        photo = WriteRTImage(imageCaptureCamera);
+        photoModel.material.mainTexture = photo;
+        
+
+    }
 
 	 Texture2D WriteRTImage(Camera camera)
     {

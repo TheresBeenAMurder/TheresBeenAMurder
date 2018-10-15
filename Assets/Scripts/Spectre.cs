@@ -29,9 +29,10 @@ public class Spectre : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (!inConversation && playerNear && Input.GetKey("e"))
+        if (!inConversation && playerNear && Input.GetKeyDown(KeyCode.E))
         {
             inConversation = true;
+            
             InitializeDatabase();
         }
 
@@ -138,7 +139,7 @@ public class Spectre : MonoBehaviour {
 
     private void InitializeDatabase()
     {
-        string connection = "URI=file:" + Application.dataPath + "/Database.db";
+        string connection = "URI=file:" + Application.dataPath + "/Database/Database.db";
         database = (IDbConnection)new SqliteConnection(connection);
         database.Open();
         command = database.CreateCommand();
