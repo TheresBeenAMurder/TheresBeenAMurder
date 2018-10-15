@@ -81,6 +81,10 @@ public class Spectre : MonoBehaviour {
             GetPrompt(nextPromptID);
             DisplayResponses();
         }
+        else
+        {
+            inConversation = false;
+        }
     }
 
     private void DisplayResponses()
