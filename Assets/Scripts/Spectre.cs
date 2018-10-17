@@ -14,6 +14,7 @@ public class Spectre : NPC {
 	// Use this for initialization
 	void Start ()
     {
+        conversationAudio = GetComponent<AudioSource>();
         canvas = GameObject.Find("Canvas");
         displayBox = canvas.GetComponentInChildren<Text>();
     }
@@ -60,6 +61,9 @@ public class Spectre : NPC {
         if (!playerNear)
         {
             displayBox.text = "Press E to speak to Spectre";
+            
+            playerAudio = GameObject.Find("HandPrefab").GetComponent<AudioSource>();
+            
             playerNear = true;
         }
     }

@@ -9,12 +9,15 @@ public class NPC : MonoBehaviour {
 
     private enum relationshipStatus {Hate, Dislike, Neutral, Like};
 
+    public string audioFolder;
+    public AudioSource conversationAudio;
     public int id;
     public IDbCommand command = null;
     public IDbConnection database = null;
     public Text displayBox = null;
     public bool inConversation = false;
-    public new string name;
+    public string characterName;
+    public AudioSource playerAudio;
     public int promptID;
     public int[] responseIDs = new int[4];
     public IDataReader reader = null;
@@ -22,13 +25,22 @@ public class NPC : MonoBehaviour {
     public NPC(int id, string name)
     {
         this.id = id;
-        this.name = name;
+        this.characterName = name;
     }
 
-    private IEnumerator ChooseResponse(string response, int nextPromptID, bool end)
+    private IEnumerator ChooseResponse(string response, int nextPromptID, bool end, string audioFile)
     {
         displayBox.text = response;
-        yield return new WaitForSeconds(3);
+
+        // Play the voice line for the response
+        if (audioFile != "")
+        {
+            string responseAudioSource = "Audio/Player/" + audioFile;
+            AudioClip responseAudio = Resources.Load<AudioClip>(responseAudioSource);
+            playerAudio.clip = responseAudio;
+            playerAudio.Play();
+            yield return new WaitForSeconds(responseAudio.length + 2);
+        }
 
         UpdateNextPrompt(nextPromptID);
 
@@ -51,12 +63,13 @@ public class NPC : MonoBehaviour {
         command = database.CreateCommand();
 
         // Finds the ID of the initial prompt
-        string query = "SELECT PromptID FROM 'Characters' WHERE ID == " + id;
+        string query = "SELECT PromptID, AudioFolder FROM 'Characters' WHERE ID == " + id;
         command.CommandText = query;
         reader = command.ExecuteReader();
 
         reader.Read();
         promptID = reader.GetInt32(0);
+        audioFolder = reader.GetString(1);
         reader.Close();
     }
 	
@@ -81,7 +94,7 @@ public class NPC : MonoBehaviour {
                 return;
             }
 
-            string query = "SELECT DisplayText, NextPromptID, End FROM Responses WHERE ID ==" +
+            string query = "SELECT DisplayText, NextPromptID, End, AudioFile FROM Responses WHERE ID ==" +
                 responseIDs[choice - 1];
             command.CommandText = query;
             reader = command.ExecuteReader();
@@ -90,9 +103,10 @@ public class NPC : MonoBehaviour {
             string response = "You chose: " + reader.GetString(0);
             int nextPromptID = reader.GetInt32(1);
             bool end = reader.GetBoolean(2);
+            string responseAudio = reader.IsDBNull(3) ? "" : reader.GetString(3);
             reader.Close();
 
-            StartCoroutine(ChooseResponse(response, nextPromptID, end));
+            StartCoroutine(ChooseResponse(response, nextPromptID, end, responseAudio));
         }
     }
 
@@ -124,6 +138,12 @@ public class NPC : MonoBehaviour {
         responseIDs[2] = reader.GetInt32(3);
         responseIDs[3] = reader.GetInt32(4);
         reader.Close();
+
+        // Play the voice line for the prompt
+        string promptAudioSource = "Audio/" + audioFolder + "/" + promptID + "-Neutral";
+        AudioClip promptAudio = Resources.Load<AudioClip>(promptAudioSource);
+        conversationAudio.clip = promptAudio;
+        conversationAudio.Play();
     }
 
     public void WriteResponses()
