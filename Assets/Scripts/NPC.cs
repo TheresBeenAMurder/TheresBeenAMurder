@@ -7,20 +7,36 @@ using UnityEngine.UI;
 // This is a base class meant to be used for all NPC characters
 public class NPC : MonoBehaviour {
 
-    private enum relationshipStatus {Hate, Dislike, Neutral, Like};
+    private static int RelationshipLowerBound = 0;
+    private static int RelationshipUpperBound = 10;
 
+    public enum relationshipStatus {hate, dislike, neutral, like};
+
+    // NPC traits
+    public string characterName;
+    public int dislikeThreshold;
+    public int id;
+    public int likeThreshold;
+    public int neutralThreshold;
+    public relationshipStatus relStat;
+    public int relationshipValue;
+
+    // audio related
     public string audioFolder;
     public AudioSource conversationAudio;
-    public int id;
+    public AudioSource playerAudio;
+
+    // database related
     public IDbCommand command = null;
     public IDbConnection database = null;
+    public IDataReader reader = null;
+
+    // conversation related
     public Text displayBox = null;
     public bool inConversation = false;
-    public string characterName;
-    public AudioSource playerAudio;
     public int promptID;
     public int[] responseIDs = new int[4];
-    public IDataReader reader = null;
+    
 
     public NPC(int id, string name)
     {
@@ -28,9 +44,21 @@ public class NPC : MonoBehaviour {
         this.characterName = name;
     }
 
-    private IEnumerator ChooseResponse(string response, int nextPromptID, bool end, string audioFile)
+    private IEnumerator ChooseResponse(
+        string response, 
+        int nextPromptID, 
+        bool end, 
+        string audioFile, 
+        int relationshipEffect
+    )
     {
         displayBox.text = response;
+
+        // Let NPC finish audio before continuing
+        if (conversationAudio.isPlaying)
+        {
+            yield return new WaitForSeconds(conversationAudio.clip.length - conversationAudio.time);
+        }
 
         // Play the voice line for the response
         if (audioFile != "")
@@ -39,9 +67,10 @@ public class NPC : MonoBehaviour {
             AudioClip responseAudio = Resources.Load<AudioClip>(responseAudioSource);
             playerAudio.clip = responseAudio;
             playerAudio.Play();
-            yield return new WaitForSeconds(responseAudio.length + 2);
+            yield return new WaitForSeconds(responseAudio.length + 1);
         }
 
+        UpdateRelationshipValue(relationshipEffect);
         UpdateNextPrompt(nextPromptID);
 
         if (!end)
@@ -63,14 +92,21 @@ public class NPC : MonoBehaviour {
         command = database.CreateCommand();
 
         // Finds the ID of the initial prompt
-        string query = "SELECT PromptID, AudioFolder FROM 'Characters' WHERE ID == " + id;
+        string query = "SELECT PromptID, AudioFolder, RelationshipValue, DislikeThreshold, " +
+            "NeutralThreshold, LikeThreshold FROM 'Characters' WHERE ID == " + id;
         command.CommandText = query;
         reader = command.ExecuteReader();
 
         reader.Read();
         promptID = reader.GetInt32(0);
         audioFolder = reader.GetString(1);
+        relationshipValue = reader.GetInt32(2);
+        dislikeThreshold = reader.GetInt32(3);
+        neutralThreshold = reader.GetInt32(4);
+        likeThreshold = reader.GetInt32(5);
         reader.Close();
+
+        UpdateRelationshipStatus();
     }
 	
 	// Update is called once per frame
@@ -94,8 +130,8 @@ public class NPC : MonoBehaviour {
                 return;
             }
 
-            string query = "SELECT DisplayText, NextPromptID, End, AudioFile FROM Responses WHERE ID ==" +
-                responseIDs[choice - 1];
+            string query = "SELECT DisplayText, NextPromptID, End, AudioFile, RelationshipEffect" +
+                " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
             command.CommandText = query;
             reader = command.ExecuteReader();
 
@@ -104,9 +140,10 @@ public class NPC : MonoBehaviour {
             int nextPromptID = reader.GetInt32(1);
             bool end = reader.GetBoolean(2);
             string responseAudio = reader.IsDBNull(3) ? "" : reader.GetString(3);
+            int relEffect = reader.GetInt32(4);
             reader.Close();
 
-            StartCoroutine(ChooseResponse(response, nextPromptID, end, responseAudio));
+            StartCoroutine(ChooseResponse(response, nextPromptID, end, responseAudio, relEffect));
         }
     }
 
@@ -121,6 +158,37 @@ public class NPC : MonoBehaviour {
     {
         this.promptID = promptID;
         string update = "UPDATE Characters SET PromptID = " + promptID + " WHERE ID ==" + id;
+        command.CommandText = update;
+        command.ExecuteNonQuery();
+    }
+
+    private void UpdateRelationshipStatus()
+    {
+        if (relationshipValue <= dislikeThreshold)
+        {
+            relStat = relationshipStatus.dislike;
+        }
+        else if (relationshipValue <= neutralThreshold)
+        {
+            relStat = relationshipStatus.neutral;
+        }
+        else
+        {
+            relStat = relationshipStatus.like;
+        }
+    }
+
+    private void UpdateRelationshipValue(int relationshipEffect)
+    {
+        relationshipValue += relationshipEffect;
+
+        // relationship value can't go below/above pre-determined values
+        relationshipValue = (relationshipValue < RelationshipLowerBound) ? 0 : relationshipValue;
+        relationshipValue = (relationshipValue > RelationshipUpperBound) ? 10 : relationshipValue;
+
+        UpdateRelationshipStatus();
+        string update = "UPDATE Characters SET RelationshipValue = " + relationshipValue +
+            " WHERE ID ==" + id;
         command.CommandText = update;
         command.ExecuteNonQuery();
     }
@@ -140,7 +208,7 @@ public class NPC : MonoBehaviour {
         reader.Close();
 
         // Play the voice line for the prompt
-        string promptAudioSource = "Audio/" + audioFolder + "/" + promptID + "-Neutral";
+        string promptAudioSource = "Audio/" + audioFolder + "/" + promptID + "-" + relStat;
         AudioClip promptAudio = Resources.Load<AudioClip>(promptAudioSource);
         conversationAudio.clip = promptAudio;
         conversationAudio.Play();
