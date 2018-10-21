@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 5555202}
   - component: {fileID: 5555201}
   - component: {fileID: 5555206}
-  - component: {fileID: 5555205}
   m_Layer: 9
   m_Name: MovableWall1
   m_TagString: Untagged
@@ -201,21 +200,6 @@ Transform:
   m_Father: {fileID: 1186745035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5555205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 5555200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40e6dcbdfb816c44a4484715b7e09cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pianoKey: 
-  moveDirection: {x: 0, y: 0, z: 0}
-  moveDistance: 0
-  moveTime: 0
 --- !u!114 &5555206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,9 +212,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pianoKey: 000111001
-  moveDirection: {x: 0, y: 0, z: -1}
-  moveDistance: 3
-  moveTime: 4
+  target: {x: -3.80467, y: -0.2281655, z: 7}
+  speed: 3
 --- !u!1 &97825387
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +664,6 @@ GameObject:
   - component: {fileID: 438114439}
   - component: {fileID: 438114438}
   - component: {fileID: 438114443}
-  - component: {fileID: 438114442}
   m_Layer: 9
   m_Name: MovableWall2
   m_TagString: Untagged
@@ -757,21 +739,6 @@ Transform:
   m_Father: {fileID: 1186745035}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &438114442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 438114437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40e6dcbdfb816c44a4484715b7e09cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pianoKey: 
-  moveDirection: {x: 0, y: 0, z: 0}
-  moveDistance: 0
-  moveTime: 0
 --- !u!114 &438114443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,9 +751,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pianoKey: 101011001
-  moveDirection: {x: 0, y: 0, z: -1}
-  moveDistance: 3
-  moveTime: 4
+  target: {x: 0.1010202, y: -0.2281655, z: 7}
+  speed: 3
 --- !u!1 &446176525
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,7 +2856,6 @@ GameObject:
   - component: {fileID: 1849987459}
   - component: {fileID: 1849987458}
   - component: {fileID: 1849987463}
-  - component: {fileID: 1849987462}
   m_Layer: 9
   m_Name: MovableWall3
   m_TagString: Untagged
@@ -2966,21 +2931,6 @@ Transform:
   m_Father: {fileID: 1186745035}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1849987462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1849987457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40e6dcbdfb816c44a4484715b7e09cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pianoKey: 
-  moveDirection: {x: 0, y: 0, z: 0}
-  moveDistance: 0
-  moveTime: 0
 --- !u!114 &1849987463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2993,9 +2943,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pianoKey: 110011010
-  moveDirection: {x: 0, y: 0, z: -1}
-  moveDistance: 3
-  moveTime: 4
+  target: {x: 4.11353, y: -0.2281655, z: 7}
+  speed: 3
 --- !u!1 &1918293777
 GameObject:
   m_ObjectHideFlags: 0
