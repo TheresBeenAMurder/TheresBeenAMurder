@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pianoKey: 000111001
-  target: {x: -3.80467, y: -0.2281655, z: 7}
+  target: {x: -3.80467, y: -0.2281655, z: 16}
   speed: 3
 --- !u!1 &97825387
 GameObject:
@@ -751,7 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pianoKey: 101011001
-  target: {x: 0.1010202, y: -0.2281655, z: 7}
+  target: {x: 0.1010202, y: -0.2281655, z: 16}
   speed: 3
 --- !u!1 &446176525
 GameObject:
@@ -1757,6 +1757,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c92b34385c13a4dae255c670bdd083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walls:
+  - {fileID: 5555206}
+  - {fileID: 438114443}
+  - {fileID: 1849987463}
+  test: {fileID: 1335193106}
 --- !u!4 &1290947533
 Transform:
   m_ObjectHideFlags: 0
@@ -1856,6 +1861,24 @@ Prefab:
     - {fileID: 114657944587040074, guid: a815fdf1d747b7c4fbe87457813df26e, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: a815fdf1d747b7c4fbe87457813df26e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1335193105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1211345965214026, guid: a815fdf1d747b7c4fbe87457813df26e,
+    type: 2}
+  m_PrefabInternal: {fileID: 994991133}
+--- !u!114 &1335193106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1335193105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4498d6f0df2f6b428e82b3a852553e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nodeStatus: 000000000000000000
+  _thisPaperMat: {fileID: 2100000, guid: 846475d8fa273ab4e8e9e474a58f3a60, type: 2}
 --- !u!1 &1366850684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2943,7 +2966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pianoKey: 110011010
-  target: {x: 4.11353, y: -0.2281655, z: 7}
+  target: {x: 4.11353, y: -0.2281655, z: 16}
   speed: 3
 --- !u!1 &1918293777
 GameObject:
