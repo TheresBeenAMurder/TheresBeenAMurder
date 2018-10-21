@@ -6,6 +6,8 @@ public class PaperPuncher : MonoBehaviour {
 
     private bool[] _punchNodes;
 
+    public PaperPuncherNode[] _nodeObjects;
+
     public PlayerPianoPaper _currentPaper;
     
 
@@ -25,8 +27,61 @@ public class PaperPuncher : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            setNode(0);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            setNode(1);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            setNode(2);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            setNode(3);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            setNode(4);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            setNode(5);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            setNode(6);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            setNode(7);
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            setNode(8);
+
+        }
+
+
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+
+
+            punchPaper();
+        }
+    }
 
     public void punchPaper()
     {
@@ -48,8 +103,8 @@ public class PaperPuncher : MonoBehaviour {
 
             _currentPaper.punchMe(toPunch);
 
-            _currentPaper.gameObject.transform.position = new Vector3(_currentPaper.gameObject.transform.position.x + 1, _currentPaper.gameObject.transform.position.y, _currentPaper.gameObject.transform.position.z);
-            _currentPaper = null;
+            //_currentPaper.gameObject.transform.position = new Vector3(_currentPaper.gameObject.transform.position.x + 1, _currentPaper.gameObject.transform.position.y, _currentPaper.gameObject.transform.position.z);
+            //_currentPaper = null;
         }
     }
 
@@ -62,10 +117,12 @@ public class PaperPuncher : MonoBehaviour {
 
     }
 
-    public void setNode(int index, bool setTo)
+    public void setNode(int index)
     {
+        _punchNodes[index] = !_punchNodes[index];
+        _nodeObjects[index].switchStatus();
+        
 
-        _punchNodes[index] = setTo;
 
     }
 }

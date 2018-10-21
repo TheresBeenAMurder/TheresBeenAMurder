@@ -7,13 +7,17 @@ public class PaperPuncherNode : MonoBehaviour {
 
     public PaperPuncher _parent;
     public int _index;
-    
+
+    public Material _offMat;
+    public Material _onMat;
+
+    public MeshRenderer _mr;
 
     bool isOn = false;
 
 	// Use this for initialization
 	void Start () {
-
+        _mr = GetComponent<MeshRenderer>();
     }
 	
 	// Update is called once per frame
@@ -23,17 +27,19 @@ public class PaperPuncherNode : MonoBehaviour {
 
     void turnOn()
     {
-        _parent.setNode(_index, true);
+       // _parent.setNode(_index);
+        _mr.material = _onMat;
         isOn = true;
     }
 
     void turnOff()
     {
-        _parent.setNode(_index, false);
+        //_parent.setNode(_index);
+        _mr.material = _offMat;
         isOn = false;
     }
 
-    void switchStatus()
+    public void switchStatus()
     {
         if(isOn)
         {

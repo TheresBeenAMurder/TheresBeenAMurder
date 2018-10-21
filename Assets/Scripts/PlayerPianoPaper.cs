@@ -23,50 +23,16 @@ public class PlayerPianoPaper : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
-            activePunch(0);
+            string[] _punchBools = new string[] { "_Punch0", "_Punch1", "_Punch2", "_Punch3", "_Punch4", "_Punch5", "_Punch6", "_Punch7", "_Punch8" };
+            //reset
+            for (int i = 0; i< _nodeStatus.Length; i++)
+            {
+                _nodeStatus[i] = false;
 
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            activePunch(1);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            activePunch(2);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            activePunch(3);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            activePunch(4);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            activePunch(5);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            activePunch(6);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            activePunch(7);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            activePunch(8);
-
+                _thisPaperMat.SetInt(_punchBools[i], 0);
+            }
         }
     }
 
