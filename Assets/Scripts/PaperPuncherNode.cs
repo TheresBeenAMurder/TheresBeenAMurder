@@ -1,21 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VRTK;
+
 
 public class PaperPuncherNode : MonoBehaviour {
 
     public PaperPuncher _parent;
     public int _index;
-
-    private VRTK_InteractableObject _interactableObject;
+    
 
     bool isOn = false;
 
 	// Use this for initialization
 	void Start () {
-        _interactableObject = GetComponent<VRTK_InteractableObject>();
-        _interactableObject.InteractableObjectUsed += new InteractableObjectEventHandler(switchStatus);
 
     }
 	
@@ -36,7 +33,7 @@ public class PaperPuncherNode : MonoBehaviour {
         isOn = false;
     }
 
-    void switchStatus(object sender, InteractableObjectEventArgs e)
+    void switchStatus()
     {
         if(isOn)
         {

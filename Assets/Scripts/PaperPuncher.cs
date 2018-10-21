@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VRTK;
+using Oculus.Platform;
 
 public class PaperPuncher : MonoBehaviour {
 
     private bool[] _punchNodes;
 
     public PlayerPianoPaper _currentPaper;
-
-    public VRTK_SnapDropZone _paperDrop;
+    
 
     // punch nodes are numbered left to right, top to bottom
     //  | 0  1  2 |
@@ -23,7 +22,6 @@ public class PaperPuncher : MonoBehaviour {
     void Start () {
 
         _punchNodes = new bool[] { false, false, false, false, false, false, false, false, false };
-        _paperDrop.ObjectSnappedToDropZone += new SnapDropZoneEventHandler(insertPaper);
     }
 	
 	// Update is called once per frame
@@ -56,19 +54,12 @@ public class PaperPuncher : MonoBehaviour {
         }
     }
 
-    public void insertPaper(object o, SnapDropZoneEventArgs e)
+    public void insertPaper(PlayerPianoPaper paperToInsert)
     {
-
-        Debug.Log("Paper Inserted");
-        PlayerPianoPaper paperToInsert = _paperDrop.GetCurrentSnappedObject().GetComponent<PlayerPianoPaper>();
-
-
-
-
-        if (paperToInsert != null)
-        {
+        
+        
             _currentPaper = paperToInsert;
-        }
+        
 
     }
 
