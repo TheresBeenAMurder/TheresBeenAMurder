@@ -17,14 +17,14 @@ public class Teleporter : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        OVRInput.Update();
+       // OVRInput.Update();
 
         // show teleport indicator in given position
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, teleportDistance))
         {
-            if (hit.collider.tag == "floor")
+            if (hit.collider.tag == "Floor")
             {
                 if (!teleportIndicator.activeSelf)
                 {
@@ -44,11 +44,14 @@ public class Teleporter : MonoBehaviour {
         }
 
         // teleport player to gaze location
-        if (OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch))
+        if (OVRInput.GetDown(OVRInput.Button.One))
         {
+            Debug.Log("Beep");
+            
             if (teleportIndicator.activeSelf)
             {
                 Vector3 indicatorPosition = teleportIndicator.transform.position;
+                Debug.Log(indicatorPosition);
                 playerGaze.position = new Vector3(indicatorPosition.x,
                     playerGaze.position.y,
                     indicatorPosition.z);
