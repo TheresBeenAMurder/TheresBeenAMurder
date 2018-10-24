@@ -7,18 +7,10 @@ public class Teleporter : MonoBehaviour {
     public GameObject teleportIndicator;
     public Transform playerGaze;
     public float teleportDistance = 50f;
-
-	// Use this for initialization
-	void Start ()
-    {
-        
-	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-       // OVRInput.Update();
-
         // show teleport indicator in given position
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
@@ -44,14 +36,11 @@ public class Teleporter : MonoBehaviour {
         }
 
         // teleport player to gaze location
-        if (OVRInput.GetDown(OVRInput.Button.One))
-        {
-            Debug.Log("Beep");
-            
+        if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
+        {       
             if (teleportIndicator.activeSelf)
             {
                 Vector3 indicatorPosition = teleportIndicator.transform.position;
-                Debug.Log(indicatorPosition);
                 playerGaze.position = new Vector3(indicatorPosition.x,
                     playerGaze.position.y,
                     indicatorPosition.z);
