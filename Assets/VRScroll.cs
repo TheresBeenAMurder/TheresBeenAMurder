@@ -37,7 +37,7 @@ public class VRScroll : MonoBehaviour {
                 content.position = contentAdjustment;
 
             }
-
+            oldPos = newPos;
         }
 	}
 
