@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Player : MonoBehaviour {
 
@@ -6,10 +7,37 @@ public class Player : MonoBehaviour {
     public OVRInput.Button murderBoardButton;
     public GameObject playerHead;
 
+    private ScrollMenu murderBoard;
+
+    private IEnumerator CreateMurderBoard()
+    {
+        murderBoardBase.SetActive(true);
+
+        // set up the new position of the murder board
+        Vector3 newPos = new Vector3(playerHead.transform.position.x,
+            playerHead.transform.position.y,
+            playerHead.transform.position.z + .75f);
+        murderBoardBase.GetComponent<Rigidbody>().MovePosition(newPos);
+
+        // load in the images
+        murderBoard.LoadImages();
+
+        // let it do its thing before you display it to the player
+        yield return new WaitForEndOfFrame();
+
+        // display it to the player
+        murderBoardBase.GetComponent<Renderer>().enabled = true;
+    }
+
 	private void Start ()
     {
         // make sure that the player can't see this upon start
         murderBoardBase.GetComponent<Renderer>().enabled = false;
+
+        // find the scroll menu and store it
+        murderBoard = murderBoardBase.transform.Find("ImageSelectorCanvas")
+            .Find("Scroll View").gameObject.GetComponent<ScrollMenu>();
+
         murderBoardBase.SetActive(false);
 	}
 
@@ -21,17 +49,13 @@ public class Player : MonoBehaviour {
             {
                 // turn it off
                 murderBoardBase.GetComponent<Renderer>().enabled = false;
+                murderBoard.KillCurrentImages();
                 murderBoardBase.SetActive(false);
             }
             else
             {
                 // turn it on
-                murderBoardBase.SetActive(true);
-                Vector3 newPos = new Vector3(playerHead.transform.position.x,
-                    playerHead.transform.position.y,
-                    playerHead.transform.position.z + .75f);
-                murderBoardBase.GetComponent<Rigidbody>().MovePosition(newPos);
-                murderBoardBase.GetComponent<Renderer>().enabled = true;
+                StartCoroutine("CreateMurderBoard");
             }
         }
     }
