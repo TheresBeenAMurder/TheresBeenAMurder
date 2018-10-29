@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class MurderBoard : MonoBehaviour {
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -9,6 +10,7 @@ public class MurderBoard : MonoBehaviour {
             // reparent photo to board
             other.gameObject.transform.parent = transform;
             other.gameObject.transform.localScale = new Vector3(.15f, .25f, .005f);
+            
         }
     }
 

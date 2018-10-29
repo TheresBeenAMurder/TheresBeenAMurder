@@ -13,6 +13,8 @@ public class ScrollMenu : ScrollRect, IMoveHandler
     private Vector3 oldPos;
     private GameObject touchingHand;
 
+    public PhotoSpawner _photoSpawner;
+
     public void KillCurrentImages()
     {
         foreach (Transform child in content.transform)
@@ -20,6 +22,8 @@ public class ScrollMenu : ScrollRect, IMoveHandler
             GameObject.Destroy(child.gameObject);
         }
     }
+
+    
 
     public void LoadImages()
     {
@@ -42,6 +46,13 @@ public class ScrollMenu : ScrollRect, IMoveHandler
             images[i].GetComponent<RectTransform>().localScale = new Vector3(2f, .7f, 1f);
             images[i].transform.localPosition = new Vector3(0, 0, 0);
         }
+
+        if(_photoSpawner == null)
+        {
+            _photoSpawner = GameObject.FindObjectOfType<PhotoSpawner>();
+
+        }
+        _photoSpawner.refreshLayoutGroup();
     }
 
     public void OnMove(AxisEventData eventData)
