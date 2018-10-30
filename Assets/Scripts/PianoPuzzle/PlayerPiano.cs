@@ -5,18 +5,17 @@ using UnityEngine;
 public class PlayerPiano : MonoBehaviour {
 
 
-    public Dictionary<string, MovableWall> movableWalls;
+    public Dictionary<string, WallButton> movableWalls;
 
-    public MovableWall[] walls;
+    public WallButton[] walls;
 
-    public PlayerPianoPaper test;
 
 	// Use this for initialization
 	void Start () {
         //fill the dictionary
-        movableWalls = new Dictionary<string, MovableWall>();
+        movableWalls = new Dictionary<string, WallButton>();
         movableWalls.Clear();
-        foreach(MovableWall mw in walls)
+        foreach(WallButton mw in walls)
         {
 
             movableWalls.Add(mw.pianoKey, mw);
@@ -24,14 +23,23 @@ public class PlayerPiano : MonoBehaviour {
         }
         
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.Return))
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("PunchPaper"))
         {
-            insertPaper(test);
+
+
+            insertPaper(other.gameObject.GetComponent<PlayerPianoPaper>());
+            other.transform.localScale *= 0.001f;
+            other.transform.parent = gameObject.transform;
 
         }
+    }
+
+    // Update is called once per frame
+    void Update () {
+		
 	}
 
     void insertPaper(PlayerPianoPaper inserted)
@@ -59,7 +67,7 @@ public class PlayerPiano : MonoBehaviour {
         if (movableWalls.ContainsKey(s))
         {
 
-            movableWalls[s].moveWall();
+            movableWalls[s].Move();
 
         }
 

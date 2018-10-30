@@ -16,11 +16,18 @@ public class TakePicture : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
+
+        if(OVRInput.GetDown(OVRInput.Button.Three))
         {
+
             takePic();
 
         }
+		//if(Input.GetKeyDown(KeyCode.Space))
+  //      {
+  //          takePic();
+
+  //      }
 	} 
 
     void takePic()

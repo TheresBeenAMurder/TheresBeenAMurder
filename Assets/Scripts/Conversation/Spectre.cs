@@ -10,7 +10,7 @@ public class Spectre : MonoBehaviour {
 
     static int ID = 2;
 
-    GameObject canvas = null;
+    public GameObject canvas;// = null;
     IDbCommand command = null;
     IDbConnection database = null;
     Text displayBox = null;
@@ -22,14 +22,14 @@ public class Spectre : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        canvas = GameObject.Find("Canvas");
+        //canvas = GameObject.Find("Canvas");
         displayBox = canvas.GetComponentInChildren<Text>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (!inConversation && playerNear && Input.GetKeyDown(KeyCode.E))
+        if (!inConversation && playerNear && Input.GetKeyDown(KeyCode.X))
         {
             inConversation = true;
             
@@ -161,7 +161,8 @@ public class Spectre : MonoBehaviour {
     {
         if (!playerNear)
         {
-            displayBox.text = "Press E to speak to Spectre";
+            //Debug.Log("Player Near");
+            displayBox.text = "Press X to speak to Spectre";
             playerNear = true;
         }
     }

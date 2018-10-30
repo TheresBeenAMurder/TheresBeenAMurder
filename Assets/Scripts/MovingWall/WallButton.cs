@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WallButton : MonoBehaviour {
 
-    public Material defaultMaterial;
-    public Material onPressMaterial;
+    //public Material defaultMaterial;
+   // public Material onPressMaterial;
     // walls that this button can move, please add walls
     // top-down (index 0 is top wall, last index is bottom wall)
     public List<Wall> walls;
@@ -14,23 +14,30 @@ public class WallButton : MonoBehaviour {
     private bool playerNear;
     private bool goingUp;
 
+    public string pianoKey;
+
 	// Use this for initialization
 	void Start ()
     {
         buttonPressed = false;
         playerNear = false;
-        goingUp = true;
+        goingUp = false;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-		if (playerNear && OVRInput.GetDown(OVRInput.Button.One) && !buttonPressed)
-        {
-            GetComponent<MeshRenderer>().material = onPressMaterial;
-            StartCoroutine(MoveWalls());
-            buttonPressed = true;
-        }
+		//if (playerNear && OVRInput.GetDown(OVRInput.Button.One) && !buttonPressed)
+  //      {
+  //          GetComponent<MeshRenderer>().material = onPressMaterial;
+  //          StartCoroutine(MoveWalls());
+  //          buttonPressed = true;
+  //      }
+    }
+
+    public void Move()
+    {
+        StartCoroutine(MoveWalls());
     }
 
     private IEnumerator MoveWalls()
@@ -80,22 +87,22 @@ public class WallButton : MonoBehaviour {
         }
 
         buttonPressed = false;
-        GetComponent<MeshRenderer>().material = defaultMaterial;
+       // GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            playerNear = true;
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "PlayerHand")
+    //    {
+    //        playerNear = true;
+    //    }
+    //}
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            playerNear = false;
-        }
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "PlayerHand")
+    //    {
+    //        playerNear = false;
+    //    }
+    //}
 }

@@ -15,6 +15,10 @@ public class PaperPuncherNode : MonoBehaviour {
 
     bool isOn = false;
 
+    public GameObject _leftHand;
+    public GameObject _rightHand;
+
+
 	// Use this for initialization
 	void Start () {
         _mr = GetComponent<MeshRenderer>();
@@ -24,6 +28,23 @@ public class PaperPuncherNode : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+
+         if((other.gameObject.name == _leftHand.name || other.gameObject.name == _rightHand.name))
+         {
+        
+
+       // if (Gestures.IsPointing(_leftHand, _rightHand) != null)
+       // {
+
+            switchStatus();
+       // }
+
+        }
+    }
 
     void turnOn()
     {
@@ -50,5 +71,7 @@ public class PaperPuncherNode : MonoBehaviour {
             turnOn();
 
         }
+
+        _parent.setNode(_index);
     }
 }

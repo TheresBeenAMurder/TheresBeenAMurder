@@ -27,51 +27,8 @@ public class PaperPuncher : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            setNode(0);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            setNode(1);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            setNode(2);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            setNode(3);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            setNode(4);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            setNode(5);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            setNode(6);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            setNode(7);
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            setNode(8);
-
-        }
+       
+        
 
 
 
@@ -103,6 +60,11 @@ public class PaperPuncher : MonoBehaviour {
 
             _currentPaper.punchMe(toPunch);
 
+            //_currentPaper.transform.localScale *= 20;
+            _currentPaper.transform.parent = null;
+            _currentPaper.transform.localScale = Vector3.one;
+            _currentPaper.transform.position = (transform.position + new Vector3(1, 0, 0));
+            _currentPaper.transform.rotation = new Quaternion(0, 0, 0, 0);
             //_currentPaper.gameObject.transform.position = new Vector3(_currentPaper.gameObject.transform.position.x + 1, _currentPaper.gameObject.transform.position.y, _currentPaper.gameObject.transform.position.z);
             //_currentPaper = null;
         }
@@ -120,7 +82,7 @@ public class PaperPuncher : MonoBehaviour {
     public void setNode(int index)
     {
         _punchNodes[index] = !_punchNodes[index];
-        _nodeObjects[index].switchStatus();
+      //  _nodeObjects[index].switchStatus();
         
 
 

@@ -7,6 +7,8 @@ public class Teleporter : MonoBehaviour {
     public GameObject teleportIndicator;
     public Transform playerGaze;
     public float teleportDistance = 50f;
+
+    //public Transform playerObj;
 	
 	// Update is called once per frame
 	void Update ()
@@ -36,14 +38,14 @@ public class Teleporter : MonoBehaviour {
         }
 
         // teleport player to gaze location
-        if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.One))
         {       
             if (teleportIndicator.activeSelf)
             {
                 Vector3 indicatorPosition = teleportIndicator.transform.position;
-                playerGaze.position = new Vector3(indicatorPosition.x,
+                playerGaze.SetPositionAndRotation(new Vector3(indicatorPosition.x,
                     playerGaze.position.y,
-                    indicatorPosition.z);
+                    indicatorPosition.z), Quaternion.identity);
             }
         }
 	}

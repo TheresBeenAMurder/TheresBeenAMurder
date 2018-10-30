@@ -8,6 +8,8 @@ public class Wall : MonoBehaviour {
 
     private float moveTime = 1f / .1f;
 
+    public string pianoKey;
+
     public bool CanMoveDown()
     {
         return (!isCurrentWall || wallAbove != null);

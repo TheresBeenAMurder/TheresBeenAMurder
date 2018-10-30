@@ -181,7 +181,7 @@ public class PhotoSpawner : MonoBehaviour {
             checkForPhotoGrab();
 
         }
-        else if(!Gestures.IsGrabbing(_leftHand, _rightHand))
+        else if(Gestures.IsGrabbing(_leftHand, _rightHand) == null)
         {
 
             isGrabbingPhoto = false;
