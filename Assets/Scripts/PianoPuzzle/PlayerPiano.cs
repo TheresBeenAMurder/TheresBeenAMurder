@@ -15,12 +15,12 @@ public class PlayerPiano : MonoBehaviour {
         //fill the dictionary
         movableWalls = new Dictionary<string, WallButton>();
         movableWalls.Clear();
-        foreach(WallButton mw in walls)
-        {
+        //foreach(WallButton mw in walls)
+        //{
 
-            movableWalls.Add(mw.pianoKey, mw);
+        //    movableWalls.Add(mw.pianoKey, mw);
 
-        }
+        //}
         
 	}
 
@@ -31,9 +31,10 @@ public class PlayerPiano : MonoBehaviour {
 
 
             insertPaper(other.gameObject.GetComponent<PlayerPianoPaper>());
-            other.transform.localScale *= 0.001f;
+            //other.transform.localScale *= 0.001f;
             other.transform.parent = gameObject.transform;
-
+            other.transform.position = new Vector3(transform.position.x - 8.716f, transform.position.y + .706f, transform.position.z - .203f);
+            other.transform.rotation = new Quaternion(0, transform.rotation.y, 0, 0);
         }
     }
 

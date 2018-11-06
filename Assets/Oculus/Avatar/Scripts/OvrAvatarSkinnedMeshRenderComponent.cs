@@ -24,18 +24,18 @@ public class OvrAvatarSkinnedMeshRenderComponent : OvrAvatarRenderComponent
         ovrAvatarTransform localTransform = CAPI.ovrAvatarSkinnedMeshRender_GetTransform(renderPart);
         UpdateSkinnedMesh(avatar, bones, localTransform, visibilityMask, renderPart);
 
-        UpdateMeshMaterial(visibilityMask, mesh);
+        //UpdateMeshMaterial(visibilityMask, mesh);
         bool isActive = this.gameObject.activeSelf;
 
-        if( mesh != null )
-        {
-            bool changedMaterial = CAPI.ovrAvatarSkinnedMeshRender_MaterialStateChanged(renderPart);
-            if (changedMaterial || (!previouslyActive && isActive))
-            {
-                ovrAvatarMaterialState materialState = CAPI.ovrAvatarSkinnedMeshRender_GetMaterialState(renderPart);
-                component.UpdateAvatarMaterial(mesh.sharedMaterial, materialState);
-            }
-        }
+        //if( mesh != null )
+        //{
+        //    bool changedMaterial = CAPI.ovrAvatarSkinnedMeshRender_MaterialStateChanged(renderPart);
+        //    if (changedMaterial || (!previouslyActive && isActive))
+        //    {
+        //        ovrAvatarMaterialState materialState = CAPI.ovrAvatarSkinnedMeshRender_GetMaterialState(renderPart);
+        //        component.UpdateAvatarMaterial(mesh.sharedMaterial, materialState);
+        //    }
+        //}
         previouslyActive = isActive;
     }
 

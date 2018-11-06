@@ -28,16 +28,7 @@ public class PaperPuncher : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
        
-        
-
-
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-
-
-            punchPaper();
-        }
+      
     }
 
     public void punchPaper()
@@ -75,7 +66,8 @@ public class PaperPuncher : MonoBehaviour {
         
         
             _currentPaper = paperToInsert;
-        
+        paperToInsert.transform.localPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        paperToInsert.transform.rotation = new Quaternion(0, 0, 0, 0);
 
     }
 
