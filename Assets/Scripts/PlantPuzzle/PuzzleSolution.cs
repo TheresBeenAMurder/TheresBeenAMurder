@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class PuzzleSolution : MonoBehaviour {
 
-    public float moveTime = 1f / .1f;
-
     private bool isSolved = false;
+    private float moveTime = 1f / .1f;
 
     public bool IsSolved()
     {
@@ -23,10 +22,10 @@ public class PuzzleSolution : MonoBehaviour {
     {
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
-        // Slide cover to left of painting
-        Vector3 newPos = new Vector3(transform.parent.position.x + 1,
+        // Slide cover behind painting
+        Vector3 newPos = new Vector3(transform.position.x,
             transform.position.y,
-            transform.position.z);
+            transform.parent.position.z + 2);
 
         yield return StartCoroutine(Movement.SmoothMove(newPos, moveTime, rigidbody));
     }

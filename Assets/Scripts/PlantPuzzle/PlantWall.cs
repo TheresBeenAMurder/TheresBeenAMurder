@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlantTable : MonoBehaviour
+public class PlantWall : MonoBehaviour
 {
     public PuzzleSolution art;
 
@@ -18,7 +18,7 @@ public class PlantTable : MonoBehaviour
                     return;
                 }
             }
-
+            
             art.PuzzleSolve();
         }
     }

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Spectre : NPC {
+public class Spectre : NPC
+{
 
     static int ID = 2;
     static string NAME = "Spectre";
