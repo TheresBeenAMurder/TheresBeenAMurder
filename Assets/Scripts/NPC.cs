@@ -154,12 +154,31 @@ public class NPC : MonoBehaviour {
         WriteResponses();
     }
 
-    private void UpdateNextPrompt(int promptID)
+    public void UpdateNextPrompt(int promptID)
     {
+        bool shouldClose = false;
+        if (command == null)
+        {
+            string connection = "URI=file:" + Application.dataPath + "/Database.db";
+            database = (IDbConnection)new SqliteConnection(connection);
+            database.Open();
+            command = database.CreateCommand();
+            shouldClose = true;
+        }
+
         this.promptID = promptID;
         string update = "UPDATE Characters SET PromptID = " + promptID + " WHERE ID ==" + id;
         command.CommandText = update;
         command.ExecuteNonQuery();
+
+        if (shouldClose)
+        {
+            command.Dispose();
+            command = null;
+
+            database.Close();
+            database = null;
+        }
     }
 
     private void UpdateRelationshipStatus()
@@ -195,23 +214,28 @@ public class NPC : MonoBehaviour {
 
     public void WritePrompt()
     {
-        string query = "SELECT DisplayText, Response1ID, Response2ID, Response3ID, Response4ID FROM Prompts WHERE ID ==" + promptID;
-        command.CommandText = query;
-        reader = command.ExecuteReader();
+        if (promptID != -1)
+        {
+            string query = "SELECT DisplayText, Response1ID, Response2ID, Response3ID, Response4ID, " +
+            "AudioFile FROM Prompts WHERE ID ==" + promptID;
+            command.CommandText = query;
+            reader = command.ExecuteReader();
 
-        reader.Read();
-        displayBox.text = reader.GetString(0);
-        responseIDs[0] = reader.GetInt32(1);
-        responseIDs[1] = reader.GetInt32(2);
-        responseIDs[2] = reader.GetInt32(3);
-        responseIDs[3] = reader.GetInt32(4);
-        reader.Close();
+            reader.Read();
+            displayBox.text = reader.GetString(0);
+            responseIDs[0] = reader.GetInt32(1);
+            responseIDs[1] = reader.GetInt32(2);
+            responseIDs[2] = reader.GetInt32(3);
+            responseIDs[3] = reader.GetInt32(4);
+            string audioFile = reader.IsDBNull(3) ? "" : reader.GetString(5);
+            reader.Close();
 
-        // Play the voice line for the prompt
-        string promptAudioSource = "Audio/" + audioFolder + "/" + promptID + "-" + relStat;
-        AudioClip promptAudio = Resources.Load<AudioClip>(promptAudioSource);
-        conversationAudio.clip = promptAudio;
-        conversationAudio.Play();
+            // Play the voice line for the prompt
+            string promptAudioSource = "Audio/" + audioFolder + "/" + audioFile;
+            AudioClip promptAudio = Resources.Load<AudioClip>(promptAudioSource);
+            conversationAudio.clip = promptAudio;
+            conversationAudio.Play();
+        }
     }
 
     public void WriteResponses()

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PuzzleSolution : MonoBehaviour {
 
+    public Madeline madeline;
+
     private bool isSolved = false;
     private float moveTime = 1f / .1f;
 
@@ -14,6 +16,7 @@ public class PuzzleSolution : MonoBehaviour {
 	public void PuzzleSolve()
     {
         StartCoroutine("RevealPainting");
+        madeline.UpdateNextPrompt(12);
         isSolved = true;
     }
 
