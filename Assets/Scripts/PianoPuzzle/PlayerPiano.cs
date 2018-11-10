@@ -9,61 +9,65 @@ public class PlayerPiano : MonoBehaviour {
 
     public WallButton[] walls;
 
+    public PianoCylinder testBoi;
 
 	// Use this for initialization
 	void Start () {
         //fill the dictionary
         movableWalls = new Dictionary<string, WallButton>();
         movableWalls.Clear();
-        //foreach(WallButton mw in walls)
-        //{
+        foreach(WallButton mw in walls)
+        {
 
-        //    movableWalls.Add(mw.pianoKey, mw);
+            movableWalls.Add(mw.pianoKey, mw);
 
-        //}
-        
+        }
 	}
+
+    
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("PunchPaper"))
-        {
+        //if(other.CompareTag("PianoCylinder"))
+        //{
 
 
-            insertPaper(other.gameObject.GetComponent<PlayerPianoPaper>());
-            //other.transform.localScale *= 0.001f;
-            other.transform.parent = gameObject.transform;
-            other.transform.position = new Vector3(transform.position.x - 8.716f, transform.position.y + .706f, transform.position.z - .203f);
-            other.transform.rotation = new Quaternion(0, transform.rotation.y, 0, 0);
-        }
+        //    insertCylinder(other.transform.root.gameObject.GetComponent<PianoCylinder>());
+            
+        //}
     }
 
     // Update is called once per frame
     void Update () {
-		
+		if(Input.GetKeyDown(KeyCode.Space))
+        {
+
+
+            insertCylinder(testBoi);
+
+        }
 	}
 
-    void insertPaper(PlayerPianoPaper inserted)
+    void insertCylinder(PianoCylinder inserted)
     {
        
         //construct our string
         string s = "";
 
-        for(int i = 0; i < inserted._nodeStatus.Length; i++)
+        //s += inserted.color.ToString();
+
+        PianoCylinder[] allChildren = inserted.GetComponentsInChildren<PianoCylinder>();
+
+       
+        
+        foreach(PianoCylinder p in allChildren)
         {
-            if (inserted._nodeStatus[i])
-            {
-                s += "1";
 
-            }
-            else
-            {
-                s += "0";
-
-            }
-
+            s += p.color.ToString();
 
         }
+
+
         //check if it's the key to any walls
         if (movableWalls.ContainsKey(s))
         {
