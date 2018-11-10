@@ -23,7 +23,7 @@ public class StickyCylinder : MonoBehaviour {
     private void Start()
     {
         attached = null;
-        thisBottom = GetComponent<BottomCylinder>();
+        thisBottom = GetComponentInParent<BottomCylinder>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,15 +33,15 @@ public class StickyCylinder : MonoBehaviour {
             if (other.CompareTag("PianoCylinder"))
             {
                 attachColor(other.gameObject);
-                other.gameObject.transform.position = snapPoint.position;
-                other.transform.parent = this.transform;
+                other.gameObject.transform.root.transform.position = snapPoint.position;
+                other.transform.root.transform.parent = this.transform;
                 if(other.GetComponent<BottomCylinder>() != null)
                 {
 
                     Destroy(other.gameObject.GetComponent<BottomCylinder>());
 
                 }
-                other.gameObject.GetComponent<StickyCylinder>().thisBottom = thisBottom;
+                other.gameObject.GetComponentInChildren<StickyCylinder>().thisBottom = thisBottom;
                 thisBottom.addCylinder();
             }
         }
@@ -56,7 +56,7 @@ public class StickyCylinder : MonoBehaviour {
             {
                 
                 attached = null;
-                other.transform.parent = null;
+                other.transform.root.transform.parent = null;
                 other.gameObject.AddComponent<BottomCylinder>();
                 other.gameObject.GetComponent<StickyCylinder>().thisBottom = other.gameObject.GetComponent<BottomCylinder>();
                 thisBottom.removeCylinder();

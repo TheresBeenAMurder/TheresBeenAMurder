@@ -13,8 +13,8 @@ public class BottomCylinder : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         cylinderCount = GetComponentsInChildren<PianoCylinder>().Length + 1;
-        gameObject.AddComponent<BoxCollider>();
-        collider = GetComponent<BoxCollider>();
+        collider = gameObject.AddComponent<BoxCollider>();
+        collider.size = new Vector3(.2f, .1f, .2f);
         resizeBoxCollider();
 
     }
@@ -22,6 +22,7 @@ public class BottomCylinder : MonoBehaviour {
     public void addCylinder()
     {
         cylinderCount += 1;
+        collider.center = new Vector3(collider.center.x, collider.center.y + cylinderHeight / 2, collider.center.z);
         resizeBoxCollider();
 
     }
@@ -30,6 +31,7 @@ public class BottomCylinder : MonoBehaviour {
     {
 
         cylinderCount -= 1;
+        collider.center = new Vector3(collider.center.x, collider.center.y - cylinderHeight / 2, collider.center.z);
         resizeBoxCollider();
     }
 	

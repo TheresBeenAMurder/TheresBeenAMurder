@@ -9,7 +9,7 @@ public class PlayerPiano : MonoBehaviour {
 
     public WallButton[] walls;
 
-    public PianoCylinder testBoi;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -39,13 +39,7 @@ public class PlayerPiano : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		if(Input.GetKeyDown(KeyCode.Space))
-        {
-
-
-            insertCylinder(testBoi);
-
-        }
+		
 	}
 
     void insertCylinder(PianoCylinder inserted)
