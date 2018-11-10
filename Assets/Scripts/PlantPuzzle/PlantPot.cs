@@ -6,9 +6,9 @@ public class PlantPot : MonoBehaviour {
 
     public GameObject correctLabel;
 
-    private bool containsLabel = false;
-    private GameObject currentLabel;
-    private PlantWall plantHolder;
+    public bool containsLabel = false;
+    public GameObject currentLabel;
+    public PlantWall plantHolder;
 
     public bool IsCorrect()
     {

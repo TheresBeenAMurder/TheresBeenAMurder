@@ -28,13 +28,13 @@ public class PlayerPiano : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        //if(other.CompareTag("PianoCylinder"))
-        //{
+        if (other.CompareTag("PianoCylinder"))
+        {
 
 
-        //    insertCylinder(other.transform.root.gameObject.GetComponent<PianoCylinder>());
-            
-        //}
+            insertCylinder(other.transform.root.gameObject.GetComponent<PianoCylinder>());
+
+        }
     }
 
     // Update is called once per frame
@@ -65,9 +65,9 @@ public class PlayerPiano : MonoBehaviour {
         //check if it's the key to any walls
         if (movableWalls.ContainsKey(s))
         {
-
             movableWalls[s].Move();
-
+            Madeline m = GameObject.FindObjectOfType<Madeline>();
+            m.UpdateNextPrompt(6);
         }
 
     }

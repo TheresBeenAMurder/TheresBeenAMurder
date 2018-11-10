@@ -30,19 +30,20 @@ public class StickyCylinder : MonoBehaviour {
     {
         if (attached == null)
         {
-            if (other.CompareTag("PianoCylinder"))
+            if (other.CompareTag("PianoCylinder") && other.isTrigger)
             {
                 attachColor(other.gameObject);
-                other.gameObject.transform.root.transform.position = snapPoint.position;
+                //other.gameObject.transform.root.transform.position = snapPoint.position;
+              
                 other.transform.root.transform.parent = this.transform;
-                if(other.GetComponent<BottomCylinder>() != null)
-                {
+                //if(other.GetComponent<BottomCylinder>() != null)
+                //{
 
-                    Destroy(other.gameObject.GetComponent<BottomCylinder>());
+                //    Destroy(other.gameObject.GetComponent<BottomCylinder>());
 
-                }
-                other.gameObject.GetComponentInChildren<StickyCylinder>().thisBottom = thisBottom;
-                thisBottom.addCylinder();
+                //}
+                //other.gameObject.GetComponentInChildren<StickyCylinder>().thisBottom = thisBottom;
+                //thisBottom.addCylinder();
             }
         }
 
@@ -52,14 +53,14 @@ public class StickyCylinder : MonoBehaviour {
     {
         if(attached != null)
         {
-            if (other.CompareTag("PianoCylinder") && other.GetComponent<StickyCylinder>() != null)
+            if (other.CompareTag("PianoCylinder"))// && other.GetComponent<StickyCylinder>() != null)
             {
                 
                 attached = null;
-                other.transform.root.transform.parent = null;
-                other.gameObject.AddComponent<BottomCylinder>();
-                other.gameObject.GetComponent<StickyCylinder>().thisBottom = other.gameObject.GetComponent<BottomCylinder>();
-                thisBottom.removeCylinder();
+                other.transform.parent = null;
+               // other.gameObject.AddComponent<BottomCylinder>();
+              //  other.gameObject.GetComponentInChildren<StickyCylinder>().thisBottom = other.gameObject.GetComponent<BottomCylinder>();
+               // thisBottom.removeCylinder();
             }
 
 
