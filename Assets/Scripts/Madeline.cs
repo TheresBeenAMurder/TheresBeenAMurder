@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Mono.Data.Sqlite;
+using System.Data;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Madeline : NPC
@@ -15,6 +17,30 @@ public class Madeline : NPC
     {
         conversationAudio = GetComponent<AudioSource>();
         displayBox = GetComponentInChildren<Text>();
+
+        // Reset current conversation to be the first one when the scene loads
+        string connection = "URI=file:" + Application.dataPath + "/Database.db";
+        database = (IDbConnection)new SqliteConnection(connection);
+        database.Open();
+        command = database.CreateCommand();
+
+        string query = "SELECT DefaultPromptID FROM 'Characters' WHERE ID == " + id;
+        command.CommandText = query;
+        reader = command.ExecuteReader();
+
+        reader.Read();
+        int firstPromptID = reader.GetInt32(0);
+        reader.Close();
+
+        string update = "UPDATE Characters SET PromptID = " + firstPromptID + " WHERE ID ==" + id;
+        command.CommandText = update;
+        command.ExecuteNonQuery();
+
+        command.Dispose();
+        command = null;
+
+        database.Close();
+        database = null;
     }
 	
 	protected override void Update ()
