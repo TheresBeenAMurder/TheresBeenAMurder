@@ -19,20 +19,26 @@ public class Madeline : NPC
         displayBox = GetComponentInChildren<Text>();
 
         // Reset current conversation to be the first one when the scene loads
+        // Reset relationship value to default when scene loads
         string connection = "URI=file:" + Application.dataPath + "/Database.db";
         database = (IDbConnection)new SqliteConnection(connection);
         database.Open();
         command = database.CreateCommand();
 
-        string query = "SELECT DefaultPromptID FROM 'Characters' WHERE ID == " + id;
+        string query = "SELECT DefaultPromptID, DefaultRelValue FROM 'Characters' WHERE ID == " + id;
         command.CommandText = query;
         reader = command.ExecuteReader();
 
         reader.Read();
         int firstPromptID = reader.GetInt32(0);
+        int relationshipVal = reader.GetInt32(1);
         reader.Close();
 
         string update = "UPDATE Characters SET PromptID = " + firstPromptID + " WHERE ID ==" + id;
+        command.CommandText = update;
+        command.ExecuteNonQuery();
+
+        update = "UPDATE Characters SET RelationshipValue = " + relationshipVal + " WHERE ID ==" + id;
         command.CommandText = update;
         command.ExecuteNonQuery();
 
