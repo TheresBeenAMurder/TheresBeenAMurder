@@ -9,6 +9,13 @@ public class Player : MonoBehaviour {
 
     private ScrollMenu murderBoard;
 
+    public GameObject polaroid;
+    public OVRInput.Button polaroidToggleButton;
+
+    public TakePicture camera;
+    public OVRInput.Button takePolaroidButton;
+
+
     private IEnumerator CreateMurderBoard()
     {
         murderBoardBase.SetActive(true);
@@ -27,6 +34,24 @@ public class Player : MonoBehaviour {
 
         // display it to the player
         murderBoardBase.GetComponent<Renderer>().enabled = true;
+    }
+
+    private void togglePolaroid()
+    {
+        if (polaroid.activeSelf)
+        {
+            // turn it off
+
+            polaroid.SetActive(false);
+        }
+        else
+        {
+            // turn it on
+            polaroid.SetActive(true);
+        }
+
+
+
     }
 
 	private void Start ()
@@ -57,6 +82,21 @@ public class Player : MonoBehaviour {
                 // turn it on
                 StartCoroutine("CreateMurderBoard");
             }
+        }
+
+        if(OVRInput.GetDown(polaroidToggleButton))
+        {
+
+            togglePolaroid();
+
+        }
+
+
+        if (OVRInput.GetDown(takePolaroidButton))
+        {
+
+            camera.takePic();
+
         }
     }
 }

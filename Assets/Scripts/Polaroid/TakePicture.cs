@@ -30,7 +30,7 @@ public class TakePicture : MonoBehaviour {
   //      }
 	} 
 
-    void takePic()
+    public void takePic()
     {
         photo = WriteRTImage(imageCaptureCamera);
         photoModel.material.mainTexture = photo;
