@@ -16,7 +16,7 @@ public class DrawBWPoints : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		lineRenderer = GetComponent<LineRenderer>();
-		
+        pointsToDraw = new Transform[2];
 		
 	}
 	
@@ -33,6 +33,6 @@ public class DrawBWPoints : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		//lineRenderer.SetPosition(1, pointB.position);
+		lineRenderer.SetPosition(1, pointsToDraw[1].position);
 	}
 }

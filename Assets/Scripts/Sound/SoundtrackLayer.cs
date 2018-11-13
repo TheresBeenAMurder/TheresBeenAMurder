@@ -6,7 +6,7 @@ public class SoundtrackLayer : MonoBehaviour {
 
 
     public AudioClip[] tracks;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     public int defaultTrack;
 
 	// Use this for initialization

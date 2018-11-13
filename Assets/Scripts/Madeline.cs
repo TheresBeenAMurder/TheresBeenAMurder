@@ -11,6 +11,7 @@ public class Madeline : NPC
     private GameObject canvas = null;
     private bool playerNear = false;
 
+
     public Madeline() : base(ID, NAME){}
 
 	void Start ()

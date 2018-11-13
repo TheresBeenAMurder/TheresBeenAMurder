@@ -7,6 +7,9 @@ using UnityEngine.UI;
 // This is a base class meant to be used for all NPC characters
 public class NPC : MonoBehaviour {
 
+
+    public SoundtrackLayer soundtrackLayer;
+
     private static int RelationshipLowerBound = 0;
     private static int RelationshipUpperBound = 10;
 
@@ -195,6 +198,8 @@ public class NPC : MonoBehaviour {
         {
             relStat = relationshipStatus.like;
         }
+
+        soundtrackLayer.audioSource.volume = relationshipValue * 0.1f;
     }
 
     private void UpdateRelationshipValue(int relationshipEffect)
