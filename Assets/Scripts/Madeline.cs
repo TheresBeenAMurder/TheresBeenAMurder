@@ -21,7 +21,7 @@ public class Madeline : NPC
 
         // Reset current conversation to be the first one when the scene loads
         // Reset relationship value to default when scene loads
-        string connection = "URI=file:" + Application.dataPath + "/Database.db";
+        string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
         database = (IDbConnection)new SqliteConnection(connection);
         database.Open();
         command = database.CreateCommand();
@@ -52,7 +52,7 @@ public class Madeline : NPC
 	
 	protected override void Update ()
     {
-        if (!inConversation && playerNear && Input.GetKey("m"))
+        if (!inConversation && playerNear && OVRInput.GetDown(OVRInput.Button.Two))
         {
             inConversation = true;
             StartConversation();
@@ -90,7 +90,7 @@ public class Madeline : NPC
     { 
         if (!playerNear && other.gameObject.tag == "Player")
         {
-            displayBox.text = "Press m to speak to " + NAME;
+            displayBox.text = "Press B to speak to " + NAME;
             playerNear = true;
         }
     }

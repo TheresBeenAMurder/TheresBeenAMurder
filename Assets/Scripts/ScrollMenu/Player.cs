@@ -68,21 +68,21 @@ public class Player : MonoBehaviour {
 
     private void Update()
     {
-        if (OVRInput.GetDown(murderBoardButton))
-        {
-            if (murderBoardBase.activeSelf)
-            {
-                // turn it off
-                murderBoardBase.GetComponent<Renderer>().enabled = false;
-                murderBoard.KillCurrentImages();
-                murderBoardBase.SetActive(false);
-            }
-            else
-            {
-                // turn it on
-                StartCoroutine("CreateMurderBoard");
-            }
-        }
+        ////if (OVRInput.GetDown(murderBoardButton))
+        ////{
+        ////    if (murderBoardBase.activeSelf)
+        ////    {
+        ////        // turn it off
+        ////        murderBoardBase.GetComponent<Renderer>().enabled = false;
+        ////        murderBoard.KillCurrentImages();
+        ////        murderBoardBase.SetActive(false);
+        ////    }
+        ////    else
+        ////    {
+        ////        // turn it on
+        ////        StartCoroutine("CreateMurderBoard");
+        ////    }
+        ////}
 
         if(OVRInput.GetDown(polaroidToggleButton))
         {

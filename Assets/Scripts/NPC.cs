@@ -89,7 +89,7 @@ public class NPC : MonoBehaviour {
 
     public void InitializeDatabase()
     {
-        string connection = "URI=file:" + Application.dataPath + "/Database.db";
+        string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
         database = (IDbConnection)new SqliteConnection(connection);
         database.Open();
         command = database.CreateCommand();
@@ -162,7 +162,7 @@ public class NPC : MonoBehaviour {
         bool shouldClose = false;
         if (command == null)
         {
-            string connection = "URI=file:" + Application.dataPath + "/Database.db";
+            string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
             database = (IDbConnection)new SqliteConnection(connection);
             database.Open();
             command = database.CreateCommand();
