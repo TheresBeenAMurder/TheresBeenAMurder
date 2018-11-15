@@ -32,7 +32,7 @@ public class PlayerPiano : MonoBehaviour {
         {
 
 
-            insertCylinder(other.transform.root.gameObject.GetComponent<PianoCylinder>());
+            insertCylinder(other.gameObject.GetComponent<PianoCylinder>());
 
         }
     }

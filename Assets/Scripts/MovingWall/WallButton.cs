@@ -87,7 +87,7 @@ public class WallButton : MonoBehaviour {
         // disables the walls we don't see
         foreach (Wall wall in walls)
         {
-           // wall.UpdateVisibility();
+            wall.UpdateVisibility();
         }
 
         buttonPressed = false;
