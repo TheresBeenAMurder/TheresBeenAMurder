@@ -32,7 +32,10 @@ public class DrawBWPoints : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
-		lineRenderer.SetPosition(1, pointsToDraw[1].position);
+
+        if (pointsToDraw[1] != null)
+        {
+            lineRenderer.SetPosition(1, pointsToDraw[1].position);
+        }
 	}
 }

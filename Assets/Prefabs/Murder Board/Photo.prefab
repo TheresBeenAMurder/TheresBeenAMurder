@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65702892648408462}
   - component: {fileID: 54189958553447874}
   - component: {fileID: 114622142299789232}
+  - component: {fileID: 114602867907526070}
   m_Layer: 0
   m_Name: Photo
   m_TagString: BoardPhoto
@@ -251,6 +252,23 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114602867907526070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623818351802954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca0e7300aa427344f9bf65eccb8361f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  currentLine: {fileID: 0}
+  linePrefab: {fileID: 1187870498476670, guid: 41149956af643a747a540fafc688fcce, type: 2}
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
+  currentlyDrawingHand: {fileID: 0}
 --- !u!114 &114622142299789232
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -15,7 +15,7 @@ public class SoundtrackManager : MonoBehaviour {
 	void Start () {
 		foreach(SoundtrackLayer audio in soundtrackLayers)
         {
-            audio.GetComponent<AudioSource>().volume = .6f;
+           // audio.GetComponent<AudioSource>().volume = .6f;
 
 
         }

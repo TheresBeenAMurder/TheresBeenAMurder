@@ -13,7 +13,7 @@ public class SoundtrackLayer : MonoBehaviour {
 	void Start () {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = tracks[defaultTrack];
-        audioSource.volume = 0;
+       // audioSource.volume = 0;
         audioSource.Play();
 	}
 	

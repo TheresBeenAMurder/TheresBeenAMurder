@@ -26,26 +26,61 @@ public class Photo : MonoBehaviour {
         currentLine = null;
 	}
 
+    private void Update()
+    {
+        if (currentlyDrawingHand != null)
+        {
+            if (currentlyDrawingHand.name == rightHand.name)
+            {
+                if (currentLine == null) //the player isn't currently drawing a line
+                {
+
+                    if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger) && Gestures.IsGrabbing(leftHand, rightHand) == null)
+                    {
+                        spawnLine(rightHand);
+                    }
+
+                }
+
+                else // the player is dragging through and we should snap the line to the photo but not reparent
+                {
+                    if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger) && Gestures.IsGrabbing(leftHand, rightHand) == null)
+                    {
+                        snapToPhoto();
+                    }
+                }
+
+            }
+            else if (currentlyDrawingHand.name == leftHand.name)
+            {
+                if (currentLine == null) //the player isn't currently drawing a line
+                {
+                    if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger) && Gestures.IsGrabbing(leftHand, rightHand) == null)
+                    {
+                        spawnLine(leftHand);
+                    }
+
+                }
+                else // the player is dragging through and we should snap the line to the photo but not reparent
+                {
+                    if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger) && Gestures.IsGrabbing(leftHand, rightHand) == null)
+                    {
+                        snapToPhoto();
+                    }
+                }
+
+
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         //RIGHT
         if (other.gameObject.name == rightHand.name)
         {
             currentlyDrawingHand = rightHand;
-            if (currentLine == null) //the player isn't currently drawing a line
-            {
-
-                if (OVRInput.Get(OVRInput.RawButton.RHandTrigger))
-                {
-                    spawnLine(rightHand);
-                }
-
-            }
             
-            else // the player is dragging through and we should snap the line to the photo but not reparent
-            {
-                snapToPhoto();
-            }
         }
 
 
@@ -53,27 +88,16 @@ public class Photo : MonoBehaviour {
         else if (other.gameObject.name == leftHand.name)
         {
             currentlyDrawingHand = leftHand;
-            if (currentLine == null) //the player isn't currently drawing a line
-            {
-                if (OVRInput.Get(OVRInput.RawButton.LHandTrigger))
-                {
-                    spawnLine(leftHand);
-                }
-                
-            }
-            else // the player is dragging through and we should snap the line to the photo but not reparent
-            {
-                snapToPhoto();
-            }
+           
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
 
-        if (other.gameObject.name == rightHand.name && rightHand.name == currentlyDrawingHand.name)
+        if (other.gameObject.name == rightHand.name && currentlyDrawingHand != null && rightHand.name == currentlyDrawingHand.name)
         {
-            if (OVRInput.Get(OVRInput.RawButton.RHandTrigger)) // the line hasnt been released
+            if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger)) // the line hasnt been released
             {
                 unsnapToPhoto();
 
@@ -81,9 +105,9 @@ public class Photo : MonoBehaviour {
             currentlyDrawingHand = null;
         }
 
-        else if (other.gameObject.name == leftHand.name && leftHand.name == currentlyDrawingHand.name)
+        else if (other.gameObject.name == leftHand.name && currentlyDrawingHand != null && leftHand.name == currentlyDrawingHand.name)
         {
-            if (OVRInput.Get(OVRInput.RawButton.LHandTrigger)) // the line hasnt been released
+            if (OVRInput.Get(OVRInput.RawButton.LIndexTrigger)) // the line hasnt been released
             {
                 unsnapToPhoto();
 
@@ -97,15 +121,16 @@ public class Photo : MonoBehaviour {
 
     public void purgeLines()
     {
-
-        foreach(DrawBWPoints dbw in photoLines)
+        if (photoLines != null)
         {
+            foreach (DrawBWPoints dbw in photoLines)
+            {
 
 
-            Destroy(dbw.gameObject);
+                Destroy(dbw.gameObject);
 
+            }
         }
-
     }
 
     void snapToPhoto()
