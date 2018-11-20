@@ -66,7 +66,7 @@ public class PlayerPiano : MonoBehaviour {
         if (movableWalls.ContainsKey(s))
         {
             movableWalls[s].Move();
-            Madeline m = GameObject.FindObjectOfType<Madeline>();
+            NPC m = GameObject.FindObjectOfType<NPC>();
             m.UpdateNextPrompt(6);
         }
 

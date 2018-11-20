@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PuzzleSolution : MonoBehaviour {
 
-    public Madeline madeline;
+    public NPC madeline;
 
     private bool isSolved = false;
     private float moveTime = 1f / .1f;
@@ -19,6 +19,7 @@ public class PuzzleSolution : MonoBehaviour {
         gameObject.SetActive(false);
 
         madeline.UpdateNextPrompt(12);
+        madeline.canAccuse = true;
         isSolved = true;
     }
 
