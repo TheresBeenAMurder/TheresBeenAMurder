@@ -18,6 +18,18 @@ public class StickyComponent : MonoBehaviour {
 	void Update () {
 		
 	}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("StickyComponent"))
+        {
+            //// if(parentManager.isRotating)
+            //// {
+            parent.RemoveAttachedCylinder(TopOrBottomIndex, other.GetComponent<StickyComponent>().TopOrBottomIndex);
+            //other.gameObject.GetComponent<StickyComponent>().parent.GetComponent<PianoCylinder>().RemoveAttachedCylinder(Mathf.Abs(TopOrBottomIndex - 1));
+            ////  }
+
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,9 +37,9 @@ public class StickyComponent : MonoBehaviour {
         {
             // if(parentManager.isRotating)
             // {
-            parent.AttachCylinder(other.gameObject.GetComponent<StickyComponent>().parent.gameObject, TopOrBottomIndex);
-          //  }
-            
+            parent.AttachCylinder(other.gameObject.GetComponent<StickyComponent>().parent.gameObject, TopOrBottomIndex, other.GetComponent<StickyComponent>().TopOrBottomIndex);
+            //  }
+
         }
     }
 }

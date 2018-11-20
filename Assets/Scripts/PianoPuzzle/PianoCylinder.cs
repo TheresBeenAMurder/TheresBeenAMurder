@@ -31,7 +31,7 @@ public class PianoCylinder : OVRGrabbable {
 
     public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
     {
-        transform.parent = null;
+       // transform.parent = null;
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
@@ -60,6 +60,12 @@ public class PianoCylinder : OVRGrabbable {
     /// </summary>
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
+        foreach(PianoCylinder child in gameObject.GetComponentsInChildren<PianoCylinder>())
+        {
+            child.gameObject.transform.parent = null;
+
+        }
+
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = m_grabbedKinematic;
         rb.velocity = linearVelocity;
@@ -73,7 +79,7 @@ public class PianoCylinder : OVRGrabbable {
             parent.leftHandGrabbing = null;
 
         }
-        else;
+        else
         {
 
             parent.rightHandGrabbing = null;
@@ -82,9 +88,9 @@ public class PianoCylinder : OVRGrabbable {
 
     }
 
-    public void AttachCylinder(GameObject toAttach, int index)
+    public void AttachCylinder(GameObject toAttach, int index, int otherIndex)
     {
-        if(attached == null)
+        if(attached.Length == 0)
         {
             attached = new PianoCylinder[2];
             attached[0] = null;
@@ -92,11 +98,12 @@ public class PianoCylinder : OVRGrabbable {
         }
 
         attached[index] = toAttach.GetComponent<PianoCylinder>();
-
+        toAttach.GetComponent<PianoCylinder>().attached[otherIndex] = this;
+            
 
     }
 
-    public void RemoveAttachedCylinder(int index)
+    public void RemoveAttachedCylinder(int index, int otherIndex)
     {
 
         if (attached == null)
@@ -104,7 +111,7 @@ public class PianoCylinder : OVRGrabbable {
             attached = new PianoCylinder[2];
 
         }
-
+        attached[index].attached[otherIndex] = null;
         attached[index] = null;
 
 
@@ -113,13 +120,15 @@ public class PianoCylinder : OVRGrabbable {
 
     void grabChild(int index)
     {
-        if(attached[index] != null)
+        if (attached.Length > 0)
         {
-            attached[index].transform.parent = gameObject.transform;
-            attached[index].grabChild(index);
+            if (attached[index] != null)
+            {
+                attached[index].transform.parent = gameObject.transform;
+                attached[index].grabChild(index);
 
+            }
         }
-        
     }
 
 }

@@ -117,7 +117,7 @@ public class Accusation : MonoBehaviour
     }
 
     // Initialize character-related values and begin accusation
-    public void StartAccusation(ConversationUI convo,
+    public IEnumerator StartAccusation(ConversationUI convo,
         int charID,
         DatabaseHandler db,
         string charAudioFolder,
@@ -133,7 +133,7 @@ public class Accusation : MonoBehaviour
         currentEvidence = evidenceType.initial;
 
         InitializeEvidence();
-        StartCoroutine(TalkAbout(currentEvidence));
+        yield return StartCoroutine(TalkAbout(currentEvidence));
     }
 
     private IEnumerator TalkAbout(evidenceType evidenceType)
@@ -144,7 +144,8 @@ public class Accusation : MonoBehaviour
         }
 
         string query = "SELECT Response, ResAudio, NotFoundAudio FROM 'Accusations' WHERE CharacterID == "
-                + characterID + ", Type == " + evidenceType.ToString();
+                + characterID + " " +
+                "AND Type == " + evidenceType.ToString();
         IDataReader reader = dbHandler.ExecuteQuery(query);
 
         reader.Read();

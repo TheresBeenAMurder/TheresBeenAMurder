@@ -31,7 +31,7 @@ public class NPC : MonoBehaviour {
     private DatabaseHandler dbHandler = new DatabaseHandler();
 
     // conversation related
-    private Accusation accusation = new Accusation();
+    private Accusation accusation;
     public bool canAccuse = false;
     private int currentAccuseChoice = 0;
     private bool isAccusing = false;
@@ -118,6 +118,7 @@ public class NPC : MonoBehaviour {
 
     public void Start()
     {
+        accusation = GetComponent<Accusation>();
         conversationAudio = GetComponent<AudioSource>();
         conversationUI = new ConversationUI(GetComponentInChildren<Text>());
 
@@ -163,12 +164,12 @@ public class NPC : MonoBehaviour {
             if (!isAccusing && choice == currentAccuseChoice)
             {
                 isAccusing = true;
-                accusation.StartAccusation(conversationUI,
+                StartCoroutine(accusation.StartAccusation(conversationUI,
                     id,
                     dbHandler,
                     audioFolder,
                     conversationAudio,
-                    playerAudio);
+                    playerAudio));
                 return;
             }
 
@@ -249,6 +250,8 @@ public class NPC : MonoBehaviour {
     public void WriteResponses(bool addAccuseOpt = false)
     {
         string[] responseDisplays = new string[5];
+        responseDisplays[4] = "";
+
         int currentDisplay = 0;
         foreach (int id in responseIDs)
         {
