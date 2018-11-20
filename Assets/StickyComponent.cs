@@ -24,7 +24,7 @@ public class StickyComponent : MonoBehaviour {
         {
             //// if(parentManager.isRotating)
             //// {
-            parent.RemoveAttachedCylinder(TopOrBottomIndex, other.GetComponent<StickyComponent>().TopOrBottomIndex);
+           // parent.RemoveAttachedCylinder(TopOrBottomIndex, other.GetComponent<StickyComponent>().TopOrBottomIndex);
             //other.gameObject.GetComponent<StickyComponent>().parent.GetComponent<PianoCylinder>().RemoveAttachedCylinder(Mathf.Abs(TopOrBottomIndex - 1));
             ////  }
 

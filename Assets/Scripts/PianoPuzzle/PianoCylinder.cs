@@ -29,6 +29,8 @@ public class PianoCylinder : OVRGrabbable {
 
     bool grabbedByLeft;
 
+    public float maxDistanceToSeparate;
+
     public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
     {
        // transform.parent = null;
@@ -125,9 +127,62 @@ public class PianoCylinder : OVRGrabbable {
             if (attached[index] != null)
             {
                 attached[index].transform.parent = gameObject.transform;
-                attached[index].grabChild(index);
+                if (attached[index].attached[0] != null && attached[index].attached[0].name == gameObject.name)
+                {
+                    attached[index].grabChild(1);
+                }
+                else if (attached[index].attached[1] != null && attached[index].attached[1].name == gameObject.name)
+                {
+                    attached[index].grabChild(0);
+                }
 
             }
+        }
+    }
+
+    private void Update()
+    {
+        if(attached.Length > 0)
+        {
+            if(attached[0] != null)
+            {
+
+                if(Vector3.Distance(attached[0].transform.position, transform.position) > maxDistanceToSeparate)
+                {
+                    if(attached[0].attached[0] != null && attached[0].attached[0].name == gameObject.name)
+                    {
+                        RemoveAttachedCylinder(0, 0);
+                    }
+                    else if (attached[0].attached[1] != null && attached[0].attached[1].name == gameObject.name)
+                    {
+                        RemoveAttachedCylinder(0, 1);
+
+                    }
+
+                }
+
+            }
+
+            if (attached[1] != null)
+            {
+
+                if (Vector3.Distance(attached[1].transform.position, transform.position) > maxDistanceToSeparate)
+                {
+                    if (attached[1].attached[0] != null && attached[1].attached[0].name == gameObject.name)
+                    {
+                        RemoveAttachedCylinder(1, 0);
+                    }
+                    else if (attached[1].attached[1] != null && attached[1].attached[1].name == gameObject.name)
+                    {
+                        RemoveAttachedCylinder(1, 1);
+
+                    }
+
+                }
+
+            }
+
+
         }
     }
 

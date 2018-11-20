@@ -9,7 +9,11 @@ public class PlayerPiano : MonoBehaviour {
 
     public WallButton[] walls;
 
-    
+    public Transform leftmost;
+    bool cylinderInserted = false;
+
+    float cooldown = 1;
+    float cooldownTimer = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +32,7 @@ public class PlayerPiano : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PianoCylinder"))
+        if (other.CompareTag("PianoCylinder") && !cylinderInserted)
         {
 
 
@@ -39,12 +43,20 @@ public class PlayerPiano : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
+        if(cooldownTimer <= 0 && cylinderInserted)
+        {
+            cylinderInserted = false;
+
+        }
 	}
 
     void insertCylinder(PianoCylinder inserted)
     {
-       
+        cylinderInserted = true;
         //construct our string
         string s = "";
 
@@ -52,9 +64,46 @@ public class PlayerPiano : MonoBehaviour {
 
         PianoCylinder[] allChildren = inserted.GetComponentsInChildren<PianoCylinder>();
 
-       
+        //now we gotta sort em
+        List<PianoCylinder> childCyls = new List<PianoCylinder>();
+
+        foreach(PianoCylinder pc in allChildren)
+        {
+            childCyls.Add(pc);
+        }
+
+        int newIndex = 0;
+
+        PianoCylinder[] sorted = new PianoCylinder[allChildren.Length];
+
+        while(childCyls.Count > 0)
+        {
+           
+            PianoCylinder pcLeast = childCyls[0];
+            foreach(PianoCylinder pc in childCyls)
+            {
+
+                if(Vector3.Distance(pc.transform.position, leftmost.transform.position) < Vector3.Distance(pcLeast.transform.position, leftmost.transform.position))
+                {
+                    pcLeast = pc;
+                }
+
+            }
+            
+            sorted[newIndex] = pcLeast;
+
+            childCyls.Remove(pcLeast);
+            newIndex++;
+
+
+
+        }
+
+
+
+
         
-        foreach(PianoCylinder p in allChildren)
+        foreach(PianoCylinder p in sorted)
         {
 
             s += p.color.ToString();
@@ -69,6 +118,8 @@ public class PlayerPiano : MonoBehaviour {
             NPC m = GameObject.FindObjectOfType<NPC>();
             m.UpdateNextPrompt(6);
         }
+
+        cooldownTimer = cooldown;
 
     }
 }
