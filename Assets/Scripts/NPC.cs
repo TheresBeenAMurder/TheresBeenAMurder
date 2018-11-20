@@ -204,7 +204,32 @@ public class NPC : MonoBehaviour {
             relStat = relationshipStatus.like;
         }
 
-        soundtrackLayer.audioSource.volume = relationshipValue * 0.1f;
+
+        switch(relStat)
+        {
+            case (relationshipStatus.hate):
+                {
+                    soundtrackLayer.switchTrack(0);
+                    break;
+                }
+            case (relationshipStatus.dislike):
+                {
+                    soundtrackLayer.switchTrack(1);
+                    break;
+                }
+            case (relationshipStatus.neutral):
+                {
+                    soundtrackLayer.switchTrack(2);
+                    break;
+                }
+            case (relationshipStatus.like):
+                {
+                    soundtrackLayer.switchTrack(3);
+                    break;
+                }
+        }
+
+        
     }
 
     private void UpdateRelationshipValue(int relationshipEffect)
