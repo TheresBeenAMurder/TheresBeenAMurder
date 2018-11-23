@@ -9,68 +9,117 @@ public class PlayerPiano : MonoBehaviour {
 
     public WallButton[] walls;
 
+    public Transform leftmost;
+    bool cylinderInserted = false;
+
+    float cooldown = 1;
+    float cooldownTimer = 0;
 
 	// Use this for initialization
 	void Start () {
         //fill the dictionary
         movableWalls = new Dictionary<string, WallButton>();
         movableWalls.Clear();
-        //foreach(WallButton mw in walls)
-        //{
+        foreach(WallButton mw in walls)
+        {
 
-        //    movableWalls.Add(mw.pianoKey, mw);
+            movableWalls.Add(mw.pianoKey, mw);
 
-        //}
-        
+        }
 	}
+
+    
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("PunchPaper"))
+        if (other.CompareTag("PianoCylinder") && !cylinderInserted)
         {
 
 
-            insertPaper(other.gameObject.GetComponent<PlayerPianoPaper>());
-            //other.transform.localScale *= 0.001f;
-            other.transform.parent = gameObject.transform;
-            other.transform.position = new Vector3(transform.position.x - 8.716f, transform.position.y + .706f, transform.position.z - .203f);
-            other.transform.rotation = new Quaternion(0, transform.rotation.y, 0, 0);
+            insertCylinder(other.gameObject.GetComponent<PianoCylinder>());
+
         }
     }
 
     // Update is called once per frame
     void Update () {
-		
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
+        if(cooldownTimer <= 0 && cylinderInserted)
+        {
+            cylinderInserted = false;
+
+        }
 	}
 
-    void insertPaper(PlayerPianoPaper inserted)
+    void insertCylinder(PianoCylinder inserted)
     {
-       
+        cylinderInserted = true;
         //construct our string
         string s = "";
 
-        for(int i = 0; i < inserted._nodeStatus.Length; i++)
+        //s += inserted.color.ToString();
+
+        PianoCylinder[] allChildren = inserted.GetComponentsInChildren<PianoCylinder>();
+
+        //now we gotta sort em
+        List<PianoCylinder> childCyls = new List<PianoCylinder>();
+
+        foreach(PianoCylinder pc in allChildren)
         {
-            if (inserted._nodeStatus[i])
+            childCyls.Add(pc);
+        }
+
+        int newIndex = 0;
+
+        PianoCylinder[] sorted = new PianoCylinder[allChildren.Length];
+
+        while(childCyls.Count > 0)
+        {
+           
+            PianoCylinder pcLeast = childCyls[0];
+            foreach(PianoCylinder pc in childCyls)
             {
-                s += "1";
+
+                if(Vector3.Distance(pc.transform.position, leftmost.transform.position) < Vector3.Distance(pcLeast.transform.position, leftmost.transform.position))
+                {
+                    pcLeast = pc;
+                }
 
             }
-            else
-            {
-                s += "0";
+            
+            sorted[newIndex] = pcLeast;
 
-            }
+            childCyls.Remove(pcLeast);
+            newIndex++;
+
 
 
         }
+
+
+
+
+        
+        foreach(PianoCylinder p in sorted)
+        {
+
+            s += p.color.ToString();
+
+        }
+
+
         //check if it's the key to any walls
         if (movableWalls.ContainsKey(s))
         {
-
             movableWalls[s].Move();
-
+            NPC m = GameObject.FindObjectOfType<NPC>();
+            m.UpdateNextPrompt(6);
         }
+
+        cooldownTimer = cooldown;
 
     }
 }

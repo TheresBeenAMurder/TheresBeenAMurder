@@ -14,6 +14,8 @@ public class WallButton : MonoBehaviour {
     private bool playerNear;
     private bool goingUp;
 
+    public AudioSource sfx;
+
     public string pianoKey;
 
 	// Use this for initialization
@@ -42,6 +44,8 @@ public class WallButton : MonoBehaviour {
 
     private IEnumerator MoveWalls()
     {
+        sfx.Play();
+
         // need to set walls to active to move them
         foreach (Wall wall in walls)
         {

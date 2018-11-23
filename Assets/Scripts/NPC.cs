@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Data;
-using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,45 +13,50 @@ public class NPC : MonoBehaviour {
 
     // NPC traits
     public string characterName;
-    public int dislikeThreshold;
     public int id;
-    public int likeThreshold;
-    public int neutralThreshold;
-    public relationshipStatus relStat;
-    public int relationshipValue;
+
+    private int dislikeThreshold;
+    private int likeThreshold;
+    private int neutralThreshold;
+    private relationshipStatus relStat;
+    private int relationshipValue;
 
     // audio related
-    public string audioFolder;
+    private string audioFolder;
     public AudioSource conversationAudio;
     public AudioSource playerAudio;
+    public SoundtrackLayer soundtrackLayer;
 
     // database related
-    public IDbCommand command = null;
-    public IDbConnection database = null;
-    public IDataReader reader = null;
+    private DatabaseHandler dbHandler = new DatabaseHandler();
 
     // conversation related
-    public Text displayBox = null;
-    public bool inConversation = false;
-    public int promptID;
-    public int[] responseIDs = new int[4];
-    
+    private Accusation accusation;
+    public bool canAccuse = false;
+    private int currentAccuseChoice = 0;
+    private bool isAccusing = false;
+    private int promptID;
+    private int[] responseIDs = new int[4];
 
-    public NPC(int id, string name)
-    {
-        this.id = id;
-        this.characterName = name;
-    }
+    // UI related
+    private ConversationUI conversationUI;
 
-    private IEnumerator ChooseResponse(
-        string response, 
-        int nextPromptID, 
-        bool end, 
-        string audioFile, 
-        int relationshipEffect
-    )
+    // Gets the relevant information from the database about the chosen
+    // response and moves the conversation along
+    private IEnumerator ChooseResponse(int choice)
     {
-        displayBox.text = response;
+        string query = "SELECT NextPromptID, End, AudioFile, RelationshipEffect" +
+                " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
+        IDataReader reader = dbHandler.ExecuteQuery(query);
+
+        reader.Read();
+        int nextPromptID = reader.GetInt32(0);
+        bool end = reader.GetBoolean(1);
+        string responseAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
+        int relationshipEffect = reader.GetInt32(3);
+        reader.Close();
+
+        conversationUI.ClearDisplay();
 
         // Let NPC finish audio before continuing
         if (conversationAudio.isPlaying)
@@ -61,13 +65,10 @@ public class NPC : MonoBehaviour {
         }
 
         // Play the voice line for the response
-        if (audioFile != "")
+        if (responseAudio != "")
         {
-            string responseAudioSource = "Audio/Player/" + audioFile;
-            AudioClip responseAudio = Resources.Load<AudioClip>(responseAudioSource);
-            playerAudio.clip = responseAudio;
-            playerAudio.Play();
-            yield return new WaitForSeconds(responseAudio.length + 1);
+            string responseAudioSource = "Audio/Player/" + responseAudio;
+            yield return StartCoroutine(conversationUI.PlayAudio(playerAudio, responseAudioSource));
         }
 
         UpdateRelationshipValue(relationshipEffect);
@@ -80,22 +81,18 @@ public class NPC : MonoBehaviour {
         }
         else
         {
-            inConversation = false;
+            conversationUI.EndConversation();
         }
     }
 
-    public void InitializeDatabase()
+    public void InitializeConversation()
     {
-        string connection = "URI=file:" + Application.dataPath + "/Database.db";
-        database = (IDbConnection)new SqliteConnection(connection);
-        database.Open();
-        command = database.CreateCommand();
+        dbHandler.SetUpDatabase();
 
         // Finds the ID of the initial prompt
         string query = "SELECT PromptID, AudioFolder, RelationshipValue, DislikeThreshold, " +
             "NeutralThreshold, LikeThreshold FROM 'Characters' WHERE ID == " + id;
-        command.CommandText = query;
-        reader = command.ExecuteReader();
+        IDataReader reader = dbHandler.ExecuteQuery(query);
 
         reader.Read();
         promptID = reader.GetInt32(0);
@@ -108,20 +105,71 @@ public class NPC : MonoBehaviour {
 
         UpdateRelationshipStatus();
     }
-	
-	// Update is called once per frame
-	protected virtual void Update () {
-        if (inConversation && Input.anyKeyDown)
-        {
-            int choice;
 
-            if (!int.TryParse(Input.inputString, out choice))
+    private void OnTriggerExit(Collider other)
+    {
+        conversationUI.ExitConversation(other, characterName);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        conversationUI.PromptForConversation(other, characterName);
+    }
+
+    public void Start()
+    {
+        accusation = GetComponent<Accusation>();
+        conversationAudio = GetComponent<AudioSource>();
+        conversationUI = new ConversationUI(GetComponentInChildren<Text>());
+
+        // Wouldn't normally want to reset on load, only on new game
+        // This reset is for our single scene testing.
+        dbHandler.ResetDatabaseToDefault(id);
+    }
+
+    public void StartConversation()
+    {
+        InitializeConversation();
+        WritePrompt();
+        WriteResponses(canAccuse);
+    }
+
+    // Handler of all input involving conversations
+    protected virtual void Update ()
+    {
+        if (conversationUI.StartConversationCheck())
+        {
+            StartConversation();
+        }
+
+        if (conversationUI.inConversation && Input.anyKeyDown)
+        {
+            int choice = conversationUI.GetSelection();
+
+            if (choice == -1)
             {
                 return;
             }
 
-            if (choice < 1 || choice > 4)
+            // throw this input to the accusation logic
+            if (isAccusing)
             {
+                isAccusing = accusation.SelectChoice(choice);
+                return;
+            }
+
+            // Move into the accuse line of questioning, doesn't affect
+            // future conversations so we have to break out into different
+            // code.
+            if (!isAccusing && choice == currentAccuseChoice)
+            {
+                isAccusing = true;
+                StartCoroutine(accusation.StartAccusation(conversationUI,
+                    id,
+                    dbHandler,
+                    audioFolder,
+                    conversationAudio,
+                    playerAudio));
                 return;
             }
 
@@ -130,55 +178,15 @@ public class NPC : MonoBehaviour {
                 return;
             }
 
-            string query = "SELECT DisplayText, NextPromptID, End, AudioFile, RelationshipEffect" +
-                " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
-            command.CommandText = query;
-            reader = command.ExecuteReader();
-
-            reader.Read();
-            string response = "You chose: " + reader.GetString(0);
-            int nextPromptID = reader.GetInt32(1);
-            bool end = reader.GetBoolean(2);
-            string responseAudio = reader.IsDBNull(3) ? "" : reader.GetString(3);
-            int relEffect = reader.GetInt32(4);
-            reader.Close();
-
-            StartCoroutine(ChooseResponse(response, nextPromptID, end, responseAudio, relEffect));
+            StartCoroutine(ChooseResponse(choice));
         }
-    }
-
-    public void StartConversation()
-    {
-        InitializeDatabase();
-        WritePrompt();
-        WriteResponses();
     }
 
     public void UpdateNextPrompt(int promptID)
     {
-        bool shouldClose = false;
-        if (command == null)
-        {
-            string connection = "URI=file:" + Application.dataPath + "/Database.db";
-            database = (IDbConnection)new SqliteConnection(connection);
-            database.Open();
-            command = database.CreateCommand();
-            shouldClose = true;
-        }
-
         this.promptID = promptID;
         string update = "UPDATE Characters SET PromptID = " + promptID + " WHERE ID ==" + id;
-        command.CommandText = update;
-        command.ExecuteNonQuery();
-
-        if (shouldClose)
-        {
-            command.Dispose();
-            command = null;
-
-            database.Close();
-            database = null;
-        }
+        dbHandler.OpenUpdateClose(update);
     }
 
     private void UpdateRelationshipStatus()
@@ -195,6 +203,33 @@ public class NPC : MonoBehaviour {
         {
             relStat = relationshipStatus.like;
         }
+
+
+        switch(relStat)
+        {
+            case (relationshipStatus.hate):
+                {
+                    soundtrackLayer.switchTrack(0);
+                    break;
+                }
+            case (relationshipStatus.dislike):
+                {
+                    soundtrackLayer.switchTrack(1);
+                    break;
+                }
+            case (relationshipStatus.neutral):
+                {
+                    soundtrackLayer.switchTrack(2);
+                    break;
+                }
+            case (relationshipStatus.like):
+                {
+                    soundtrackLayer.switchTrack(3);
+                    break;
+                }
+        }
+
+        
     }
 
     private void UpdateRelationshipValue(int relationshipEffect)
@@ -208,8 +243,7 @@ public class NPC : MonoBehaviour {
         UpdateRelationshipStatus();
         string update = "UPDATE Characters SET RelationshipValue = " + relationshipValue +
             " WHERE ID ==" + id;
-        command.CommandText = update;
-        command.ExecuteNonQuery();
+        dbHandler.ExecuteNonQuery(update);
     }
 
     public void WritePrompt()
@@ -218,11 +252,10 @@ public class NPC : MonoBehaviour {
         {
             string query = "SELECT DisplayText, Response1ID, Response2ID, Response3ID, Response4ID, " +
             "AudioFile FROM Prompts WHERE ID ==" + promptID;
-            command.CommandText = query;
-            reader = command.ExecuteReader();
+            IDataReader reader = dbHandler.ExecuteQuery(query);
 
             reader.Read();
-            displayBox.text = reader.GetString(0);
+            conversationUI.UpdateDisplay(reader.GetString(0));
             responseIDs[0] = reader.GetInt32(1);
             responseIDs[1] = reader.GetInt32(2);
             responseIDs[2] = reader.GetInt32(3);
@@ -231,24 +264,26 @@ public class NPC : MonoBehaviour {
             reader.Close();
 
             // Play the voice line for the prompt
-            string promptAudioSource = "Audio/" + audioFolder + "/" + audioFile;
-            AudioClip promptAudio = Resources.Load<AudioClip>(promptAudioSource);
-            conversationAudio.clip = promptAudio;
-            conversationAudio.Play();
+            if (audioFile != "")
+            {
+                string promptAudioSource = "Audio/" + audioFolder + "/" + audioFile;
+                StartCoroutine(conversationUI.PlayAudio(conversationAudio, promptAudioSource));
+            }
         }
     }
 
-    public void WriteResponses()
+    public void WriteResponses(bool addAccuseOpt = false)
     {
-        string[] responseDisplays = new string[4];
+        string[] responseDisplays = new string[5];
+        responseDisplays[4] = "";
+
         int currentDisplay = 0;
         foreach (int id in responseIDs)
         {
             if (id > -1)
             {
                 string query = "SELECT DisplayText FROM Responses WHERE ID ==" + id;
-                command.CommandText = query;
-                reader = command.ExecuteReader();
+                IDataReader reader = dbHandler.ExecuteQuery(query);
 
                 reader.Read();
                 responseDisplays[currentDisplay] = reader.GetString(0);
@@ -262,13 +297,24 @@ public class NPC : MonoBehaviour {
             currentDisplay++;
         }
 
-        for (int i = 1; i <= responseDisplays.Length; i++)
+        // Adds an accuse option if the player can now accuse
+        if (addAccuseOpt)
         {
-
-            if (responseDisplays[i - 1] != "")
+            for (int i = 0; i < responseDisplays.Length; i++)
             {
-                displayBox.text += "\n " + i + ". " + responseDisplays[i - 1];
+                if (responseDisplays[i] == null || responseDisplays[i] == "")
+                {
+                    responseDisplays[i] = "Accuse";
+                    currentAccuseChoice = i + 1;
+                    break;
+                }
             }
         }
+        else
+        {
+            currentAccuseChoice = 0;
+        }
+
+        conversationUI.DisplayResponseOptions(responseDisplays);
     }
 }

@@ -23,7 +23,7 @@ public class IdentifyItem : MonoBehaviour {
 		if (Physics.Raycast(transform.position, fwd, out hit, 100)) {
 			Debug.DrawRay(transform.position, fwd * hit.distance, Color.green);
 			ItemInfo itemInfo = hit.collider.gameObject.GetComponent<ItemInfo>();
-			Debug.Log("Found Item");
+			//Debug.Log("Found Item");
             if(itemInfo != null){
 				currentItemFound.text = itemInfo.itemName;
 				Debug.Log("Looking at:"+itemInfo.itemName);

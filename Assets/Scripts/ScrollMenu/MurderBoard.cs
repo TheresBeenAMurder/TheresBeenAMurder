@@ -16,10 +16,11 @@ public class MurderBoard : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "BoardPhoto")
+        if (other.gameObject.CompareTag("BoardPhoto"))
         {
             other.gameObject.transform.parent = null;
             other.gameObject.transform.localScale = new Vector3(.108f, .105f, .004f);
+            other.gameObject.GetComponent<Photo>().purgeLines();
         }
     }
 }

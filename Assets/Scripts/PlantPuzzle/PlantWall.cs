@@ -6,6 +6,8 @@ public class PlantWall : MonoBehaviour
 
     private PlantPot[] plants;
 
+    public AudioSource win;
+
     public void CheckForSolution()
     {
         // can't solve the puzzle more than once
@@ -18,7 +20,7 @@ public class PlantWall : MonoBehaviour
                     return;
                 }
             }
-            
+            win.Play();
             art.PuzzleSolve();
         }
     }

@@ -107,8 +107,9 @@ public class PhotoSpawner : MonoBehaviour {
     {
         if(activeHand != null) //first we gotta know if there's a hand in here.
         {
-            if(Gestures.IsGrabbing(_leftHand, _rightHand))
+            if(Gestures.IsGrabbing(_leftHand, _rightHand) != null)
             {
+                //Debug.Log("Grab");
                 GameObject closestPicture = null;
                
                
@@ -140,10 +141,10 @@ public class PhotoSpawner : MonoBehaviour {
 
                 } // find the closest picture
 
+                
                 isGrabbingPhoto = true;
                 spawnPhoto(closestPicture);
 
-               // Debug.Log(closestPicture.name);
             }
 
 
@@ -161,6 +162,7 @@ public class PhotoSpawner : MonoBehaviour {
 
 
         GameObject photo = Instantiate(_photoPrefab, activeHand.transform);
+        photo.transform.localPosition = Vector3.zero;
         Canvas photoCanv = photo.GetComponentInChildren<Canvas>();
         RawImage photoImg = photoCanv.GetComponentInChildren<RawImage>();
         Texture photoGrabbed = photoToSpawn.GetComponent<RawImage>().texture;
