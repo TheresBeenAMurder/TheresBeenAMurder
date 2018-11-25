@@ -33,7 +33,8 @@ public class Accusation : MonoBehaviour
         // Play player audio
         if (!audioPath.EndsWith("/"))
         {
-            yield return StartCoroutine(conversationUI.PlayAudio(playerAudio, audioPath));
+            conversationUI.PlayAudio(playerAudio, audioPath);
+            yield return new WaitForSeconds(playerAudio.clip.length);
         }
     }
 
@@ -74,7 +75,15 @@ public class Accusation : MonoBehaviour
 
             evidenceType evType = (evidenceType)Enum.Parse(typeof(evidenceType), type);
             Evidence newEvidence = new Evidence(audio, description, found);
-            evidenceMappings.Add(evType, newEvidence);
+            try
+            {
+                evidenceMappings.Add(evType, newEvidence);
+            }
+            catch (ArgumentException)
+            {
+                // Update the value that's already there
+                evidenceMappings[evType] = newEvidence;
+            }
         }
         reader.Close();
     }
@@ -93,6 +102,7 @@ public class Accusation : MonoBehaviour
             // chose to not accuse, no longer in accusation
             if (choice == 2)
             {
+                conversationUI.ClearDisplay();
                 return false;
             }
         }
@@ -104,6 +114,7 @@ public class Accusation : MonoBehaviour
                 Debug.Log("THE END GAME STATE WAS REACHED");
             }
 
+            conversationUI.ClearDisplay();
             return false;
         }
         else
@@ -144,8 +155,7 @@ public class Accusation : MonoBehaviour
         }
 
         string query = "SELECT Response, ResAudio, NotFoundAudio FROM 'Accusations' WHERE CharacterID == "
-                + characterID + " " +
-                "AND Type == " + evidenceType.ToString();
+                + characterID + " " + "AND Type == '" + evidenceType.ToString() + "'";
         IDataReader reader = dbHandler.ExecuteQuery(query);
 
         reader.Read();
@@ -154,10 +164,20 @@ public class Accusation : MonoBehaviour
         evidenceNotFoundAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
         reader.Close();
 
+        if (evidenceType == evidenceType.initial || evidenceType == evidenceType.done)
+        {
+            GiveYesNo();
+        }
+        else
+        {
+            GiveOptions();
+        }
+
         if (resAudio != "")
         {
             string audioPath = "Audio/" + audioFolder + "/" + resAudio;
-            yield return StartCoroutine(conversationUI.PlayAudio(characterAudio, audioPath));
+            conversationUI.PlayAudio(characterAudio, audioPath);
+            yield return new WaitForSeconds(characterAudio.clip.length);
         }
     }
 

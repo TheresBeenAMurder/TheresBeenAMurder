@@ -28,7 +28,7 @@ public class NPC : MonoBehaviour {
     public SoundtrackLayer soundtrackLayer;
 
     // database related
-    private DatabaseHandler dbHandler = new DatabaseHandler();
+    public DatabaseHandler dbHandler;
 
     // conversation related
     private Accusation accusation;
@@ -45,6 +45,8 @@ public class NPC : MonoBehaviour {
     // response and moves the conversation along
     private IEnumerator ChooseResponse(int choice)
     {
+        conversationUI.UpdateDisplay("" + choice);
+
         string query = "SELECT NextPromptID, End, AudioFile, RelationshipEffect" +
                 " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
         IDataReader reader = dbHandler.ExecuteQuery(query);
@@ -56,8 +58,6 @@ public class NPC : MonoBehaviour {
         int relationshipEffect = reader.GetInt32(3);
         reader.Close();
 
-        conversationUI.ClearDisplay();
-
         // Let NPC finish audio before continuing
         if (conversationAudio.isPlaying)
         {
@@ -68,7 +68,8 @@ public class NPC : MonoBehaviour {
         if (responseAudio != "")
         {
             string responseAudioSource = "Audio/Player/" + responseAudio;
-            yield return StartCoroutine(conversationUI.PlayAudio(playerAudio, responseAudioSource));
+            conversationUI.PlayAudio(playerAudio, responseAudioSource);
+            yield return new WaitForSeconds(playerAudio.clip.length);
         }
 
         UpdateRelationshipValue(relationshipEffect);
@@ -106,21 +107,21 @@ public class NPC : MonoBehaviour {
         UpdateRelationshipStatus();
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        conversationUI.ExitConversation(other, characterName);
-    }
-
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         conversationUI.PromptForConversation(other, characterName);
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        conversationUI.ExitConversation(other);
+    }
+
     public void Start()
     {
-        accusation = GetComponent<Accusation>();
-        conversationAudio = GetComponent<AudioSource>();
-        conversationUI = new ConversationUI(GetComponentInChildren<Text>());
+        accusation = gameObject.GetComponent<Accusation>();
+        conversationAudio = gameObject.GetComponent<AudioSource>();
+        conversationUI = new ConversationUI(gameObject.GetComponentInChildren<Text>());
 
         // Wouldn't normally want to reset on load, only on new game
         // This reset is for our single scene testing.
@@ -155,6 +156,10 @@ public class NPC : MonoBehaviour {
             if (isAccusing)
             {
                 isAccusing = accusation.SelectChoice(choice);
+                if (!isAccusing)
+                {
+                    conversationUI.EndConversation();
+                }
                 return;
             }
 
@@ -204,8 +209,7 @@ public class NPC : MonoBehaviour {
             relStat = relationshipStatus.like;
         }
 
-
-        switch(relStat)
+        switch (relStat)
         {
             case (relationshipStatus.hate):
                 {
@@ -228,8 +232,6 @@ public class NPC : MonoBehaviour {
                     break;
                 }
         }
-
-        
     }
 
     private void UpdateRelationshipValue(int relationshipEffect)
@@ -267,7 +269,7 @@ public class NPC : MonoBehaviour {
             if (audioFile != "")
             {
                 string promptAudioSource = "Audio/" + audioFolder + "/" + audioFile;
-                StartCoroutine(conversationUI.PlayAudio(conversationAudio, promptAudioSource));
+                conversationUI.PlayAudio(conversationAudio, promptAudioSource);
             }
         }
     }

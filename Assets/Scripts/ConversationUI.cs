@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ConversationUI : MonoBehaviour
+public class ConversationUI
 {
     private static OVRInput.Button ConversationButton = OVRInput.Button.Two;
 
     public bool inConversation = false;
 
     private Text displayBox = null;
-    private GameObject canvas = null;
     private bool playerNear = false;
 
     public ConversationUI(Text display)
@@ -41,11 +38,11 @@ public class ConversationUI : MonoBehaviour
         inConversation = false;
     }
 
-    public void ExitConversation(Collider other, string name)
+    public void ExitConversation(Collider other)
     {
-        if (inConversation && other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            displayBox.text = "";
+            ClearDisplay();
             inConversation = false;
             playerNear = false;
         }
@@ -68,17 +65,16 @@ public class ConversationUI : MonoBehaviour
         return choice;
     }
 
-    public IEnumerator PlayAudio(AudioSource source, string fullClipPath)
+    public void PlayAudio(AudioSource source, string fullClipPath)
     {
         AudioClip audio = Resources.Load<AudioClip>(fullClipPath);
         source.clip = audio;
         source.Play();
-        yield return new WaitForSeconds(audio.length + 1);
     }
 
     public void PromptForConversation(Collider other, string name)
     {
-        if (!playerNear && other.gameObject.tag == "Player")
+        if (!playerNear && !inConversation && other.gameObject.tag == "Player")
         {
             displayBox.text = "Press B to speak to " + name;
             playerNear = true;
@@ -90,9 +86,10 @@ public class ConversationUI : MonoBehaviour
         if (!inConversation && playerNear && OVRInput.GetDown(ConversationButton))
         {
             inConversation = true;
+            return true;
         }
 
-        return inConversation;
+        return false;
     }
 
     public void UpdateDisplay(string prompt)

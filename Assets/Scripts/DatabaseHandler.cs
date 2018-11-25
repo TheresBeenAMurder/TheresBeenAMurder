@@ -3,7 +3,7 @@ using System.Data;
 using UnityEngine;
 
 // Used for all necessary database interactions
-public class DatabaseHandler
+public class DatabaseHandler: MonoBehaviour
 {
     private IDbCommand command = null;
     private IDbConnection database = null;
@@ -20,6 +20,12 @@ public class DatabaseHandler
         command.CommandText = query;
         reader = command.ExecuteReader();
         return reader;
+    }
+
+    public void OnDestroy()
+    {
+        // Close the database before ending the scene completely
+        ShutDownDatabase();
     }
 
     // Sets up and shuts down the database for a non-query
