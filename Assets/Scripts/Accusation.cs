@@ -11,7 +11,7 @@ public class Accusation : MonoBehaviour
     private ConversationUI conversationUI;
     private int characterID;
     private evidenceType currentEvidence = evidenceType.initial;
-    private DatabaseHandler dbHandler;
+    public DatabaseHandler dbHandler;
     private Dictionary<evidenceType, Evidence> evidenceMappings = new Dictionary<evidenceType, Evidence>();
 
     // audio related
@@ -36,6 +36,13 @@ public class Accusation : MonoBehaviour
             conversationUI.PlayAudio(playerAudio, audioPath);
             yield return new WaitForSeconds(playerAudio.clip.length);
         }
+    }
+
+    public void FindEvidence(string evidenceType, int characterID)
+    {
+        string update = "UPDATE Evidence SET Found = 1 WHERE CharacterID ==" + 
+            characterID + " AND Type == '" + evidenceType + "'";
+        dbHandler.ExecuteNonQuery(update);
     }
 
     private void GiveOptions()
@@ -130,14 +137,12 @@ public class Accusation : MonoBehaviour
     // Initialize character-related values and begin accusation
     public IEnumerator StartAccusation(ConversationUI convo,
         int charID,
-        DatabaseHandler db,
         string charAudioFolder,
         AudioSource characterAudio,
         AudioSource playerAudio)
     {
         conversationUI = convo;
         characterID = charID;
-        dbHandler = db;
         audioFolder = charAudioFolder;
         this.characterAudio = characterAudio;
         this.playerAudio = playerAudio;

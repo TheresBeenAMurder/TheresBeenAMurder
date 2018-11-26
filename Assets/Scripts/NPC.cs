@@ -171,7 +171,6 @@ public class NPC : MonoBehaviour {
                 isAccusing = true;
                 StartCoroutine(accusation.StartAccusation(conversationUI,
                     id,
-                    dbHandler,
                     audioFolder,
                     conversationAudio,
                     playerAudio));
