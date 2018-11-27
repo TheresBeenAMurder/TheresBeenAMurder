@@ -10,9 +10,8 @@ public class FloatingText : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        //transform.localPosition += Offset; //Text is created at NPC's position. Offset brings it above their head
+        transform.localPosition += Offset; //Text is created at NPC's position. Offset brings it above their head
         
-        //Commented out because it's not setup in the game and I'm stupid.
         //in convo: go.GetComponent<TextMesh>().text = whatever string you want.
     } 
 	
