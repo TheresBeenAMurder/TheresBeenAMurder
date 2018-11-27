@@ -38,12 +38,12 @@ public class PianoCylinder : OVRGrabbable {
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        if(hand.gameObject.name == leftHand.name)
+        if(hand.gameObject.name == "LeftHandAnchor")
         {
             parent.leftHandGrabbing = this;
             grabbedByLeft = true;
         }
-        else if (hand.gameObject.name == rightHand.name)
+        else if (hand.gameObject.name == "RightHandAnchor")
         {
             grabbedByLeft = false;
             parent.rightHandGrabbing = this;
@@ -144,44 +144,7 @@ public class PianoCylinder : OVRGrabbable {
     {
         if(attached.Length > 0)
         {
-            if(attached[0] != null)
-            {
-
-                if(Vector3.Distance(attached[0].transform.position, transform.position) > maxDistanceToSeparate)
-                {
-                    if(attached[0].attached[0] != null && attached[0].attached[0].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(0, 0);
-                    }
-                    else if (attached[0].attached[1] != null && attached[0].attached[1].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(0, 1);
-
-                    }
-
-                }
-
-            }
-
-            if (attached[1] != null)
-            {
-
-                if (Vector3.Distance(attached[1].transform.position, transform.position) > maxDistanceToSeparate)
-                {
-                    if (attached[1].attached[0] != null && attached[1].attached[0].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(1, 0);
-                    }
-                    else if (attached[1].attached[1] != null && attached[1].attached[1].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(1, 1);
-
-                    }
-
-                }
-
-            }
-
+            
 
         }
     }

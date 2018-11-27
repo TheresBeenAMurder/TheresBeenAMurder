@@ -10,10 +10,9 @@ public class PlayerPiano : MonoBehaviour {
     public WallButton[] walls;
 
     public Transform leftmost;
-    bool cylinderInserted = false;
 
-    float cooldown = 1;
-    float cooldownTimer = 0;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +31,7 @@ public class PlayerPiano : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PianoCylinder") && !cylinderInserted)
+        if (other.CompareTag("PianoCylinder") && other.transform.parent == null)//only check the top one in the hierarchy. i'm brilliant
         {
 
 
@@ -43,20 +42,12 @@ public class PlayerPiano : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (cooldownTimer > 0)
-        {
-            cooldownTimer -= Time.deltaTime;
-        }
-        if(cooldownTimer <= 0 && cylinderInserted)
-        {
-            cylinderInserted = false;
-
-        }
+       
 	}
 
     void insertCylinder(PianoCylinder inserted)
     {
-        cylinderInserted = true;
+   
         //construct our string
         string s = "";
 
@@ -118,8 +109,7 @@ public class PlayerPiano : MonoBehaviour {
             NPC m = GameObject.FindObjectOfType<NPC>();
             m.UpdateNextPrompt(6);
         }
-
-        cooldownTimer = cooldown;
+        
 
     }
 }
