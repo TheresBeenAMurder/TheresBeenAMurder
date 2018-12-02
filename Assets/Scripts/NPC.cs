@@ -22,7 +22,7 @@ public class NPC : MonoBehaviour {
     private int relationshipValue;
 
     // audio related
-    private string audioFolder;
+    public string audioFolder;
     public AudioSource conversationAudio;
     public AudioSource playerAudio;
     public SoundtrackLayer soundtrackLayer;
@@ -34,7 +34,7 @@ public class NPC : MonoBehaviour {
     private Accusation accusation;
     public bool canAccuse = false;
     private int currentAccuseChoice = 0;
-    private bool isAccusing = false;
+    public bool isAccusing = false;
     private int promptID;
     private int[] responseIDs = new int[4];
 
@@ -43,9 +43,9 @@ public class NPC : MonoBehaviour {
 
     // Gets the relevant information from the database about the chosen
     // response and moves the conversation along
-    private IEnumerator ChooseResponse(int choice)
+    public void ChooseResponse(int choice)
     {
-        conversationUI.UpdateDisplay("" + choice);
+        conversationUI.ClearOptions();
 
         string query = "SELECT NextPromptID, End, AudioFile, RelationshipEffect" +
                 " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
@@ -58,18 +58,11 @@ public class NPC : MonoBehaviour {
         int relationshipEffect = reader.GetInt32(3);
         reader.Close();
 
-        // Let NPC finish audio before continuing
-        if (conversationAudio.isPlaying)
-        {
-            yield return new WaitForSeconds(conversationAudio.clip.length - conversationAudio.time);
-        }
-
         // Play the voice line for the response
         if (responseAudio != "")
         {
             string responseAudioSource = "Audio/Player/" + responseAudio;
             conversationUI.PlayAudio(playerAudio, responseAudioSource);
-            yield return new WaitForSeconds(playerAudio.clip.length);
         }
 
         UpdateRelationshipValue(relationshipEffect);
@@ -77,10 +70,18 @@ public class NPC : MonoBehaviour {
 
         if (!end)
         {
-            WritePrompt();
-            WriteResponses();
+            StartCoroutine(WritePrompt());
         }
         else
+        {
+            conversationUI.EndConversation();
+        }
+    }
+
+    public void ContinueAccusation(int choice)
+    {
+        isAccusing = accusation.SelectChoice(choice);
+        if (!isAccusing)
         {
             conversationUI.EndConversation();
         }
@@ -121,69 +122,24 @@ public class NPC : MonoBehaviour {
     {
         accusation = gameObject.GetComponent<Accusation>();
         conversationAudio = gameObject.GetComponent<AudioSource>();
-        conversationUI = new ConversationUI(gameObject.GetComponentInChildren<Text>());
+        conversationUI = gameObject.GetComponent<ConversationUI>();
 
         // Wouldn't normally want to reset on load, only on new game
         // This reset is for our single scene testing.
         dbHandler.ResetDatabaseToDefault(id);
     }
 
-    public void StartConversation()
+    public void StartAccusation()
     {
-        InitializeConversation();
-        WritePrompt();
-        WriteResponses(canAccuse);
+        isAccusing = true;
+        accusation.StartAccusation();
     }
 
-    // Handler of all input involving conversations
-    protected virtual void Update ()
+    public void StartConversation()
     {
-        if (conversationUI.StartConversationCheck())
-        {
-            StartConversation();
-        }
-
-        if (conversationUI.inConversation && Input.anyKeyDown)
-        {
-            int choice = conversationUI.GetSelection();
-
-            if (choice == -1)
-            {
-                return;
-            }
-
-            // throw this input to the accusation logic
-            if (isAccusing)
-            {
-                isAccusing = accusation.SelectChoice(choice);
-                if (!isAccusing)
-                {
-                    conversationUI.EndConversation();
-                }
-                return;
-            }
-
-            // Move into the accuse line of questioning, doesn't affect
-            // future conversations so we have to break out into different
-            // code.
-            if (!isAccusing && choice == currentAccuseChoice)
-            {
-                isAccusing = true;
-                StartCoroutine(accusation.StartAccusation(conversationUI,
-                    id,
-                    audioFolder,
-                    conversationAudio,
-                    playerAudio));
-                return;
-            }
-
-            if (responseIDs[choice - 1] == -1)
-            {
-                return;
-            }
-
-            StartCoroutine(ChooseResponse(choice));
-        }
+        conversationUI.ClearDisplay();
+        InitializeConversation();
+        StartCoroutine(WritePrompt(canAccuse));
     }
 
     public void UpdateNextPrompt(int promptID)
@@ -247,21 +203,25 @@ public class NPC : MonoBehaviour {
         dbHandler.ExecuteNonQuery(update);
     }
 
-    public void WritePrompt()
+    public IEnumerator WritePrompt(bool addAccuseOpt = false)
     {
+        if (playerAudio.isPlaying)
+        {
+            yield return new WaitForSeconds(playerAudio.clip.length - playerAudio.time);
+        }
+
         if (promptID != -1)
         {
-            string query = "SELECT DisplayText, Response1ID, Response2ID, Response3ID, Response4ID, " +
+            string query = "SELECT Response1ID, Response2ID, Response3ID, Response4ID, " +
             "AudioFile FROM Prompts WHERE ID ==" + promptID;
             IDataReader reader = dbHandler.ExecuteQuery(query);
 
             reader.Read();
-            conversationUI.UpdateDisplay(reader.GetString(0));
-            responseIDs[0] = reader.GetInt32(1);
-            responseIDs[1] = reader.GetInt32(2);
-            responseIDs[2] = reader.GetInt32(3);
-            responseIDs[3] = reader.GetInt32(4);
-            string audioFile = reader.IsDBNull(3) ? "" : reader.GetString(5);
+            responseIDs[0] = reader.GetInt32(0);
+            responseIDs[1] = reader.GetInt32(1);
+            responseIDs[2] = reader.GetInt32(2);
+            responseIDs[3] = reader.GetInt32(3);
+            string audioFile = reader.IsDBNull(4) ? "" : reader.GetString(4);
             reader.Close();
 
             // Play the voice line for the prompt
@@ -270,6 +230,8 @@ public class NPC : MonoBehaviour {
                 string promptAudioSource = "Audio/" + audioFolder + "/" + audioFile;
                 conversationUI.PlayAudio(conversationAudio, promptAudioSource);
             }
+
+            WriteResponses(addAccuseOpt);
         }
     }
 

@@ -50,6 +50,8 @@ public class DatabaseHandler: MonoBehaviour
     // In Characters:
     //      PromptID -> DefaultPromptID
     //      RelationshipValue -> DefaultRelValue
+    // In Evidence:
+    //      Found -> 0 for all character-related evidence
     public void ResetDatabaseToDefault(int id)
     {
         SetUpDatabase();
@@ -66,6 +68,9 @@ public class DatabaseHandler: MonoBehaviour
         ExecuteNonQuery(update);
 
         update = "UPDATE Characters SET RelationshipValue = " + relationshipVal + " WHERE ID ==" + id;
+        ExecuteNonQuery(update);
+
+        update = "UPDATE Evidence SET Found = 0 WHERE CharacterID == " + id;
         ExecuteNonQuery(update);
 
         ShutDownDatabase();

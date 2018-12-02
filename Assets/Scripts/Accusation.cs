@@ -10,7 +10,7 @@ public class Accusation : MonoBehaviour
 
     private ConversationUI conversationUI;
     private int characterID;
-    private evidenceType currentEvidence = evidenceType.initial;
+    private evidenceType currentEvidence;
     public DatabaseHandler dbHandler;
     private Dictionary<evidenceType, Evidence> evidenceMappings = new Dictionary<evidenceType, Evidence>();
 
@@ -20,7 +20,7 @@ public class Accusation : MonoBehaviour
     private string evidenceNotFoundAudio;
     private AudioSource playerAudio;
 
-    private IEnumerator DescribeEvidence()
+    private void DescribeEvidence()
     {
         string audioPath = "Audio/Player/" + evidenceNotFoundAudio;
 
@@ -34,15 +34,16 @@ public class Accusation : MonoBehaviour
         if (!audioPath.EndsWith("/"))
         {
             conversationUI.PlayAudio(playerAudio, audioPath);
-            yield return new WaitForSeconds(playerAudio.clip.length);
         }
     }
 
+    // Update the evidence in the database to found, the evidence is now
+    // accessible through the accusation mechanic
     public void FindEvidence(string evidenceType, int characterID)
     {
         string update = "UPDATE Evidence SET Found = 1 WHERE CharacterID ==" + 
             characterID + " AND Type == '" + evidenceType + "'";
-        dbHandler.ExecuteNonQuery(update);
+        dbHandler.OpenUpdateClose(update);
     }
 
     private void GiveOptions()
@@ -98,10 +99,7 @@ public class Accusation : MonoBehaviour
     // Returns true if still in accusation, false otherwise
     public bool SelectChoice(int choice)
     {
-        if (choice < 1 || choice > 2)
-        {
-            return true;
-        }
+        conversationUI.ClearOptions();
 
         // Options for first two are yes to accuse, no to leave conversation
         if (currentEvidence == evidenceType.initial)
@@ -126,7 +124,7 @@ public class Accusation : MonoBehaviour
         }
         else
         {
-            StartCoroutine(DescribeEvidence());
+            DescribeEvidence();
         }
 
         UpdateNextEvidence();
@@ -134,22 +132,24 @@ public class Accusation : MonoBehaviour
         return true;
     }
 
-    // Initialize character-related values and begin accusation
-    public IEnumerator StartAccusation(ConversationUI convo,
-        int charID,
-        string charAudioFolder,
-        AudioSource characterAudio,
-        AudioSource playerAudio)
+    public void Start()
     {
-        conversationUI = convo;
-        characterID = charID;
-        audioFolder = charAudioFolder;
-        this.characterAudio = characterAudio;
-        this.playerAudio = playerAudio;
+        NPC character = gameObject.GetComponent<NPC>();
+        characterID = character.id;
+        audioFolder = character.audioFolder;
+        characterAudio = character.conversationAudio;
+        playerAudio = character.playerAudio;
+        conversationUI = gameObject.GetComponent<ConversationUI>();
+    }
+
+    // Initialize character-related values and begin accusation
+    public void StartAccusation()
+    {
+        conversationUI.ClearOptions();
         currentEvidence = evidenceType.initial;
 
         InitializeEvidence();
-        yield return StartCoroutine(TalkAbout(currentEvidence));
+        StartCoroutine(TalkAbout(currentEvidence));
     }
 
     private IEnumerator TalkAbout(evidenceType evidenceType)
@@ -182,7 +182,6 @@ public class Accusation : MonoBehaviour
         {
             string audioPath = "Audio/" + audioFolder + "/" + resAudio;
             conversationUI.PlayAudio(characterAudio, audioPath);
-            yield return new WaitForSeconds(characterAudio.clip.length);
         }
     }
 
@@ -202,6 +201,9 @@ public class Accusation : MonoBehaviour
                 currentEvidence = evidenceType.opportunity;
                 break;
             case evidenceType.opportunity:
+                currentEvidence = evidenceType.alibi;
+                break;
+            case evidenceType.alibi:
                 currentEvidence = evidenceType.done;
                 break;
         }
