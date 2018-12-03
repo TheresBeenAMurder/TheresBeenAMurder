@@ -100,6 +100,12 @@ public class PianoCylinder : OVRGrabbable {
         }
 
         attached[index] = toAttach.GetComponent<PianoCylinder>();
+        if(toAttach.GetComponent<PianoCylinder>().attached.Length == 0)
+        {
+            toAttach.GetComponent<PianoCylinder>().attached = new PianoCylinder[2];
+            toAttach.GetComponent<PianoCylinder>().attached[0] = null;
+            toAttach.GetComponent<PianoCylinder>().attached[1] = null;
+        }
         toAttach.GetComponent<PianoCylinder>().attached[otherIndex] = this;
             
 
@@ -108,11 +114,12 @@ public class PianoCylinder : OVRGrabbable {
     public void RemoveAttachedCylinder(int index, int otherIndex)
     {
 
-        if (attached == null)
+        if (attached.Length == 0)
         {
             attached = new PianoCylinder[2];
 
         }
+        
         attached[index].attached[otherIndex] = null;
         attached[index] = null;
 

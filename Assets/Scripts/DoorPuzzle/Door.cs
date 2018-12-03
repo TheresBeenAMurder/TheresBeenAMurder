@@ -6,7 +6,7 @@ public class Door : MonoBehaviour
     public float moveTime = 1 / .1f;
     public float newZPos = .295f;
     public TeleportTargetHandlerPhysical teleportAllowance;
-
+    public Transform newPosTransform;
     private bool isSolved = false;
 
     public bool IsSolved()
@@ -19,9 +19,7 @@ public class Door : MonoBehaviour
         isSolved = true;
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-        Vector3 newPos = new Vector3(transform.position.x,
-            transform.position.y,
-            transform.parent.position.z - newZPos);
+        Vector3 newPos = newPosTransform.position;
         yield return StartCoroutine(Movement.SmoothMove(newPos, moveTime, rigidbody));
 
         // Switch the teleportation layer to only allow teleportation inside the room

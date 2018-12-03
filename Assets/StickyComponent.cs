@@ -32,7 +32,7 @@ public class StickyComponent : MonoBehaviour {
             else
             {
 
-                other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
+               // other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
 
             }
 
@@ -46,11 +46,11 @@ public class StickyComponent : MonoBehaviour {
 
         if(other.gameObject.CompareTag("StickyComponent"))
         {
-            if(parentManager.isRotating)
+            if(parentManager.isRotating && ((parent.attached.Length > 0 && parent.attached[TopOrBottomIndex] == null) || parent.attached.Length == 0))
              {
                 
                 parent.AttachCylinder(other.gameObject.GetComponent<StickyComponent>().parent.gameObject, TopOrBottomIndex, other.GetComponent<StickyComponent>().TopOrBottomIndex);
-                other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
+                //other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
               }
 
         }

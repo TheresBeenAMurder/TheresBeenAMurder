@@ -20,6 +20,8 @@ public class Accusation : MonoBehaviour
     private string evidenceNotFoundAudio;
     private AudioSource playerAudio;
 
+    public int gameOverScene = 2;
+
     private void DescribeEvidence()
     {
         string audioPath = "Audio/Player/" + evidenceNotFoundAudio;
@@ -116,7 +118,8 @@ public class Accusation : MonoBehaviour
             if (choice == 1)
             {
                 // END GAME STATE - AN ACCUSATION HAS BEEN MADE
-                Debug.Log("THE END GAME STATE WAS REACHED");
+                //Debug.Log("THE END GAME STATE WAS REACHED");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(gameOverScene);
             }
 
             conversationUI.ClearDisplay();

@@ -31,7 +31,7 @@ public class PlayerPiano : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PianoCylinder") && other.transform.parent == null)//only check the top one in the hierarchy. i'm brilliant
+        if (other.CompareTag("PianoCylinder") && (other.transform.parent == null || !other.transform.parent.CompareTag("PianoCylinder")))//only check the top one in the hierarchy. i'm brilliant
         {
 
 
@@ -47,7 +47,7 @@ public class PlayerPiano : MonoBehaviour {
 
     void insertCylinder(PianoCylinder inserted)
     {
-   
+        Debug.Log("Insert: " + inserted.gameObject.name);
         //construct our string
         string s = "";
 

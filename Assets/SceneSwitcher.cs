@@ -15,7 +15,12 @@ public class SceneSwitcher : MonoBehaviour {
 		
 	}
 
-    void switchScene(int nextScene)
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void switchScene(int nextScene)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);
     }
