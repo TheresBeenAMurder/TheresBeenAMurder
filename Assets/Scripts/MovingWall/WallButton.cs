@@ -45,15 +45,16 @@ public class WallButton : MonoBehaviour {
     private IEnumerator MoveWalls()
     {
         sfx.Play();
-
         // need to set walls to active to move them
         foreach (Wall wall in walls)
         {
             wall.gameObject.SetActive(true);
+           
         }
 
-        yield return new WaitForSeconds(.5f);
 
+        yield return new WaitForSeconds(.5f);
+        
         // goes up until it reaches the last wall, then goes down until
         // it reaches the last wall, rinse, repeat
         if (goingUp)
@@ -90,7 +91,7 @@ public class WallButton : MonoBehaviour {
             wall.UpdateVisibility();
         }
 
-        buttonPressed = false;
+      //  buttonPressed = false;
        // GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 

@@ -3,7 +3,7 @@ using System.Data;
 using UnityEngine;
 
 // Used for all necessary database interactions
-public class DatabaseHandler
+public class DatabaseHandler: MonoBehaviour
 {
     private IDbCommand command = null;
     private IDbConnection database = null;
@@ -20,6 +20,12 @@ public class DatabaseHandler
         command.CommandText = query;
         reader = command.ExecuteReader();
         return reader;
+    }
+
+    public void OnDestroy()
+    {
+        // Close the database before ending the scene completely
+        ShutDownDatabase();
     }
 
     // Sets up and shuts down the database for a non-query
@@ -44,6 +50,8 @@ public class DatabaseHandler
     // In Characters:
     //      PromptID -> DefaultPromptID
     //      RelationshipValue -> DefaultRelValue
+    // In Evidence:
+    //      Found -> 0 for all character-related evidence
     public void ResetDatabaseToDefault(int id)
     {
         SetUpDatabase();
@@ -60,6 +68,9 @@ public class DatabaseHandler
         ExecuteNonQuery(update);
 
         update = "UPDATE Characters SET RelationshipValue = " + relationshipVal + " WHERE ID ==" + id;
+        ExecuteNonQuery(update);
+
+        update = "UPDATE Evidence SET Found = 0 WHERE CharacterID == " + id;
         ExecuteNonQuery(update);
 
         ShutDownDatabase();

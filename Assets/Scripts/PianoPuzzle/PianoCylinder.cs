@@ -38,12 +38,12 @@ public class PianoCylinder : OVRGrabbable {
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        if(hand.gameObject.name == leftHand.name)
+        if(hand.gameObject.name == "LeftHandAnchor")
         {
             parent.leftHandGrabbing = this;
             grabbedByLeft = true;
         }
-        else if (hand.gameObject.name == rightHand.name)
+        else if (hand.gameObject.name == "RightHandAnchor")
         {
             grabbedByLeft = false;
             parent.rightHandGrabbing = this;
@@ -100,6 +100,12 @@ public class PianoCylinder : OVRGrabbable {
         }
 
         attached[index] = toAttach.GetComponent<PianoCylinder>();
+        if(toAttach.GetComponent<PianoCylinder>().attached.Length == 0)
+        {
+            toAttach.GetComponent<PianoCylinder>().attached = new PianoCylinder[2];
+            toAttach.GetComponent<PianoCylinder>().attached[0] = null;
+            toAttach.GetComponent<PianoCylinder>().attached[1] = null;
+        }
         toAttach.GetComponent<PianoCylinder>().attached[otherIndex] = this;
             
 
@@ -108,11 +114,12 @@ public class PianoCylinder : OVRGrabbable {
     public void RemoveAttachedCylinder(int index, int otherIndex)
     {
 
-        if (attached == null)
+        if (attached.Length == 0)
         {
             attached = new PianoCylinder[2];
 
         }
+        
         attached[index].attached[otherIndex] = null;
         attached[index] = null;
 
@@ -144,44 +151,7 @@ public class PianoCylinder : OVRGrabbable {
     {
         if(attached.Length > 0)
         {
-            if(attached[0] != null)
-            {
-
-                if(Vector3.Distance(attached[0].transform.position, transform.position) > maxDistanceToSeparate)
-                {
-                    if(attached[0].attached[0] != null && attached[0].attached[0].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(0, 0);
-                    }
-                    else if (attached[0].attached[1] != null && attached[0].attached[1].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(0, 1);
-
-                    }
-
-                }
-
-            }
-
-            if (attached[1] != null)
-            {
-
-                if (Vector3.Distance(attached[1].transform.position, transform.position) > maxDistanceToSeparate)
-                {
-                    if (attached[1].attached[0] != null && attached[1].attached[0].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(1, 0);
-                    }
-                    else if (attached[1].attached[1] != null && attached[1].attached[1].name == gameObject.name)
-                    {
-                        RemoveAttachedCylinder(1, 1);
-
-                    }
-
-                }
-
-            }
-
+            
 
         }
     }

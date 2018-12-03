@@ -28,6 +28,8 @@ public class Wall : MonoBehaviour {
     // call from the highest wall in the stack
     public IEnumerator MoveDown()
     {
+        Debug.Log("Trying to move down");
+
         float wallHeight = transform.position.y - wallBelow.transform.position.y;
         SetCurrentWall(false);
 

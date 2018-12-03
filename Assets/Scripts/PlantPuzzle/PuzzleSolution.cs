@@ -21,6 +21,9 @@ public class PuzzleSolution : MonoBehaviour {
         madeline.UpdateNextPrompt(12);
         madeline.canAccuse = true;
         isSolved = true;
+
+        // "Find" the motive for Madeline when the plant puzzle is solved
+        madeline.gameObject.GetComponent<Accusation>().FindEvidence("motive", madeline.id);
     }
 
     // Moves painting cover so painting is now visible

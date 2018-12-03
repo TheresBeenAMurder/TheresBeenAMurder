@@ -7,6 +7,8 @@ public class PianoCylinderManager : MonoBehaviour {
     public GameObject leftHand;
     public GameObject rightHand;
 
+    //public Material handMat;
+
     public PianoCylinder leftHandGrabbing = null;
     public PianoCylinder rightHandGrabbing = null;
 
@@ -22,60 +24,65 @@ public class PianoCylinderManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-       // prevLeftRotation = leftHand.transform.localRotation.x;
-       // prevRightRotation = rightHand.transform.localRotation.x;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-        // float currLeft = leftHand.transform.localRotation.x;
-        //float currRight = rightHand.transform.localRotation.x;
-
-        // leftDifference = currLeft - prevLeftRotation;
-        // rightDifference = currRight - prevRightRotation;
-
-
-        if (leftHandGrabbing == null || rightHandGrabbing == null)
+        if (leftHand.activeSelf == true)
         {
-
-            isRotating = false;
-
+            prevLeftRotation = leftHand.transform.rotation.x * Mathf.Rad2Deg;
         }
-        //else if(Mathf.Abs(leftDifference - rightDifference) > rotationTolerance) //then we're twisting!
-        // {
+        if (rightHand.activeSelf == true)
+        {
+            prevRightRotation = rightHand.transform.rotation.x * Mathf.Rad2Deg;
+        }
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+
+        float currLeft = prevLeftRotation;
+        float currRight = prevRightRotation;
+
+        if (leftHand.activeSelf == true)
+        {
+            currLeft = leftHand.transform.rotation.x * Mathf.Rad2Deg;
+        }
+        if (rightHand.activeSelf == true)
+        {
+            currRight = rightHand.transform.rotation.x * Mathf.Rad2Deg;
+        }
+
+        leftDifference = currLeft - prevLeftRotation;
+        rightDifference = currRight - prevRightRotation;
+
+
+        
+
+
+        if (isRotating)
+        {
+            if (leftHandGrabbing == null || rightHandGrabbing == null || Mathf.Abs(leftDifference - rightDifference) < rotationTolerance)
+            {
+                    isRotating = false;
+                
+            }
+        }
         else
         {
-            //if the cylinders we're grabbing are attached and adjacent, separate them
-            if (rightHandGrabbing.attached[0].gameObject.name == leftHandGrabbing.attached[1].gameObject.name)
-            {
-                rightHandGrabbing.RemoveAttachedCylinder(0,1);
-                leftHandGrabbing.RemoveAttachedCylinder(1,0);
-            }
-            else if (rightHandGrabbing.attached[1].gameObject.name == leftHandGrabbing.attached[0].gameObject.name)
-            {
-                rightHandGrabbing.RemoveAttachedCylinder(1,0);
-                leftHandGrabbing.RemoveAttachedCylinder(0,1);
-            }
-            else if (rightHandGrabbing.attached[1].gameObject.name == leftHandGrabbing.attached[1].gameObject.name)
-            {
-                rightHandGrabbing.RemoveAttachedCylinder(1, 1);
-                leftHandGrabbing.RemoveAttachedCylinder(1, 1);
-            }
-            else if (rightHandGrabbing.attached[0].gameObject.name == leftHandGrabbing.attached[0].gameObject.name)
-            {
-                rightHandGrabbing.RemoveAttachedCylinder(0, 0);
-                leftHandGrabbing.RemoveAttachedCylinder(0, 0);
-            }
 
-
+            if (Mathf.Abs(leftDifference - rightDifference) >= rotationTolerance)
+            {
+                if (leftHandGrabbing != null && rightHandGrabbing != null)
+                {
+                   
+                        isRotating = true;
+                   
+                }
+            }
         }
+        
 
-       // }
 
-
-      //  prevLeftRotation = currLeft;
-       // prevRightRotation = currRight;
+        prevLeftRotation = currLeft;
+        prevRightRotation = currRight;
 
 
     }
