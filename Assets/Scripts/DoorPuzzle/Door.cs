@@ -8,6 +8,7 @@ public class Door : MonoBehaviour
     public TeleportTargetHandlerPhysical teleportAllowance;
     public Transform newPosTransform;
     private bool isSolved = false;
+    
 
     public bool IsSolved()
     {

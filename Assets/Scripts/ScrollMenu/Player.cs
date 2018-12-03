@@ -12,8 +12,8 @@ public class Player : MonoBehaviour {
     public GameObject polaroid;
     public OVRInput.Button polaroidToggleButton;
 
-    public TakePicture camera;
-    public OVRInput.Button takePolaroidButton;
+  //  public TakePicture camera;
+    //public OVRInput.Button takePolaroidButton;
 
 
     private IEnumerator CreateMurderBoard()
@@ -92,11 +92,11 @@ public class Player : MonoBehaviour {
         }
 
 
-        if (OVRInput.GetDown(takePolaroidButton))
-        {
+        //if (OVRInput.GetDown(takePolaroidButton))
+        //{
 
-            camera.takePic();
+        //    camera.takePic();
 
-        }
+        //}
     }
 }
