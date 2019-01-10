@@ -185,6 +185,9 @@ public class Accusation : MonoBehaviour
         {
             string audioPath = "Audio/" + audioFolder + "/" + resAudio;
             conversationUI.PlayAudio(characterAudio, audioPath);
+
+            // Let audio play all the way through
+            yield return new WaitForSeconds(characterAudio.clip.length);
         }
     }
 

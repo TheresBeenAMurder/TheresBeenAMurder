@@ -229,6 +229,9 @@ public class NPC : MonoBehaviour {
             {
                 string promptAudioSource = "Audio/" + audioFolder + "/" + audioFile;
                 conversationUI.PlayAudio(conversationAudio, promptAudioSource);
+
+                // Make sure the voice line plays all the way through
+                yield return new WaitForSeconds(conversationAudio.clip.length);
             }
 
             WriteResponses(addAccuseOpt);
