@@ -19,12 +19,12 @@ public class Door : MonoBehaviour
     {
         isSolved = true;
 
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
-        Vector3 newPos = newPosTransform.position;
-        yield return StartCoroutine(Movement.SmoothMove(newPos, moveTime, rigidbody));
-
         // Switch the teleportation layer to only allow teleportation inside the room
         // once the door puzzle is solved.
         teleportAllowance.AimCollisionLayerMask = LayerMask.GetMask("Floor");
+
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        Vector3 newPos = newPosTransform.position;
+        yield return StartCoroutine(Movement.SmoothMove(newPos, moveTime, rigidbody));
     }
 }
