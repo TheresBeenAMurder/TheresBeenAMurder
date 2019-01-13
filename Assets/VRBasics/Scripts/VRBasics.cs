@@ -52,17 +52,21 @@ public class VRBasics : MonoBehaviour {
 
 			//deactivates the uneeded camera rig
 			//both must be active in the editor to use this
-			if (model.IndexOf ("Rift") >= 0) {
-				//VRSettings.LoadDeviceByName ("Oculus");
-				VRBasics.Instance.vrType = VRBasics.VRTypes.OVR;
-				GameObject.Find ("SteamVRCameraRig [VRBasics]").SetActive (false);
-				GameObject.Find ("OVRCameraRig [VRBasics]").SetActive (true);
-			} else {
-				//VRSettings.LoadDeviceByName ("OpenVR");
-				VRBasics.Instance.vrType = VRBasics.VRTypes.SteamVR;
-				GameObject.Find ("SteamVRCameraRig [VRBasics]").SetActive (true);
-				GameObject.Find ("OVRCameraRig [VRBasics]").SetActive (false);
-			}
+			////if (model.IndexOf ("Rift") >= 0) {
+			////	//VRSettings.LoadDeviceByName ("Oculus");
+			////	VRBasics.Instance.vrType = VRBasics.VRTypes.OVR;
+			////	GameObject.Find ("SteamVRCameraRig [VRBasics]").SetActive (false);
+			////	GameObject.Find ("OVRCameraRig [VRBasics]").SetActive (true);
+			////} else {
+			////	//VRSettings.LoadDeviceByName ("OpenVR");
+			////	VRBasics.Instance.vrType = VRBasics.VRTypes.SteamVR;
+			////	GameObject.Find ("SteamVRCameraRig [VRBasics]").SetActive (true);
+			////	GameObject.Find ("OVRCameraRig [VRBasics]").SetActive (false);
+			////}
+            ///
+            // I commented this out because we only ever have 1 camera rig in the scene
+            // at any given time, and this block of code kept throwing errors when it couldn't
+            // find the "second" camera rig. - Samara
 		}
 	}
 

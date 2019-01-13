@@ -5,6 +5,7 @@ public class Sensor : MonoBehaviour
     public Material correctColor;
     public int correctKeyID;
     public Material incorrectColor;
+    public Lever puzzleSolutionLever;
 
     private Key currentKey;
     private Material originalColor;
@@ -36,6 +37,7 @@ public class Sensor : MonoBehaviour
             {
                 //  PUZZLE SOLVED HERE, DO THE OTHER STUFF
                 ChangeColor(correctColor);
+                puzzleSolutionLever.SetSpring(false);
             }
             else
             {
