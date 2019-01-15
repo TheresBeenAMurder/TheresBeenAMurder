@@ -8,6 +8,7 @@ public class CenterFrame : MonoBehaviour {
 
     public float lowFreq;
     public float highFreq;
+    
 
     public float range;
 
@@ -25,6 +26,8 @@ public class CenterFrame : MonoBehaviour {
 	void Start () {
         StartCoroutine("Vibrate");
         on = false;
+        
+
 	}
 	
     void Vibrate()
@@ -51,6 +54,8 @@ public class CenterFrame : MonoBehaviour {
         }
 
     }
+
+    
     
 
 	// Update is called once per frame
@@ -71,18 +76,28 @@ public class CenterFrame : MonoBehaviour {
         else if (!isPaused && inRange)
         {
             //calculate the distance & set time accordingly
+            //should we base it on the closest hand or the eaverage of the two? we're going to stick with the closest hand for now n can change it later
+            float sendTime = (Vector3.Distance(transform.position, leftHand.transform.position));
+            if(Vector3.Distance(transform.position, rightHand.transform.position) < sendTime)
+            {
+                sendTime = (Vector3.Distance(transform.position, rightHand.transform.position));
+            }
 
+            //calculate the percentage, then multiply by the difference between highest and lowest frequency, then add to the lowest frequency
 
+            sendTime = range / sendTime;
 
+            float difference = highFreq - lowFreq;
+
+            sendTime *= difference;
+            sendTime += lowFreq;
+
+            sendTime = 1 / sendTime;
+
+            time = sendTime;
 
         }
 
 	}
-
-    void pulseNearby()
-    {
-
-
-
-    }
+    
 }
