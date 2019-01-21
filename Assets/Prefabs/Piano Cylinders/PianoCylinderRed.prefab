@@ -156,7 +156,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1929841782885068}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.1584, y: 1.1749, z: 0.8946}
+  m_LocalPosition: {x: -6.897, y: 1.128, z: 0.681}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4342965171024784}
@@ -245,8 +245,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.07425165, y: 0.023906708, z: 0.06100075}
-  m_Center: {x: -0.0024468899, y: -0.011014104, z: 0}
+  m_Size: {x: 0.100838184, y: 0.035865784, z: 0.09365004}
+  m_Center: {x: -0.0010912418, y: -0.005034566, z: -0.0018650591}
 --- !u!65 &65282173754888376
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -257,8 +257,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.06282921, y: 0.020452539, z: 0.05634927}
-  m_Center: {x: 0, y: 0.016885778, z: 0}
+  m_Size: {x: 0.10512648, y: 0.031857006, z: 0.096625894}
+  m_Center: {x: -0.00028799105, y: 0.011183734, z: 0.00042782357}
 --- !u!114 &114152655567408454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,10 +270,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 098fd7a7efd15fb448cf167a10b46ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TopOrBottomIndex: 1
-  parentManager: {fileID: 0}
   parent: {fileID: 114357079548043356}
+  parentManager: {fileID: 0}
   snapPoint: {fileID: 4146315098151694}
+  tolerance: 0.1
+  topOrBottomIndex: 1
+  attachedCyl: {fileID: 0}
+  attachedIndex: 0
 --- !u!114 &114357079548043356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -282,7 +285,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1929841782885068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e5206c3d51b7f2419f2e627ab9515ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 22fbf00577311984d96bea2443cc3f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_allowOffhandGrab: 1
@@ -290,14 +293,13 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
-  color: 1
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
-  parent: {fileID: 0}
-  stickyTop: {fileID: 1105299496993906}
-  stickyBottom: {fileID: 1153078123325502}
   attached: []
+  color: 1
+  grabbedByLeft: 0
   maxDistanceToSeparate: 0
+  parent: {fileID: 0}
+  stickyBottom: {fileID: 1153078123325502}
+  stickyTop: {fileID: 1105299496993906}
 --- !u!114 &114894765436539000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,7 +311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 098fd7a7efd15fb448cf167a10b46ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TopOrBottomIndex: 0
-  parentManager: {fileID: 0}
   parent: {fileID: 114357079548043356}
+  parentManager: {fileID: 0}
   snapPoint: {fileID: 4157950745624592}
+  tolerance: 0.1
+  topOrBottomIndex: 0
+  attachedCyl: {fileID: 0}
+  attachedIndex: 0
