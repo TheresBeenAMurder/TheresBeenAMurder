@@ -15,12 +15,16 @@ public class PianoCylinder : OVRGrabbable
     public PianoCylinder[] attached;
     public int color;
     public bool grabbedByLeft;
-    public GameObject leftHand;
+   // public GameObject leftHand;
     public float maxDistanceToSeparate;
     public PianoCylinderManager parent;
-    public GameObject rightHand;
+  //  public GameObject rightHand;
     public GameObject stickyBottom;
     public GameObject stickyTop;
+    private ConfigurableJoint [] childJoints;
+    
+
+    
 
     public void AttachCylinder(GameObject toAttach, int index, int otherIndex)
     {
@@ -70,6 +74,8 @@ public class PianoCylinder : OVRGrabbable
             if (attached[index] != null)
             {
                 attached[index].transform.parent = gameObject.transform;
+                childJoints = new ConfigurableJoint[2];
+
                 if (attached[index].attached[0] != null && attached[index].attached[0].name == gameObject.name)
                 {
                     attached[index].GrabChild(1);
@@ -83,12 +89,14 @@ public class PianoCylinder : OVRGrabbable
         }
     }
 
+    
     // Notifies the object that it has been released.
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         foreach(PianoCylinder child in gameObject.GetComponentsInChildren<PianoCylinder>())
         {
             child.gameObject.transform.parent = null;
+            
         }
 
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
@@ -114,7 +122,7 @@ public class PianoCylinder : OVRGrabbable
         {
             attached = new PianoCylinder[2];
         }
-        
+
         attached[index].attached[otherIndex] = null;
         attached[index] = null;
     }
