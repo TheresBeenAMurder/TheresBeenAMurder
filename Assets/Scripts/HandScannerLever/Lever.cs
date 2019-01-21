@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour
 {
+    public ArchiveReceiver archiveReceiver;
     public LightBoard lightBoard;
 
     private VRBasics_Hinge leverHinge;
@@ -18,6 +19,7 @@ public class Lever : MonoBehaviour
     private void SolvePuzzle()
     {
         lightBoard.TurnOn();
+        archiveReceiver.Reveal();
 
         // Makes the lever auto bounce back to the "solved" position
         leverHinge.useSpringToMin = true;
