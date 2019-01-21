@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
+// Generic Physical Sensor class, use in combo with Key.cs
 public class Sensor : MonoBehaviour
 {
     public Material correctColor;
-    public int correctKeyID;
+    public int[] correctKeyIDs;
     public Material incorrectColor;
-    public Lever puzzleSolutionLever;
+    public Puzzle puzzle;
 
     private Key currentKey;
     private Material originalColor;
@@ -33,11 +35,11 @@ public class Sensor : MonoBehaviour
         if (key != null && currentKey == null)
         {
             currentKey = key;
-            if (key.ID == correctKeyID)
+            if (key.PuzzleType() == puzzle && correctKeyIDs.Contains(key.ID))
             {
-                //  PUZZLE SOLVED HERE, DO THE OTHER STUFF
+                //  PUZZLE SOLVED HERE
                 ChangeColor(correctColor);
-                puzzleSolutionLever.SetSpring(false);
+                key.Solve();
             }
             else
             {
