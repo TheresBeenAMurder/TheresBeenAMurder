@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class PianoCylinder : OVRGrabbable
 {
@@ -28,13 +29,12 @@ public class PianoCylinder : OVRGrabbable
 
     public void AttachCylinder(GameObject toAttach, int index, int otherIndex)
     {
-        if (attached.Length == 0)
+        if (attached == null || attached.Length == 0)
         {
             attached = new PianoCylinder[2];
             attached[0] = null;
             attached[1] = null;
         }
-
         attached[index] = toAttach.GetComponent<PianoCylinder>();
         if (toAttach.GetComponent<PianoCylinder>().attached.Length == 0)
         {
@@ -74,29 +74,111 @@ public class PianoCylinder : OVRGrabbable
             if (attached[index] != null)
             {
                 attached[index].transform.parent = gameObject.transform;
-                childJoints = new ConfigurableJoint[2];
-
+                if (childJoints == null)
+                {
+                    childJoints = new ConfigurableJoint[2];
+                }
+                childJoints[index] = gameObject.AddComponent<ConfigurableJoint>();
+                configureJoint(index);
                 if (attached[index].attached[0] != null && attached[index].attached[0].name == gameObject.name)
                 {
                     attached[index].GrabChild(1);
+                    
                 }
                 else if (attached[index].attached[1] != null && attached[index].attached[1].name == gameObject.name)
                 {
                     attached[index].GrabChild(0);
+                    
                 }
 
             }
         }
     }
 
+    public Rigidbody objectRigidbody()
+    {
+        return GetComponent<Rigidbody>();
+    }
+
+    void configureJoint(int index)
+    {
+        ConfigurableJoint toConfigure = childJoints[index];
+
+        toConfigure.connectedBody = attached[index].objectRigidbody();
+
+        toConfigure.xMotion = ConfigurableJointMotion.Locked;
+        toConfigure.zMotion = ConfigurableJointMotion.Locked;
+        toConfigure.yMotion = ConfigurableJointMotion.Locked;
+
+        toConfigure.angularXMotion = ConfigurableJointMotion.Locked;
+        toConfigure.angularYMotion = ConfigurableJointMotion.Free;
+        toConfigure.angularZMotion = ConfigurableJointMotion.Locked;
+        
+
+    }
     
     // Notifies the object that it has been released.
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
-        foreach(PianoCylinder child in gameObject.GetComponentsInChildren<PianoCylinder>())
+
+
+
+        bool snapped = false;
+        List<string> childNames = new List<string>();
+        childNames.Clear();
+        foreach (PianoCylinder childCyl in GetComponentsInChildren<PianoCylinder>())
+        {
+            childNames.Add(childCyl.gameObject.name);
+        }
+        if (attached != null && attached.Length > 0)
+        {
+            if (attached[0] != null)
+            {
+                if (!childNames.Contains(attached[0].gameObject.name))
+                {
+                    //then we gotta snap to it
+                    if (attached[0].attached[0] != null && attached[0].attached[0].gameObject.name == gameObject.name)
+                    {
+                        transform.position = attached[0].stickyBottom.GetComponent<StickyComponent>().snapPoint.transform.position;
+                        transform.rotation = attached[0].stickyBottom.GetComponent<StickyComponent>().snapPoint.transform.rotation;
+                        snapped = true;
+                    }
+                    else if (attached[0].attached[1] != null && attached[0].attached[1].gameObject.name == gameObject.name)
+                    {
+                        transform.position = attached[0].stickyTop.GetComponent<StickyComponent>().snapPoint.transform.position;
+                        transform.rotation = attached[0].stickyTop.GetComponent<StickyComponent>().snapPoint.transform.rotation;
+                        snapped = true;
+                    }
+                }
+
+            }
+            if (attached[1] != null && !snapped)
+            {
+                if (!childNames.Contains(attached[1].gameObject.name))
+                {
+                    //then we gotta snap to it
+                    if (attached[1].attached[0] != null && attached[1].attached[0].gameObject.name == gameObject.name)
+                    {
+                        transform.position = attached[1].stickyBottom.GetComponent<StickyComponent>().snapPoint.transform.position;
+                        transform.rotation = attached[1].stickyBottom.GetComponent<StickyComponent>().snapPoint.transform.rotation;
+                        snapped = true;
+                    }
+                    else if (attached[1].attached[1] != null && attached[1].attached[1].gameObject.name == gameObject.name)
+                    {
+                        transform.position = attached[1].stickyTop.GetComponent<StickyComponent>().snapPoint.transform.position;
+                        transform.rotation = attached[1].stickyTop.GetComponent<StickyComponent>().snapPoint.transform.rotation;
+                        snapped = true;
+                    }
+                }
+
+            }
+        }
+
+        clearJoints();
+        foreach (PianoCylinder child in gameObject.GetComponentsInChildren<PianoCylinder>())
         {
             child.gameObject.transform.parent = null;
-            
+            child.clearJoints();
         }
 
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
@@ -114,13 +196,56 @@ public class PianoCylinder : OVRGrabbable
         {
             parent.rightHandGrabbing = null;
         }
-    }  
+
+
+        
+
+    } 
+    
+    public void snapAttached(int index)
+    {
+        if(index == 0)
+        {
+            attached[index].transform.position = stickyBottom.GetComponent<StickyComponent>().snapPoint.position;
+        }
+        if (index == 1)
+        {
+            attached[index].transform.position = stickyTop.GetComponent<StickyComponent>().snapPoint.position;
+        }
+    }
+
+    public void clearJoints()
+    {
+
+        if (childJoints != null)
+        {
+            if (childJoints[0] != null)
+            {
+                Destroy(childJoints[0]);
+            }
+
+
+            if (childJoints[1] != null)
+            {
+                Destroy(childJoints[1]);
+            }
+        }
+
+
+    }
 
     public void RemoveAttachedCylinder(int index, int otherIndex)
     {
+        Debug.Log("Removing " + index + " from " + gameObject.name);
+
         if (attached.Length == 0)
         {
             attached = new PianoCylinder[2];
+        }
+
+        if(childJoints != null && childJoints[index] != null)
+        {
+            Destroy(childJoints[index]);
         }
 
         attached[index].attached[otherIndex] = null;

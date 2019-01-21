@@ -18,7 +18,7 @@ public class StickyComponent : MonoBehaviour
             }
             else if(parent.attached[topOrBottomIndex] != null)
             {
-                other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
+             //   other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
             }
         }
     }
