@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonPanel : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ButtonPanel : MonoBehaviour
     private Lights lights;
     private bool loggingChoice = false;
     private int[] playerChoices = new int[SOLUTIONLENGTH];
+
+    public Text feedback;
 
     // Figures out what color light to shine based on player's choice
     private Lights.LightOptions DetermineLightColor()
@@ -90,7 +93,7 @@ public class ButtonPanel : MonoBehaviour
         currentChoiceNum = 0;
         
         lights.ResetLights();
-
+        feedback.text = "";
         // Sets all values in playerChoices array to 0
         Array.Clear(playerChoices, 0, SOLUTIONLENGTH);
     }

@@ -22,7 +22,7 @@ public class PianoCylinder : OVRGrabbable
   //  public GameObject rightHand;
     public GameObject stickyBottom;
     public GameObject stickyTop;
-    private ConfigurableJoint [] childJoints;
+  //  private ConfigurableJoint [] childJoints;
     
 
     
@@ -74,12 +74,7 @@ public class PianoCylinder : OVRGrabbable
             if (attached[index] != null)
             {
                 attached[index].transform.parent = gameObject.transform;
-                if (childJoints == null)
-                {
-                    childJoints = new ConfigurableJoint[2];
-                }
-                childJoints[index] = gameObject.AddComponent<ConfigurableJoint>();
-                configureJoint(index);
+               
                 if (attached[index].attached[0] != null && attached[index].attached[0].name == gameObject.name)
                 {
                     attached[index].GrabChild(1);
@@ -100,22 +95,6 @@ public class PianoCylinder : OVRGrabbable
         return GetComponent<Rigidbody>();
     }
 
-    void configureJoint(int index)
-    {
-        ConfigurableJoint toConfigure = childJoints[index];
-
-        toConfigure.connectedBody = attached[index].objectRigidbody();
-
-        toConfigure.xMotion = ConfigurableJointMotion.Locked;
-        toConfigure.zMotion = ConfigurableJointMotion.Locked;
-        toConfigure.yMotion = ConfigurableJointMotion.Locked;
-
-        toConfigure.angularXMotion = ConfigurableJointMotion.Locked;
-        toConfigure.angularYMotion = ConfigurableJointMotion.Free;
-        toConfigure.angularZMotion = ConfigurableJointMotion.Locked;
-        
-
-    }
     
     // Notifies the object that it has been released.
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
@@ -174,11 +153,11 @@ public class PianoCylinder : OVRGrabbable
             }
         }
 
-        clearJoints();
+        //clearJoints();
         foreach (PianoCylinder child in gameObject.GetComponentsInChildren<PianoCylinder>())
         {
             child.gameObject.transform.parent = null;
-            child.clearJoints();
+            //child.clearJoints();
         }
 
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
@@ -214,25 +193,8 @@ public class PianoCylinder : OVRGrabbable
         }
     }
 
-    public void clearJoints()
-    {
-
-        if (childJoints != null)
-        {
-            if (childJoints[0] != null)
-            {
-                Destroy(childJoints[0]);
-            }
-
-
-            if (childJoints[1] != null)
-            {
-                Destroy(childJoints[1]);
-            }
-        }
-
-
-    }
+    
+    
 
     public void RemoveAttachedCylinder(int index, int otherIndex)
     {
@@ -243,10 +205,6 @@ public class PianoCylinder : OVRGrabbable
             attached = new PianoCylinder[2];
         }
 
-        if(childJoints != null && childJoints[index] != null)
-        {
-            Destroy(childJoints[index]);
-        }
 
         attached[index].attached[otherIndex] = null;
         attached[index] = null;

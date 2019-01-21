@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoorButton : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class DoorButton : MonoBehaviour
     private Material defaultMaterial;
     private bool isPressed;
     private ButtonPanel panel;
+
+    public Text feedback;
 
     public void OnTriggerEnter(Collider other)
     {
@@ -23,11 +26,12 @@ public class DoorButton : MonoBehaviour
     public IEnumerator PressButton()
     {
         Renderer renderer = GetComponent<Renderer>();
-
+        feedback.text += id.ToString();
         // "Press" the button
         isPressed = true;
         renderer.material = pressedMaterial;
         yield return (StartCoroutine(panel.LogChoice(id)));
+        
 
         // button is no longer pressed
         isPressed = false;

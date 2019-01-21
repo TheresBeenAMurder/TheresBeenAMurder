@@ -18,17 +18,17 @@ public class StickyComponent : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //if (other.gameObject.CompareTag("StickyComponent"))
-        //{
-        //    if (parentManager.isRotating && parent.attached != null && parent.attached.Length > 0 && parent.attached[topOrBottomIndex] != null)
-        //    {
-        //        parent.RemoveAttachedCylinder(topOrBottomIndex, other.GetComponent<StickyComponent>().topOrBottomIndex);
-        //    }
-        //    else if(parent.attached[topOrBottomIndex] != null)
-        //    {
-        //     //   other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
-        //    }
-        //}
+        if (other.gameObject.CompareTag("StickyComponent"))
+        {
+            if (parentManager.isRotating && parent.attached != null && parent.attached.Length > 0 && parent.attached[topOrBottomIndex] != null)
+            {
+                parent.RemoveAttachedCylinder(topOrBottomIndex, other.GetComponent<StickyComponent>().topOrBottomIndex);
+            }
+            else if (parent.attached[topOrBottomIndex] != null)
+            {
+                //   other.gameObject.GetComponent<StickyComponent>().parent.transform.position = snapPoint.position;
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -50,16 +50,14 @@ public class StickyComponent : MonoBehaviour
 
     private void Update()
     {
-        if (attachedCyl != null)
-        {
-
-            if((Vector3.Distance(transform.position, attachedCyl.transform.position) > tolerance) && parentManager.isRotating)
-            {
-                attachedCyl = null;
-                parent.RemoveAttachedCylinder(topOrBottomIndex, attachedIndex);
+        //if (attachedCyl != null)
+        //{
+        //    if((Vector3.Distance(transform.position, attachedCyl.transform.position) > tolerance) && parentManager.isRotating)
+        //    {
+        //        attachedCyl = null;
+        //        parent.RemoveAttachedCylinder(topOrBottomIndex, attachedIndex);
                 
-            }
-
-        }
+        //    }
+        //}
     }
 }
