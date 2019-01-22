@@ -8,12 +8,18 @@ public class PlayerPiano : MonoBehaviour
     public WallButton[] walls;
     public Transform snapPoint;
 
+   
+
     void snapCylinder(GameObject insertedCyl)
     {
 
-        insertedCyl.GetComponent<OVRGrabbable>().GrabEnd(Vector3.zero, Vector3.zero);
-        insertedCyl.transform.parent = transform;
-        insertedCyl.transform.rotation = Quaternion.Euler(0, transform.rotation.y, 90);
+        //insertedCyl.GetComponent<OVRGrabbable>().GrabEnd(Vector3.zero, Vector3.zero);
+       // insertedCyl.transform.parent = transform;
+        
+       // insertedCyl.transform.rotation = Quaternion.Euler(0, transform.rotation.y, 90);
+
+
+        
 
     }
 

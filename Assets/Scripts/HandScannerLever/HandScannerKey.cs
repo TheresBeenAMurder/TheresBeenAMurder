@@ -3,7 +3,6 @@
 public class HandScannerKey : Key
 {
     public Lever lever;
-    public LightBoard lightBoard;
 
     private bool solved;
 
@@ -16,8 +15,6 @@ public class HandScannerKey : Key
     {
         if (!solved)
         {
-            lightBoard.TurnOn();
-
             // Allow the lever to be moved
             lever.SetSpring(false);
             solved = true;

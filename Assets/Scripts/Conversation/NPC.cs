@@ -21,7 +21,9 @@ public class NPC : MonoBehaviour
     private int relationshipValue;
 
     // audio related
+    [HideInInspector]
     public string audioFolder;
+
     public AudioSource conversationAudio;
     public AudioSource playerAudio;
     public SoundtrackLayer soundtrackLayer;
@@ -104,7 +106,7 @@ public class NPC : MonoBehaviour
         likeThreshold = reader.GetInt32(5);
         reader.Close();
 
-        UpdateRelationshipStatus();
+        //UpdateRelationshipStatus();
     }
 
     private void OnTriggerEnter(Collider other)

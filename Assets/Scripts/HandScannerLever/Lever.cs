@@ -5,7 +5,7 @@ using UnityEngine;
 public class Lever : MonoBehaviour
 {
     public ArchiveReceiver archiveReceiver;
-   // public LightBoard lightBoard;
+    public LightBoard lightBoard;
 
     private VRBasics_Hinge leverHinge;
     private bool solved = false;
@@ -13,16 +13,17 @@ public class Lever : MonoBehaviour
     // Interface to set spring of lever on/off
     public void SetSpring(bool on)
     {
-        leverHinge.useSpringToMax = on;
+        leverHinge.useSpringToMin = on;
     }
 
     private void SolvePuzzle()
     {
-        //lightBoard.TurnOn();
-        archiveReceiver.Reveal();
+        lightBoard.TurnOn();
 
         // Makes the lever auto bounce back to the "solved" position
-        leverHinge.useSpringToMin = true;
+        leverHinge.useSpringToMax = true;
+
+        archiveReceiver.Reveal();
 
         solved = true;
     }
@@ -36,9 +37,9 @@ public class Lever : MonoBehaviour
     {
         if (!solved)
         {
-            bool withinSolveRange = leverHinge.percentage <= .1;
+            bool withinSolveRange = leverHinge.percentage >= .9;
 
-            if (!leverHinge.useSpringToMax && withinSolveRange)
+            if (!leverHinge.useSpringToMin && withinSolveRange)
             {
                 SolvePuzzle();
             }
