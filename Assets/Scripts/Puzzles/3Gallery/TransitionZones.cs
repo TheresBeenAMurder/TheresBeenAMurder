@@ -13,8 +13,8 @@ public class TransitionZones : MonoBehaviour {
     {
       if(other.CompareTag("GhostHand"))
         {
-
-            other.GetComponent<GhostHand>().isTransition = true;
+            other.GetComponent<GhostHand>().SwapDirection();
+            // other.GetComponent<GhostHand>().isTransition = true;
 
         }
     }
@@ -23,8 +23,7 @@ public class TransitionZones : MonoBehaviour {
     {
         if (other.CompareTag("GhostHand"))
         {
-
-            other.GetComponent<GhostHand>().isTransition = false;
+            
 
         }
     }

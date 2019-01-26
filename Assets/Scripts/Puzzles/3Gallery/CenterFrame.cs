@@ -8,7 +8,10 @@ public class CenterFrame : MonoBehaviour {
 
     public float lowFreq;
     public float highFreq;
-    
+
+    public GameObject leftGhost;
+    public GameObject rightGhost;
+    bool ghost = false;
 
     public float range;
 
@@ -58,10 +61,33 @@ public class CenterFrame : MonoBehaviour {
     {
         isGrabbing = true;
     }
-    
 
-	// Update is called once per frame
-	void Update () {
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player") && !ghost)
+        {
+
+            isPaused = true;
+            ghost = true;
+            if(other.name.Contains("Left"))
+            {
+                leftGhost.SetActive(true);
+                leftGhost.GetComponent<MeshFilter>().mesh = GameObject.Find("hand_left_renderPart_0").GetComponent<SkinnedMeshRenderer>().sharedMesh;
+                leftGhost.transform.position = new Vector3(leftGhost.transform.position.x, other.transform.position.y, leftGhost.transform.position.z);
+            }
+            else if (other.name.Contains("Right"))
+            {
+                rightGhost.SetActive(true);
+
+                rightGhost.GetComponent<MeshFilter>().mesh = GameObject.Find("hand_right_renderPart_0").GetComponent<SkinnedMeshRenderer>().sharedMesh;
+                rightGhost.transform.position = new Vector3(rightGhost.transform.position.x, other.transform.position.y, rightGhost.transform.position.z);
+            }
+        }
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (!end)
         {
             if (image.activeSelf && !isGrabbing)
@@ -83,7 +109,7 @@ public class CenterFrame : MonoBehaviour {
                     inRange = ((Vector3.Distance(transform.position, leftHand.transform.position) <= range) || (Vector3.Distance(transform.position, rightHand.transform.position) <= range));
                 }
 
-                if (isPaused && inRange)
+                if (isPaused && inRange && !ghost)
                 {
                     isPaused = false;
                     //calculate the distance & set time accordingly

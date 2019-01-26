@@ -19,7 +19,7 @@ public class GalleryDisplay : MonoBehaviour {
         }
 	}
 
-    void activateImages()
+    public void activateImages()
     {
 
         foreach(GameObject image in images)

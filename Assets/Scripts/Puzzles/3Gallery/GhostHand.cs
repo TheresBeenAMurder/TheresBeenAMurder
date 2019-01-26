@@ -21,56 +21,59 @@ public class GhostHand : MonoBehaviour {
     private float yDiff;
 
     public bool isVertical = true;
-    public bool isTransition = false;
+
+    public Transform startPos;
 
 	// Use this for initialization
 	void Start () {
-        prevY = parentHand.transform.position.y;
-        prevX = parentHand.transform.position.x;
+        prevY = parentHand.transform.localPosition.y;
+        prevX = parentHand.transform.localPosition.x;
+
+//        isVertical = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float currentY = parentHand.transform.position.y;
-        float currentX = parentHand.transform.position.x;
+        float currentY = parentHand.transform.localPosition.y;
+        float currentX = parentHand.transform.localPosition.x;
 
         xDiff = currentX - prevX;
         yDiff = currentY - prevY;
 
         prevX = currentX;
         prevY = currentY;
+        
 
-
-        if (!isVertical || isTransition)
+        if (!isVertical)
         {
-            if (transform.position.x + xDiff * multiplyFactor <= maxX && transform.position.x + xDiff * multiplyFactor >= minX)
+            if (transform.localPosition.x + xDiff * multiplyFactor <= maxX && transform.localPosition.x + xDiff * multiplyFactor >= minX)
             {
-                transform.position += new Vector3(transform.position.x + xDiff * multiplyFactor, transform.position.y, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x + xDiff * multiplyFactor, transform.localPosition.y, transform.localPosition.z);
             }
-            else if (transform.position.x + xDiff * multiplyFactor > maxX)
+            else if (transform.localPosition.x + xDiff * multiplyFactor > maxX)
             {
-                transform.position += new Vector3(maxX, transform.position.y, transform.position.z);
+                transform.localPosition = new Vector3(maxX, transform.localPosition.y, transform.localPosition.z);
             }
-            else if (transform.position.x + xDiff * multiplyFactor < minX)
+            else if (transform.localPosition.x + xDiff * multiplyFactor < minX)
             {
-                transform.position += new Vector3(minX, transform.position.y, transform.position.z);
+                transform.localPosition = new Vector3(minX, transform.localPosition.y, transform.localPosition.z);
             }
 
         }
-        if(isVertical || isTransition)
+        if(isVertical)
         {
 
-            if (transform.position.y + yDiff * multiplyFactor <= maxY && transform.position.y + yDiff * multiplyFactor >= minY)
+            if (transform.localPosition.y + yDiff * multiplyFactor <= maxY && transform.localPosition.y + yDiff * multiplyFactor >= minY)
             {
-                transform.position += new Vector3(transform.position.x, transform.position.y + yDiff *multiplyFactor, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yDiff *multiplyFactor, transform.localPosition.z);
             }
-            else if (transform.position.y + yDiff * multiplyFactor > maxY)
+            else if (transform.localPosition.y + yDiff * multiplyFactor > maxY)
             {
-                transform.position += new Vector3(transform.position.x, maxY, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, maxY, transform.localPosition.z);
             }
-            else if (transform.position.y + xDiff * multiplyFactor < minX)
+            else if (transform.localPosition.y + xDiff * multiplyFactor < minX)
             {
-                transform.position += new Vector3(transform.position.x, minY, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, minY, transform.localPosition.z);
             }
 
         }
@@ -79,18 +82,11 @@ public class GhostHand : MonoBehaviour {
 		
 	}
 
-    public void DetermineDirection()
+    public void SwapDirection()
     {
 
-        //determine if the xDiff or yDiff is greater
-        if (xDiff > yDiff)
-        {
-            isVertical = false;
-        }
-        else
-        {
-
-        }
+        isVertical = !isVertical;
+        
 
     }
 }

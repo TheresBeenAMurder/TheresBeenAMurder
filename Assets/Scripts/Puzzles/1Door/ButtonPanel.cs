@@ -71,7 +71,7 @@ public class ButtonPanel : MonoBehaviour
 
         // wait so the player can see the result of their
         // choice if it is the last option
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.5f);
 
         currentChoiceNum++;
         if (currentChoiceNum == SOLUTIONLENGTH)

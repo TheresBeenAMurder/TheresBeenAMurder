@@ -13,35 +13,49 @@ public class CenterFrameButton : MonoBehaviour {
     public GameObject indicator;
     public float range = 0.3f;
 
+    public CenterFramePivot pivot;
+
     private void Update()
     {
-        if (!done)
-        {
-            if (Vector3.Distance(leftHand.transform.position, transform.position) <= range)
-            {
-                if (Gestures.IsGrabbing(leftHand, rightHand) != null && Gestures.IsGrabbing(leftHand, rightHand).name == leftHand.name)
-                {
+        //if (!done)
+        //{
+        //    if (Vector3.Distance(leftHand.transform.position, transform.position) <= range)
+        //    {
+        //        if (Gestures.IsGrabbing(leftHand, rightHand) != null && Gestures.IsGrabbing(leftHand, rightHand).name == leftHand.name)
+        //        {
 
-                    buttonPressed();
-                }
-            }
-            if (Vector3.Distance(rightHand.transform.position, transform.position) <= range)
-            {
-                if (Gestures.IsGrabbing(leftHand, rightHand) != null && Gestures.IsGrabbing(leftHand, rightHand).name == rightHand.name)
-                {
+        //            buttonPressed();
+        //        }
+        //    }
+        //    if (Vector3.Distance(rightHand.transform.position, transform.position) <= range)
+        //    {
+        //        if (Gestures.IsGrabbing(leftHand, rightHand) != null && Gestures.IsGrabbing(leftHand, rightHand).name == rightHand.name)
+        //        {
 
-                    buttonPressed();
-                }
-            }
+        //            buttonPressed();
+        //        }
+        //    }
 
-        }
+        //}
     }
-   
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!done && other.CompareTag("GhostHand"))
+        {
+            buttonPressed();
+        }
+        
+    }
+
 
     void buttonPressed()
     {
         done = true;
         parent.Done();
-        indicator.SetActive(true);
+        pivot.RotateOpen();
+
+        Destroy(parent.leftGhost);
+        Destroy(parent.rightGhost);
     }
 }

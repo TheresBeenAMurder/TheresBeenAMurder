@@ -2,14 +2,16 @@
 
 public class PlantWall : MonoBehaviour
 {
-    public PuzzleSolution art;
+    //public PuzzleSolution art;
+    public GalleryDisplay gallery;
     private PlantPot[] plants;
     public AudioSource win;
+    bool isSolved = false;
 
     public void CheckForSolution()
     {
         // can't solve the puzzle more than once
-        if (!art.IsSolved())
+        if (!isSolved)
         {
             foreach (PlantPot plant in plants)
             {
@@ -19,7 +21,9 @@ public class PlantWall : MonoBehaviour
                 }
             }
             win.Play();
-            art.PuzzleSolve();
+            gallery.activateImages();
+            isSolved = true;
+            //art.PuzzleSolve();
         }
     }
 
