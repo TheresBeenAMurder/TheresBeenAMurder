@@ -17,6 +17,11 @@ public class ButtonPanel : MonoBehaviour
 
     public Text feedback;
 
+    public AudioSource audioSource;
+    public AudioClip keyClick;
+    public AudioClip incorrect;
+    public AudioClip correct;
+
     // Figures out what color light to shine based on player's choice
     private Lights.LightOptions DetermineLightColor()
     {
@@ -64,6 +69,8 @@ public class ButtonPanel : MonoBehaviour
     // Log the number the user pressed
     public IEnumerator LogChoice(int choice)
     {
+        audioSource.clip = keyClick;
+        audioSource.Play();
         loggingChoice = true;
 
         playerChoices[currentChoiceNum] = choice;
@@ -79,7 +86,14 @@ public class ButtonPanel : MonoBehaviour
             // Check for solution, then reset
             if (IsSolution())
             {
+                audioSource.clip = correct;
+                audioSource.Play();
                 yield return StartCoroutine(door.Open());
+            }
+            else
+            {
+                audioSource.clip = incorrect;
+                audioSource.Play();
             }
 
             ResetPuzzle();

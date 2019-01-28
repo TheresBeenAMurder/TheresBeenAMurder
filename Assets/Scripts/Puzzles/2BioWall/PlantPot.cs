@@ -8,6 +8,8 @@ public class PlantPot : MonoBehaviour
 
     private GameObject currentLabel;
 
+    public Transform snapPoint;
+
     public bool IsCorrect()
     {
         return (currentLabel != null && correctLabel == currentLabel);
@@ -19,6 +21,14 @@ public class PlantPot : MonoBehaviour
         {
             currentLabel = other.gameObject;
             containsLabel = true;
+            SnapGrabbable label = other.gameObject.GetComponent<SnapGrabbable>();
+            Debug.Log(label.name);
+            if(label != null)
+            { 
+                label.snapTransform = snapPoint;
+                label.isInDropZone = true;
+            }
+
             plantHolder.CheckForSolution();
         }
     }
@@ -27,6 +37,11 @@ public class PlantPot : MonoBehaviour
     {
         if (other.gameObject != null && other.gameObject == currentLabel)
         {
+            SnapGrabbable label = other.gameObject.GetComponent<SnapGrabbable>();
+            if (label != null)
+            {
+                label.isInDropZone = false;
+            }
             currentLabel = null;
             containsLabel = false;
         }
