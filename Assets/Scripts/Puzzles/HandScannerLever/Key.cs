@@ -11,4 +11,4 @@ public abstract class Key : MonoBehaviour
 
 // Add additional puzzles here as needed
 // Needed so that multiple puzzles can use the same IDs
-public enum Puzzle { HandScanner, Archive };
+public enum Puzzle { HandScanner, Archive, Machine };
