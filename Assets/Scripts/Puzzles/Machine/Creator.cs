@@ -6,6 +6,7 @@ public class Creator : MonoBehaviour
 {
     public AudioSource archiveAudio;
     public GameObject keyObjectPrefab;
+    public Transform spawnParent;
     public ValidKeys[] validKeys;
 
     private Dictionary<int, AudioClip> _validKeys = new Dictionary<int, AudioClip>(); 
@@ -22,8 +23,8 @@ public class Creator : MonoBehaviour
     private void SpawnObject(int id, AudioClip sound)
     {
         // Spawn object and shift it so it's sitting on top of the creator
-        GameObject keyObj = Instantiate(keyObjectPrefab, transform);
-        keyObj.transform.localPosition += new Vector3(0, 5, 0);
+        GameObject keyObj = Instantiate(keyObjectPrefab, spawnParent);
+        keyObj.transform.localPosition += new Vector3(0, 1, 0);
 
         // Set up the key properties
         ArchiveKey archiveKey = keyObj.GetComponent<ArchiveKey>();

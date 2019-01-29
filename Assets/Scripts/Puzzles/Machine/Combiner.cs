@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -19,6 +20,13 @@ public class Combiner : MonoBehaviour
 
         // Currently has 3 keys, time to combine/create
         int combined = CombineKeys();
+        StartCoroutine(Clear(combined));
+    }
+
+    private IEnumerator Clear(int combined)
+    {
+        yield return new WaitForSeconds(1);
+
         foreach (MachineKey key in currentKeys)
         {
             // Destroys game object associated

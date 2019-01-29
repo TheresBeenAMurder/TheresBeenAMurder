@@ -28,6 +28,7 @@ public class Wall : MonoBehaviour
     // call from the highest wall in the stack
     public IEnumerator MoveDown()
     {
+        Debug.Log("Moving Down");
         float wallHeight = transform.position.y - wallBelow.transform.position.y;
         SetCurrentWall(false);
 
@@ -42,6 +43,7 @@ public class Wall : MonoBehaviour
     // call from the lowest wall in the stack
     public IEnumerator MoveUp()
     {
+        Debug.Log("Moving Up");
         float wallHeight = wallAbove.transform.position.y - transform.position.y;
         SetCurrentWall(true);
 
@@ -98,6 +100,7 @@ public class Wall : MonoBehaviour
     // only sets the current wall to be visible to the player bc rendering
     public void UpdateVisibility()
     {
+        Debug.Log("Visibility Updated");
         gameObject.SetActive(isCurrentWall);
     }
 }

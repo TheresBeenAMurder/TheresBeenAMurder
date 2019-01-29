@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    public Transform moveSpace;
     public float moveTime = 1 / .1f;
-    public Transform newPosTransform;
-    public float newZPos = .295f;
     public TeleportTargetHandlerPhysical teleportAllowance;
     
     private bool isSolved = false;
@@ -24,7 +23,7 @@ public class Door : MonoBehaviour
         teleportAllowance.AimCollisionLayerMask = LayerMask.GetMask("Floor");
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-        Vector3 newPos = newPosTransform.position;
-        yield return StartCoroutine(Movement.SmoothMove(newPos, moveTime, rigidbody));
+        //Vector3 newPos = new Vector3(transform.localPosition.x + 1.75f, transform.localPosition.y, transform.localPosition.z);
+        yield return StartCoroutine(Movement.SmoothMove(moveSpace.position, moveTime, rigidbody));
     }
 }

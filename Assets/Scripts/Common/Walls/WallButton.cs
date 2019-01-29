@@ -11,16 +11,7 @@ public class WallButton : MonoBehaviour
     // top-down (index 0 is top wall, last index is bottom wall)
     public List<Wall> walls;
 
-    private bool buttonPressed;
-    private bool playerNear;
-    private bool goingUp;
-
-	void Start ()
-    {
-        buttonPressed = false;
-        playerNear = false;
-        goingUp = false;
-	}
+    private bool goingUp = false;
 
     public void Move()
     {
@@ -35,7 +26,6 @@ public class WallButton : MonoBehaviour
         foreach (Wall wall in walls)
         {
             wall.gameObject.SetActive(true);
-           
         }
 
         yield return new WaitForSeconds(.5f);
@@ -46,11 +36,11 @@ public class WallButton : MonoBehaviour
         {
             if (walls[walls.Capacity - 1].CanMoveUp())
             {
-                yield return walls[walls.Capacity - 1].MoveUp();
+                yield return StartCoroutine(walls[walls.Capacity - 1].MoveUp());
             }
             else
             {
-                yield return walls[0].MoveDown();
+                yield return StartCoroutine(walls[0].MoveDown());
                 goingUp = false;
             }
         }
@@ -58,11 +48,11 @@ public class WallButton : MonoBehaviour
         {
             if (walls[0].CanMoveDown())
             {
-                yield return walls[0].MoveDown();
+                yield return StartCoroutine(walls[0].MoveDown());
             }
             else
             {
-                yield return walls[walls.Capacity - 1].MoveUp();
+                yield return StartCoroutine(walls[walls.Capacity - 1].MoveUp());
                 goingUp = true;
             }
         }
