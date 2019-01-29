@@ -17,14 +17,12 @@ public class SnapGrabbable : OVRGrabbable {
 
         if(!isSnapped && isInDropZone)
         {
-            Debug.Log("snap that boi");
             //snap it
             if (snapTransform != null)
             {
                 transform.position = snapTransform.position;
                 transform.rotation = snapTransform.rotation;
                 isSnapped = true;
-                Debug.Log("snappin");
             }
         }
 

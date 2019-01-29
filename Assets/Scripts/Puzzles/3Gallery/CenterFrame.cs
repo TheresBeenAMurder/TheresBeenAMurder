@@ -21,13 +21,13 @@ public class CenterFrame : MonoBehaviour {
     private float time;
     private float timeLeft;
 
-    private bool isPaused;
+    public bool isPaused;
 
     private bool on;
 
     private bool isGrabbing = false;
 
-    private bool end = false;
+    public bool end = false;
 
     OVRHapticsClip clipHard;
 
@@ -67,7 +67,7 @@ public class CenterFrame : MonoBehaviour {
         if(other.CompareTag("Player") && !ghost)
         {
 
-            isPaused = true;
+            //isPaused = true;
             ghost = true;
             if(other.name.Contains("Left"))
             {
@@ -137,6 +137,9 @@ public class CenterFrame : MonoBehaviour {
                 else if (!isPaused && !inRange)
                 {
                     isPaused = true;
+                    leftGhost.SetActive(false);
+                    rightGhost.SetActive(false);
+                    ghost = false;
                 }
                 else if (!isPaused && inRange)
                 {

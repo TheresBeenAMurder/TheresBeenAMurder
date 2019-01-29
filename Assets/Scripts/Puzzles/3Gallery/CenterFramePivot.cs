@@ -10,13 +10,17 @@ public class CenterFramePivot : MonoBehaviour {
 
      bool started = false;
     bool done = false;
+
+    private float startRotation;
     
     public void RotateOpen()
     {
-       // goalRotationDegrees *= Mathf.Deg2Rad;
+        goalRotationDegrees *= Mathf.Deg2Rad;
+        startRotation = transform.rotation.y;
+        goalRotationDegrees += startRotation;
         started = true;
         rotationRate = (goalRotationDegrees - transform.rotation.y) / rotationRate;
-
+       
 
     }
 	

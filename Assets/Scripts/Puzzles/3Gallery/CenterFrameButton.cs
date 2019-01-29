@@ -43,7 +43,10 @@ public class CenterFrameButton : MonoBehaviour {
     {
         if(!done && other.CompareTag("GhostHand"))
         {
+            Debug.Log("GO");
             buttonPressed();
+            parent.isPaused = true;
+            //parent.end = true;
         }
         
     }
@@ -54,7 +57,7 @@ public class CenterFrameButton : MonoBehaviour {
         done = true;
         parent.Done();
         pivot.RotateOpen();
-
+        Debug.Log("Pivoting");
         Destroy(parent.leftGhost);
         Destroy(parent.rightGhost);
     }

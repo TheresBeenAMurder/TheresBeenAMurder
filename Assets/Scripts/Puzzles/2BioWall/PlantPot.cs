@@ -22,7 +22,7 @@ public class PlantPot : MonoBehaviour
             currentLabel = other.gameObject;
             containsLabel = true;
             SnapGrabbable label = other.gameObject.GetComponent<SnapGrabbable>();
-            Debug.Log(label.name);
+     
             if(label != null)
             { 
                 label.snapTransform = snapPoint;
