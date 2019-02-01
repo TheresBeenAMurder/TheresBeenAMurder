@@ -1,20 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SnapGrabbable : OVRGrabbable {
-
+public class SnapGrabbable : OVRGrabbable
+{
     public bool isInDropZone;
     public bool isUnsnappable;
-    private bool isSnapped =false;
-
     public Transform snapTransform;
 
+    private bool isSnapped = false;
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
-
-
         if(!isSnapped && isInDropZone)
         {
             //snap it
@@ -26,8 +21,7 @@ public class SnapGrabbable : OVRGrabbable {
             }
         }
 
-        base.GrabEnd(linearVelocity, angularVelocity);
-
+        base.GrabEnd(Vector3.zero, Vector3.zero);
     }
 
     public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
@@ -37,10 +31,5 @@ public class SnapGrabbable : OVRGrabbable {
             base.GrabBegin(hand, grabPoint);
             isSnapped = false;
         }
-
     }
-
-   
-
-
 }
