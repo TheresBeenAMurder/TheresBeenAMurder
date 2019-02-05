@@ -8,7 +8,7 @@ public class Wall : MonoBehaviour
     public Wall wallAbove;
     public Wall wallBelow;
 
-    private float moveTime = 1f / .1f;
+    private float moveTime = .2f / .1f;
 
     public bool CanMoveDown()
     {
@@ -28,8 +28,7 @@ public class Wall : MonoBehaviour
     // call from the highest wall in the stack
     public IEnumerator MoveDown()
     {
-        Debug.Log("Moving Down");
-        float wallHeight = transform.position.y - wallBelow.transform.position.y;
+        float wallHeight = Mathf.Abs(transform.position.y - wallBelow.transform.position.y);
         SetCurrentWall(false);
 
         Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
@@ -37,14 +36,13 @@ public class Wall : MonoBehaviour
             parentRigidbody.position.y - wallHeight,
             parentRigidbody.position.z);
 
-        yield return StartCoroutine(Movement.SmoothMove(end, moveTime, parentRigidbody));
+        yield return Movement.SmoothMove(end, moveTime, parentRigidbody);
     }
 
     // call from the lowest wall in the stack
     public IEnumerator MoveUp()
     {
-        Debug.Log("Moving Up");
-        float wallHeight = wallAbove.transform.position.y - transform.position.y;
+        float wallHeight = Mathf.Abs(wallAbove.transform.position.y - transform.position.y);
         SetCurrentWall(true);
 
         Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
@@ -52,7 +50,7 @@ public class Wall : MonoBehaviour
             parentRigidbody.position.y + wallHeight,
             parentRigidbody.position.z);
 
-        yield return StartCoroutine(Movement.SmoothMove(end, moveTime, parentRigidbody));
+        yield return Movement.SmoothMove(end, moveTime, parentRigidbody);
     }
 
     // goes through the walls and figures out which is the new current wall
@@ -100,7 +98,6 @@ public class Wall : MonoBehaviour
     // only sets the current wall to be visible to the player bc rendering
     public void UpdateVisibility()
     {
-        Debug.Log("Visibility Updated");
         gameObject.SetActive(isCurrentWall);
     }
 }

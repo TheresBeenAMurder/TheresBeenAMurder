@@ -36,11 +36,11 @@ public class WallButton : MonoBehaviour
         {
             if (walls[walls.Capacity - 1].CanMoveUp())
             {
-                yield return StartCoroutine(walls[walls.Capacity - 1].MoveUp());
+                yield return walls[walls.Capacity - 1].MoveUp();
             }
             else
             {
-                yield return StartCoroutine(walls[0].MoveDown());
+                yield return walls[0].MoveDown();
                 goingUp = false;
             }
         }
@@ -48,11 +48,11 @@ public class WallButton : MonoBehaviour
         {
             if (walls[0].CanMoveDown())
             {
-                yield return StartCoroutine(walls[0].MoveDown());
+                yield return walls[0].MoveDown();
             }
             else
             {
-                yield return StartCoroutine(walls[walls.Capacity - 1].MoveUp());
+                yield return walls[walls.Capacity - 1].MoveUp();
                 goingUp = true;
             }
         }

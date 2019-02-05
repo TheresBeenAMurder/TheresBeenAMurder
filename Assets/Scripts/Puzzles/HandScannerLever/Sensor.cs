@@ -17,9 +17,9 @@ public class Sensor : MonoBehaviour
         gameObject.GetComponent<Renderer>().material = newColor;
     }
 
-    public void OnCollisionExit(Collision collision)
+    public void OnTriggerExit(Collider other)
     {
-        Key key = collision.collider.gameObject.GetComponent<Key>();
+        Key key = other.gameObject.GetComponent<Key>();
 
         // Only change color when key exits, nothing else
         if (key != null && key == currentKey)
@@ -29,9 +29,9 @@ public class Sensor : MonoBehaviour
         }
     }
 
-    public void OnCollisionStay(Collision collision)
+    public void OnTriggerStay(Collider other)
     {
-        Key key = collision.collider.gameObject.GetComponent<Key>();
+        Key key = other.gameObject.GetComponent<Key>();
         if (key != null && currentKey == null)
         {
             currentKey = key;

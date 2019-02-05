@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Lever : MonoBehaviour
 {
+    public Light[] archiveLights;
     public ArchiveReceiver archiveReceiver;
     public LightBoard lightBoard;
 
@@ -23,6 +24,12 @@ public class Lever : MonoBehaviour
         // Makes the lever auto bounce back to the "solved" position
         leverHinge.useSpringToMax = true;
 
+        // Turn on the archive lights
+        foreach (Light light in archiveLights)
+        {
+            light.gameObject.SetActive(true);
+        }
+
         archiveReceiver.Reveal();
 
         solved = true;
@@ -31,6 +38,12 @@ public class Lever : MonoBehaviour
     private void Start()
     {
         leverHinge = GetComponentInChildren<VRBasics_Hinge>();
+
+        // Turn off the archive lights at the start of the game
+        foreach (Light light in archiveLights)
+        {
+            light.gameObject.SetActive(false);
+        }
     }
 
     void Update ()

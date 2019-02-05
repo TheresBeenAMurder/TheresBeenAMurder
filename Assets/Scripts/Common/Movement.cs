@@ -13,7 +13,7 @@ public static class Movement
     {
         float sqrRemainingDistance = CalculateRemainingDistance(end, rigidbody);
 
-        while (sqrRemainingDistance > float.Epsilon)
+        while (sqrRemainingDistance > .0000000001f)
         {
             Vector3 newPosition = Vector3.MoveTowards(rigidbody.position, end, moveTime * Time.deltaTime);
 
