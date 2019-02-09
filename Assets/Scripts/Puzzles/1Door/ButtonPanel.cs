@@ -7,6 +7,7 @@ public class ButtonPanel : MonoBehaviour
 {
     private static int SOLUTIONLENGTH = 3;
 
+    public CharacterNav[] characters;
     public Door door;
     public int[] puzzleSolution = new int[SOLUTIONLENGTH];
 
@@ -89,6 +90,12 @@ public class ButtonPanel : MonoBehaviour
                 audioSource.clip = correct;
                 audioSource.Play();
                 yield return StartCoroutine(door.Open());
+
+                // Characters walk into the room
+                foreach (CharacterNav character in characters)
+                {
+                    character.Move();
+                }
             }
             else
             {
