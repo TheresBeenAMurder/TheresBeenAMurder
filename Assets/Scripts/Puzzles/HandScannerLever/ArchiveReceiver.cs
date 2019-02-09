@@ -17,12 +17,12 @@ public class ArchiveReceiver : MonoBehaviour
         if (currentKey == null && key != null)
         {
             currentKey = other.gameObject;
-            SnapGrabbable cannister = other.gameObject.GetComponent<SnapGrabbable>();
+            SnapGrabbable canister = other.gameObject.GetComponent<SnapGrabbable>();
 
-            if (cannister != null)
+            if (canister != null)
             {
-                cannister.snapTransform = transform;
-                cannister.isInDropZone = true;
+                canister.snapTransform = transform;
+                canister.isInDropZone = true;
             }
         }
     }
@@ -31,10 +31,10 @@ public class ArchiveReceiver : MonoBehaviour
     {
         if (other.gameObject != null && other.gameObject == currentKey)
         {
-            SnapGrabbable cannister = other.gameObject.GetComponent<SnapGrabbable>();
-            if (cannister != null)
+            SnapGrabbable canister = other.gameObject.GetComponent<SnapGrabbable>();
+            if (canister != null)
             {
-                cannister.isInDropZone = false;
+                canister.isInDropZone = false;
             }
 
             currentKey = null;

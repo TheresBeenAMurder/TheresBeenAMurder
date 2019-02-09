@@ -4,33 +4,58 @@ using UnityEngine;
 
 public class Creator : MonoBehaviour
 {
-    public AudioSource archiveAudio;
-    public GameObject keyObjectPrefab;
-    public Transform spawnParent;
+    public Combiner combiner;
     public ValidKeys[] validKeys;
 
-    private Dictionary<int, AudioClip> _validKeys = new Dictionary<int, AudioClip>(); 
+    private GameObject currentCanister;
+    private Dictionary<int, AudioClip> _validKeys = new Dictionary<int, AudioClip>();
 
-    public void CreateKey(int id)
+    // Returns true if the cannister is empty and can be filled with a new key
+    private bool CanisterEmpty()
+    {
+        if (currentCanister != null)
+        {
+            return (currentCanister.GetComponent<ArchiveKey>().ID == 0);
+        }
+
+        return false;
+    }
+
+    // Returns true if succeeded in creating a key
+    public bool CreateKey(int id)
     {
         AudioClip soundFile;
-        if (_validKeys.TryGetValue(id, out soundFile))
+        if (CanisterEmpty())
         {
-            SpawnObject(id, soundFile);
+            if (_validKeys.TryGetValue(id, out soundFile))
+            {
+                currentCanister.GetComponent<ArchiveKey>().Fill(id, soundFile);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject != null && collider.gameObject == currentCanister)
+        {
+            currentCanister = null;
         }
     }
 
-    private void SpawnObject(int id, AudioClip sound)
+    public void OnTriggerStay(Collider collider)
     {
-        // Spawn object and shift it so it's sitting on top of the creator
-        GameObject keyObj = Instantiate(keyObjectPrefab, spawnParent);
-        keyObj.transform.localPosition += new Vector3(0, 1, 0);
-
-        // Set up the key properties
-        ArchiveKey archiveKey = keyObj.GetComponent<ArchiveKey>();
-        archiveKey.ID = id;
-        archiveKey.audioSource = archiveAudio;
-        archiveKey.audioClip = sound;
+        if (collider.gameObject != null)
+        {
+            ArchiveKey key = collider.gameObject.GetComponent<ArchiveKey>();
+            if (key != null)
+            {
+                currentCanister = collider.gameObject;
+                combiner.CheckKeys();
+            }
+        }
     }
 
     public void Start()
