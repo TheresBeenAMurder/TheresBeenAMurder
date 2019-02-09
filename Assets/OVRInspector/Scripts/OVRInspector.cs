@@ -1362,27 +1362,27 @@ public class OVRInspector : MonoBehaviour
 
 	bool ShouldToggleMenu()
 	{
-		OVRInput.Button showButton = OVRInput.Button.Start;
-		OVRInput.Controller activeController = OVRInput.GetActiveController();
+////		OVRInput.Button showButton = OVRInput.Button.Start;
+////		OVRInput.Controller activeController = OVRInput.GetActiveController();
 
-		if ((activeController == OVRInput.Controller.Remote)
-			|| (activeController == OVRInput.Controller.Touchpad)
-			|| (activeController == OVRInput.Controller.LTrackedRemote)
-			|| (activeController == OVRInput.Controller.RTrackedRemote)
-		   )
-		{
-			showButton = OVRInput.Button.Two;
-		}
+////		if ((activeController == OVRInput.Controller.Remote)
+////			|| (activeController == OVRInput.Controller.Touchpad)
+////			|| (activeController == OVRInput.Controller.LTrackedRemote)
+////			|| (activeController == OVRInput.Controller.RTrackedRemote)
+////		   )
+////		{
+////			showButton = OVRInput.Button.Two;
+////		}
 
-		if (OVRInput.GetDown(showButton)
-#if !UNITY_ANDROID || UNITY_EDITOR
-			|| (IsMenuActive() && Input.GetKeyDown(hideKey))
-			|| (!IsMenuActive() && Input.GetKeyDown(showKey))
-#endif
-		   )
-		{
-			return true;
-		}
+////		if (OVRInput.GetDown(showButton)
+////#if !UNITY_ANDROID || UNITY_EDITOR
+////			|| (IsMenuActive() && Input.GetKeyDown(hideKey))
+////			|| (!IsMenuActive() && Input.GetKeyDown(showKey))
+////#endif
+////		   )
+////		{
+////			return true;
+////		}
 
 		return false;
 	}
