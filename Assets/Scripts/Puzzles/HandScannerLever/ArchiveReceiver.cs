@@ -2,17 +2,62 @@
 
 public class ArchiveReceiver : MonoBehaviour
 {
-    private bool visible = false;
+    public Rigidbody door;
 
-    public void Reveal()
+    private GameObject currentKey;
+
+    ////private bool DoorLocked()
+    ////{
+    ////    return door.isKinematic;
+    ////}
+
+    public void OnTriggerEnter(Collider other)
     {
-        if (!visible)
+        ArchiveKey key = other.gameObject.GetComponent<ArchiveKey>();
+        if (currentKey == null && key != null)
         {
-            Vector3 newPos = new Vector3(transform.position.x, transform.position.y + .25f, transform.position.z);
+            currentKey = other.gameObject;
+            SnapGrabbable cannister = other.gameObject.GetComponent<SnapGrabbable>();
 
-            StartCoroutine(Movement.SmoothMove(newPos, 1f/.1f, gameObject.GetComponent<Rigidbody>()));
-
-            visible = true;
+            if (cannister != null)
+            {
+                cannister.snapTransform = transform;
+                cannister.isInDropZone = true;
+            }
         }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject != null && other.gameObject == currentKey)
+        {
+            SnapGrabbable cannister = other.gameObject.GetComponent<SnapGrabbable>();
+            if (cannister != null)
+            {
+                cannister.isInDropZone = false;
+            }
+
+            currentKey = null;
+        }
+    }
+
+    public void Solve()
+    {
+        ////ToggleDoorLock();
+        currentKey.GetComponent<ArchiveKey>().Solve();
+    }
+
+    private void ToggleDoorLock()
+    {
+        ////door.isKinematic = !door.isKinematic;
+    }
+
+    public void Update()
+    {
+        // key is done playing, unlock the door
+        ////if (DoorLocked() && !currentKey.GetComponent<ArchiveKey>().audioSource.isPlaying)
+        ////{
+        ////    ToggleDoorLock();
+        ////}
     }
 }

@@ -30,8 +30,6 @@ public class Lever : MonoBehaviour
             light.gameObject.SetActive(true);
         }
 
-        archiveReceiver.Reveal();
-
         solved = true;
     }
 
