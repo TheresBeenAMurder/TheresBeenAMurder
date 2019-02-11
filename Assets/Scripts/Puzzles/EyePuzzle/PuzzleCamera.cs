@@ -16,7 +16,6 @@ public class PuzzleCamera : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Eye"))
         {
-            Debug.Log("EYE COLLISION");
             SwitchCameraLayers(everythingCameraLayer);
             other.gameObject.GetComponent<EyeGrabbable>().nearCamera = true;
         }
