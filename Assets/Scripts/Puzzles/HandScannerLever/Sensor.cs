@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-// Generic Physical Sensor class, use in combo with Key.cs
+// Generic Trigger Sensor class, use in combo with Key.cs
 public class Sensor : MonoBehaviour
 {
     public Material correctColor;

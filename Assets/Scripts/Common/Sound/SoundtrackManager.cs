@@ -2,14 +2,61 @@
 
 public class SoundtrackManager : MonoBehaviour
 {
-    public SoundtrackLayer[] soundtrackLayers;
+    public SoundtrackTrack[] soundtrackTracks;
 
-    //currently set to work with one track, will add functionlity to switch tracks
-    public void SwitchTrack(int track)
+    public int currentTrack = 0;
+
+    public int madelineRelationship;
+    public int mavisRelationship;
+    public int victorRelationship;
+
+    public void Start()
     {
-        foreach(SoundtrackLayer sl in soundtrackLayers)
+        soundtrackTracks[currentTrack].startTrack();
+    }
+
+    public void nextTrack()
+    {
+        soundtrackTracks[currentTrack].Fade();
+        currentTrack += 1;
+        soundtrackTracks[currentTrack].startTrack();
+
+    }
+
+    public void updateRelationship(string characterName, int relVal)
+    {
+        int updateLayerNumber = 0;
+
+        switch (characterName)
         {
-            sl.SwitchTrack(track);
+            case "Madeline":
+       
+                {
+                    updateLayerNumber = 4;
+                    madelineRelationship = relVal;
+                    break;
+                }
+            case "Mavis":
+                {
+                    updateLayerNumber = 2;
+                    mavisRelationship = relVal;
+                    break;
+                }
+            case "Victor":
+                {
+                    updateLayerNumber = 3;
+                    victorRelationship = relVal;
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+                
         }
+
+        //update it in the track
+        soundtrackTracks[currentTrack].updateLayer(updateLayerNumber, relVal);
+
     }
 }

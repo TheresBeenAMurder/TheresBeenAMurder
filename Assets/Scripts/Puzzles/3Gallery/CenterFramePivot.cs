@@ -11,10 +11,18 @@ public class CenterFramePivot : MonoBehaviour {
      bool started = false;
     bool done = false;
 
+    private AudioSource solveSound;
+
     private float startRotation;
-    
+
+    private void Start()
+    {
+        solveSound = GetComponent<AudioSource>();
+    }
+
     public void RotateOpen()
     {
+        solveSound.Play();
         goalRotationDegrees *= Mathf.Deg2Rad;
         startRotation = transform.rotation.y;
         goalRotationDegrees += startRotation;

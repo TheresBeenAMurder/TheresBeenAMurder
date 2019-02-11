@@ -11,7 +11,7 @@ public class Combiner : MonoBehaviour
 
     private List<MachineKey> currentKeys = new List<MachineKey>();
 
-    private void CheckKeys()
+    public void CheckKeys()
     {
         if (currentKeys.Count != 3)
         {
@@ -27,13 +27,15 @@ public class Combiner : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        foreach (MachineKey key in currentKeys)
+        if (creator.CreateKey(combined))
         {
-            // Destroys game object associated
-            key.Solve();
+            foreach (MachineKey key in currentKeys)
+            {
+                // Destroys game object associated
+                key.Solve();
+            }
+            currentKeys.Clear();
         }
-        currentKeys.Clear();
-        creator.CreateKey(combined);
     }
 
     private int CombineKeys()
@@ -57,9 +59,9 @@ public class Combiner : MonoBehaviour
         return combined;
     }
 
-    public void OnCollisionExit(Collision collision)
+    public void OnTriggerExit(Collider collider)
     {
-        MachineKey key = collision.gameObject.GetComponent<MachineKey>();
+        MachineKey key = collider.gameObject.GetComponent<MachineKey>();
         if (key != null)
         {
             if (currentKeys.Contains(key))
@@ -69,9 +71,9 @@ public class Combiner : MonoBehaviour
         }
     }
 
-    public void OnCollisionStay(Collision collision)
+    public void OnTriggerEnter(Collider collider)
     {
-        MachineKey key = collision.gameObject.GetComponent<MachineKey>();
+        MachineKey key = collider.gameObject.GetComponent<MachineKey>();
         if (key != null)
         {
             if (!currentKeys.Contains(key))
