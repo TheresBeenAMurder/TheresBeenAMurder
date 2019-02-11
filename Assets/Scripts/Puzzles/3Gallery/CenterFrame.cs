@@ -72,15 +72,15 @@ public class CenterFrame : MonoBehaviour {
             if(other.name.Contains("Left"))
             {
                 leftGhost.SetActive(true);
-                leftGhost.GetComponent<MeshFilter>().mesh = GameObject.Find("hand_left_renderPart_0").GetComponent<SkinnedMeshRenderer>().sharedMesh;
-                leftGhost.transform.position = new Vector3(leftGhost.transform.position.x, other.transform.position.y, leftGhost.transform.position.z);
+                //leftGhost.GetComponent<MeshFilter>().mesh = GameObject.Find("hand_left_renderPart_0").GetComponent<SkinnedMeshRenderer>().sharedMesh;
+                //leftGhost.transform.position = new Vector3(leftGhost.transform.position.x, other.transform.position.y, leftGhost.transform.position.z);
             }
             else if (other.name.Contains("Right"))
             {
                 rightGhost.SetActive(true);
 
-                rightGhost.GetComponent<MeshFilter>().mesh = GameObject.Find("hand_right_renderPart_0").GetComponent<SkinnedMeshRenderer>().sharedMesh;
-                rightGhost.transform.position = new Vector3(rightGhost.transform.position.x, other.transform.position.y, rightGhost.transform.position.z);
+                //rightGhost.GetComponent<MeshFilter>().mesh = GameObject.Find("hand_right_renderPart_0").GetComponent<SkinnedMeshRenderer>().sharedMesh;
+                //rightGhost.transform.position = new Vector3(rightGhost.transform.position.x, other.transform.position.y, rightGhost.transform.position.z);
             }
         }
 

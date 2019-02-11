@@ -28,7 +28,7 @@ public class GhostHand : MonoBehaviour {
 	void Start () {
         prevY = parentHand.transform.localPosition.y;
         prevX = parentHand.transform.localPosition.x;
-
+        transform.rotation = new Quaternion(0, 0, 0, 0);
 //        isVertical = true;
 	}
 	

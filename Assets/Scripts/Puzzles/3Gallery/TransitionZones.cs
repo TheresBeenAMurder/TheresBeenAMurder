@@ -32,11 +32,11 @@ public class TransitionZones : MonoBehaviour {
                     //is it on the left or the right
                     if (gh.transform.localPosition.x < 0) //it's on the left
                     {
-                        gh.transform.rotation = Quaternion.Euler(0,0,0);
+                        gh.transform.localRotation = Quaternion.Euler(0,0,0);
                     }
                     else //it's on the right
                     {
-                        gh.transform.rotation = Quaternion.Euler(0, 0, 180);
+                        gh.transform.localRotation = Quaternion.Euler(0, 0, 180);
                     }
                 }
                 else
@@ -44,11 +44,11 @@ public class TransitionZones : MonoBehaviour {
                     //is it on the top or bottom
                     if (gh.transform.localPosition.y < 0) //it's on the bottom
                     {
-                        gh.transform.rotation = Quaternion.Euler(0,0,90);
+                        gh.transform.localRotation = Quaternion.Euler(0,0,90);
                     }
                     else //it's on the top
                     {
-                        gh.transform.rotation = Quaternion.Euler(0, 0, 270);
+                        gh.transform.localRotation = Quaternion.Euler(0, 0, 270);
                     }
                 }
 
@@ -60,11 +60,11 @@ public class TransitionZones : MonoBehaviour {
                     //is it on the left or the right
                     if (gh.transform.localPosition.x < 0) //it's on the left
                     {
-                        gh.transform.rotation = Quaternion.Euler(0, 0, 180);
+                        gh.transform.localRotation = Quaternion.Euler(0, 0, 180);
                     }
                     else //it's on the right
                     {
-                        gh.transform.rotation = Quaternion.Euler(0, 0, 0);
+                        gh.transform.localRotation = Quaternion.Euler(0, 0, 0);
                     }
                 }
                 else
@@ -72,11 +72,11 @@ public class TransitionZones : MonoBehaviour {
                     //is it on the top or bottom
                     if (gh.transform.localPosition.y < 0) //it's on the bottom
                     {
-                        gh.transform.rotation = Quaternion.Euler(0, 0, 270);
+                        gh.transform.localRotation = Quaternion.Euler(0, 0, 270);
                     }
                     else //it's on the top
                     {
-                        gh.transform.rotation = Quaternion.Euler(0, 0, 90);
+                        gh.transform.localRotation = Quaternion.Euler(0, 0, 90);
                     }
                 }
 
@@ -92,6 +92,7 @@ public class TransitionZones : MonoBehaviour {
             
 
         }
+
     }
 
     // Update is called once per frame

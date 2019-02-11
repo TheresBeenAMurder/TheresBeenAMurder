@@ -6,13 +6,13 @@ public class SoundtrackLayer : MonoBehaviour
     public int currentTrack;
     public AudioClip[] tracks;
 
-    bool fadingIn = true;
+    bool fadingIn = false;
     bool fadingOut = false;
 
     public float fadeTime;
 
 
-    public void Start ()
+    public void Update ()
     {
         if(fadingIn)
         {
@@ -55,6 +55,7 @@ public class SoundtrackLayer : MonoBehaviour
 
     public void startLayer(int trackNumber)
     {
+        fadingIn = true;
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = tracks[trackNumber];
         audioSource.Play();
