@@ -2,14 +2,14 @@
 
 public class ArchiveReceiver : MonoBehaviour
 {
-    public Rigidbody door;
+    public ArchiveGrabbable doorHandle;
 
     private GameObject currentKey;
 
-    ////private bool DoorLocked()
-    ////{
-    ////    return door.isKinematic;
-    ////}
+    private bool DoorLocked()
+    {
+        return doorHandle.isBeingSolved;
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -43,13 +43,14 @@ public class ArchiveReceiver : MonoBehaviour
 
     public void Solve()
     {
-        ////ToggleDoorLock();
+        // Door locking still doesn't work
+        //ToggleDoorLock();
         currentKey.GetComponent<ArchiveKey>().Solve();
     }
 
     private void ToggleDoorLock()
     {
-        ////door.isKinematic = !door.isKinematic;
+        doorHandle.isBeingSolved = !doorHandle.isBeingSolved;
     }
 
     public void Update()
