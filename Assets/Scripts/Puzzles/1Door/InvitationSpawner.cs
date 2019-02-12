@@ -2,6 +2,7 @@
 
 public class InvitationSpawner : MonoBehaviour
 {
+    public Door doorPuzzle;
     public GameObject invitationPrefab;
     public GameObject mavis;
     public AudioSource openingDialogue;
@@ -10,11 +11,13 @@ public class InvitationSpawner : MonoBehaviour
     {
 		if (!openingDialogue.isPlaying)
         {
-            Debug.Log("Spawning Object");
             GameObject invite = Instantiate(invitationPrefab, mavis.transform);
-            invite.transform.position = new Vector3(0, 1, .5f);
+            invite.transform.localPosition = new Vector3(0, 1, .5f);
+            invite.transform.parent = null;
 
-            Destroy(gameObject);
+            StartCoroutine(doorPuzzle.Hint());
+
+            enabled = false;
         }
 	}
 }

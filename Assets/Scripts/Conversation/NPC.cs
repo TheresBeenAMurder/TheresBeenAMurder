@@ -124,10 +124,6 @@ public class NPC : MonoBehaviour
         accusation = gameObject.GetComponent<Accusation>();
         conversationAudio = gameObject.GetComponent<AudioSource>();
         conversationUI = gameObject.GetComponent<ConversationUI>();
-
-        // Wouldn't normally want to reset on load, only on new game
-        // This reset is for our single scene testing.
-        dbHandler.ResetDatabaseToDefault(id);
     }
 
     public void StartAccusation()

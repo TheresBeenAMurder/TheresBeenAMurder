@@ -104,4 +104,12 @@ public class DatabaseHandler: MonoBehaviour
             database = null;
         }
     }
+
+    public void Start()
+    {
+        // Reset database for "new" game
+        ResetDatabaseToDefault(2);
+        ResetDatabaseToDefault(3);
+        ResetDatabaseToDefault(4);
+    }
 }
