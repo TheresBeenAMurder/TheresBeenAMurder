@@ -194,7 +194,8 @@ public class NPC : MonoBehaviour
         relationshipValue = (relationshipValue < RelationshipLowerBound) ? 0 : relationshipValue;
         relationshipValue = (relationshipValue > RelationshipUpperBound) ? 10 : relationshipValue;
 
-        UpdateRelationshipStatus();
+        // Commented out because other NPCs don't have soundtrack layers assigned yet
+        //UpdateRelationshipStatus();
         string update = "UPDATE Characters SET RelationshipValue = " + relationshipValue +
             " WHERE ID ==" + id;
         dbHandler.ExecuteNonQuery(update);
