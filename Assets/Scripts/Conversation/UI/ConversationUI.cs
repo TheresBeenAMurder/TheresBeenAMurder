@@ -85,6 +85,7 @@ public class ConversationUI : MonoBehaviour
     public void EndConversation()
     {
         inConversation = false;
+        playerConversation.inConversation = false;
     }
 
     public void ExitConversation(Collider other)

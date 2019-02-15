@@ -119,6 +119,11 @@ public class NPC : MonoBehaviour
         conversationUI.ExitConversation(other);
     }
 
+    public int PromptID()
+    {
+        return promptID;
+    }
+
     public void Start()
     {
         accusation = gameObject.GetComponent<Accusation>();

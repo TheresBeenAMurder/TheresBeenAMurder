@@ -1267,6 +1267,7 @@ GameObject:
   - component: {fileID: 40621643}
   - component: {fileID: 40621642}
   - component: {fileID: 40621641}
+  - component: {fileID: 40621646}
   m_Layer: 0
   m_Name: Mavis
   m_TagString: Untagged
@@ -1347,7 +1348,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.596
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1444,6 +1445,18 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0.5}
+--- !u!114 &40621646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 40621639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171c5faf0a5bf67479390c4f47e75946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  callOut: {fileID: 8300000, guid: ee0ce194a46f28342a2acee9a082297f, type: 3}
 --- !u!1 &59036887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2440,28 +2453,13 @@ GameObject:
   - component: {fileID: 116484872}
   - component: {fileID: 116484871}
   - component: {fileID: 116484870}
-  - component: {fileID: 116484869}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Blood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &116484869
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 116484868}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &116484870
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2991,12 +2989,12 @@ Prefab:
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114734196218329504, guid: 89f0e21bdbb5a6547b1f8b2aed502951, type: 2}
@@ -3635,12 +3633,12 @@ Prefab:
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114734196218329504, guid: 89f0e21bdbb5a6547b1f8b2aed502951, type: 2}
@@ -3819,161 +3817,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 189018215}
   m_Mesh: {fileID: 4300004, guid: 6ea2398713d55fc42a6a1b24787cd024, type: 3}
---- !u!43 &192467304
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  serializedVersion: 9
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 12
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 2
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0, y: 0.9, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 000000000100000000000100010000000100010001000000
-  m_VertexData:
-    serializedVersion: 2
-    m_VertexCount: 2
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 48
-    _typelessdata: 000000006666663f0000000000000000000000000000000000000000666666bf00000000000000000000000000000000
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0.9, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimized: 0
 --- !u!1001 &193095939
 Prefab:
   m_ObjectHideFlags: 0
@@ -5820,9 +5663,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftmost: {fileID: 1107063349}
+  madeline: {fileID: 489839773}
+  mavisConvo: {fileID: 40621646}
   walls:
   - {fileID: 1431812855}
   snapPoint: {fileID: 1107063349}
+  victorConvo: {fileID: 1386474523}
 --- !u!65 &376123942
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7315,7 +7161,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.604
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -14636,6 +14482,10 @@ MonoBehaviour:
   - {fileID: 1508706}
   - {fileID: 1953336553}
   - {fileID: 220564622}
+  galleryPuzzle: {fileID: 1605121640}
+  victor: {fileID: 1386474522}
+  victorAudio: {fileID: 1386474518}
+  victorExclamation: {fileID: 8300000, guid: f7e82b09c889e594f8bc33dad18d3c4a, type: 3}
 --- !u!4 &1021826614
 Transform:
   m_ObjectHideFlags: 0
@@ -15069,11 +14919,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4046e9e40acfe147816c72b7918ee3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  madeline: {fileID: 489839773}
   mavis: {fileID: 40621643}
   mavisAudio: {fileID: 40621644}
   mavisHint: {fileID: 8300000, guid: b30c8df1d1a240448908fce83481fec3, type: 3}
   moveSpace: {fileID: 146401739}
   moveTime: 10
+  bioPuzzle: {fileID: 1728579862}
   teleportAllowance: {fileID: 549021189}
 --- !u!4 &1026925383
 Transform:
@@ -21728,12 +21580,12 @@ Prefab:
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114734196218329504, guid: 89f0e21bdbb5a6547b1f8b2aed502951, type: 2}
@@ -22041,6 +21893,7 @@ GameObject:
   - component: {fileID: 1386474522}
   - component: {fileID: 1386474521}
   - component: {fileID: 1386474520}
+  - component: {fileID: 1386474523}
   m_Layer: 0
   m_Name: Victor
   m_TagString: Untagged
@@ -22073,7 +21926,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -22218,6 +22071,17 @@ MonoBehaviour:
   dbHandler: {fileID: 636283816}
   canAccuse: 0
   isAccusing: 0
+--- !u!114 &1386474523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1386474516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6b9e19bc40ee547afb45b55fedb99f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1389602214
 GameObject:
   m_ObjectHideFlags: 0
@@ -24458,7 +24322,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1546598063}
-  m_Mesh: {fileID: 192467304}
+  m_Mesh: {fileID: 1722714731}
 --- !u!23 &1546598066
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25289,6 +25153,11 @@ MonoBehaviour:
   indicator: {fileID: 1195307965}
   range: 0.1
   pivot: {fileID: 2081310425}
+  playerAudio: {fileID: 64089198}
+  playerConversation: {fileID: 1876640995}
+  victor: {fileID: 1386474522}
+  victorAudio: {fileID: 1386474518}
+  victorHint: {fileID: 8300000, guid: d489d0149f072f84ea7ff2206808eea9, type: 3}
 --- !u!1 &1605648343
 GameObject:
   m_ObjectHideFlags: 0
@@ -26537,6 +26406,161 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!43 &1722714731
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  serializedVersion: 9
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 12
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 2
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0.9, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 000000000100000000000100010000000100010001000000
+  m_VertexData:
+    serializedVersion: 2
+    m_VertexCount: 2
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 48
+    _typelessdata: 000000006666663f0000000000000000000000000000000000000000666666bf00000000000000000000000000000000
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0.9, z: 0}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimized: 0
 --- !u!1 &1728579859
 GameObject:
   m_ObjectHideFlags: 0
@@ -26616,6 +26640,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gallery: {fileID: 1021826613}
   win: {fileID: 23615308}
+  madeline: {fileID: 489839773}
+  madelineAudio: {fileID: 489839774}
+  madelineHint: {fileID: 8300000, guid: 0b8093b27a72b9e499599dd9a88e6814, type: 3}
+  playerAudio: {fileID: 64089198}
+  playerConversation: {fileID: 1876640995}
 --- !u!65 &1728579863
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27862,12 +27891,12 @@ Prefab:
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114734196218329504, guid: 89f0e21bdbb5a6547b1f8b2aed502951, type: 2}
@@ -28525,7 +28554,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1813091907}
   - component: {fileID: 1813091909}
-  - component: {fileID: 1813091908}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -28546,13 +28574,6 @@ Transform:
   m_Father: {fileID: 1796958697}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1813091908
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1813091906}
-  m_Enabled: 0
 --- !u!20 &1813091909
 Camera:
   m_ObjectHideFlags: 0
@@ -33532,12 +33553,12 @@ Prefab:
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 54468411833861550, guid: 89f0e21bdbb5a6547b1f8b2aed502951,
         type: 2}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114734196218329504, guid: 89f0e21bdbb5a6547b1f8b2aed502951, type: 2}

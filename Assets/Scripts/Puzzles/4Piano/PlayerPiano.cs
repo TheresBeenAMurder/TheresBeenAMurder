@@ -4,11 +4,14 @@ using UnityEngine;
 public class PlayerPiano : MonoBehaviour
 {
     public Transform leftmost;
+    public NPC madeline;
+    public MavisConversation mavisConvo;
     public Dictionary<string, WallButton> movableWalls;
     public WallButton[] walls;
     public Transform snapPoint;
+    public VictorConversation victorConvo;
 
-   
+    private bool wallsMoved = false;
 
     void snapCylinder(GameObject insertedCyl)
     {
@@ -72,6 +75,16 @@ public class PlayerPiano : MonoBehaviour
         if (movableWalls.ContainsKey(s))
         {
             movableWalls[s].Move();
+            madeline.UpdateNextPrompt(-1);
+
+            // Makes sure that Mavis' conversation is only accessible once,
+            // even if the walls move multiple times
+            if (!wallsMoved)
+            {
+                StartCoroutine(mavisConvo.AfterWalls());
+                StartCoroutine(victorConvo.AfterWalls());
+                wallsMoved = true;
+            }
         }
     }
 
