@@ -2,29 +2,25 @@
 
 public class Player : MonoBehaviour
 {
-    public GameObject playerHead;
-    public GameObject polaroid;
-    public OVRInput.Button polaroidToggleButton;
+    public AudioSource openingDialogue;
+    public GameObject outsideFloor;
 
-    private void TogglePolaroid()
+    private int outsideFloorLayer;
+
+    public void Start()
     {
-        if (polaroid.activeSelf)
-        {
-            // turn it off
-            polaroid.SetActive(false);
-        }
-        else
-        {
-            // turn it on
-            polaroid.SetActive(true);
-        }
+        outsideFloorLayer = outsideFloor.layer;
+
+        // Switch the outside floor layer so you can't teleport
+        outsideFloor.layer = 0;
     }
 
-    private void Update()
+    public void Update()
     {
-        if(OVRInput.GetDown(polaroidToggleButton))
+        if (!openingDialogue.isPlaying)
         {
-            TogglePolaroid();
+            outsideFloor.layer = outsideFloorLayer;
+            enabled = false;
         }
     }
 }
