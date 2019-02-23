@@ -9,7 +9,10 @@ public class CenterFrameButton : MonoBehaviour
     public GameObject indicator;
     public float range = 0.3f;
 
-    public CenterFramePivot pivot;
+    public float moveTime = 1 / .1f;
+    public Transform openPosition;
+    public Rigidbody frame;
+    public AudioSource frameAudio;
 
     // Hint related
     public AudioSource playerAudio;
@@ -22,7 +25,8 @@ public class CenterFrameButton : MonoBehaviour
     {
         done = true;
         centerFrame.enabled = false;
-        pivot.RotateOpen();
+        StartCoroutine(Movement.SmoothMove(openPosition.position, moveTime, frame));
+        frameAudio.Play();
 
         // Ghost hands are no longer needed
         Destroy(centerFrame.leftGhost);
