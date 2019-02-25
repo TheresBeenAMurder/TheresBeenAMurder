@@ -8,6 +8,10 @@ public class Wall : MonoBehaviour
     public Wall wallAbove;
     public Wall wallBelow;
 
+    public bool isStudy = false;
+    bool hasDropped = false;
+    public CorpseDrop corpseDropper;
+
     private float moveTime = .2f / .1f;
 
     public bool CanMoveDown()
@@ -37,6 +41,14 @@ public class Wall : MonoBehaviour
             parentRigidbody.position.z);
 
         yield return Movement.SmoothMove(end, moveTime, parentRigidbody);
+        if (isStudy && !hasDropped)
+        {
+            yield return new WaitForSeconds(.5f);
+            corpseDropper.Drop();
+            hasDropped = true;
+        }
+
+
     }
 
     // call from the lowest wall in the stack
