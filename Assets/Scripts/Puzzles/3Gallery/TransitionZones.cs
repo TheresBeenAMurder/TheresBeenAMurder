@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionZones : MonoBehaviour {
-
+public class TransitionZones : MonoBehaviour
+{
     public float midHeight;
     public float midWidth;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -79,9 +74,7 @@ public class TransitionZones : MonoBehaviour {
                         gh.transform.localRotation = Quaternion.Euler(0, 0, 90);
                     }
                 }
-
             }
-
         }
     }
 
@@ -89,14 +82,7 @@ public class TransitionZones : MonoBehaviour {
     {
         if (other.CompareTag("GhostHand"))
         {
-            
 
         }
-
     }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }
