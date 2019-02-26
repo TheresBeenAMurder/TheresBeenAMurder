@@ -11,18 +11,20 @@ public class SoundtrackLayer : MonoBehaviour
 
     public float fadeTime;
 
+    public float maxFade = .5f;
+
 
     public void Update ()
     {
         if(fadingIn)
         {
-            if (audioSource.volume + (1 / fadeTime * Time.deltaTime) < 1)
+            if (audioSource.volume + (maxFade / fadeTime * Time.deltaTime) < maxFade)
             {
-                audioSource.volume += (1 / fadeTime * Time.deltaTime);
+                audioSource.volume += (maxFade / fadeTime * Time.deltaTime);
             }
             else //reach max volume & we're done fading in
             {
-                audioSource.volume = 1;
+                audioSource.volume = maxFade;
                 fadingIn = false;
             }
             
@@ -31,9 +33,9 @@ public class SoundtrackLayer : MonoBehaviour
 
         if(fadingOut)
         {
-            if (audioSource.volume - (1 / fadeTime * Time.deltaTime) > 0)
+            if (audioSource.volume - (maxFade / fadeTime * Time.deltaTime) > 0)
             {
-                audioSource.volume -= (1 / fadeTime * Time.deltaTime);
+                audioSource.volume -= (maxFade / fadeTime * Time.deltaTime);
             }
             else //reach 0 volume & we're done fading out
             {

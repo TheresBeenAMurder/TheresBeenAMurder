@@ -112,7 +112,7 @@ public class CenterFrame : MonoBehaviour
         }
     }
 
-    private void TurnGhostHandsOff()
+    public void TurnGhostHandsOff()
     {
         isPaused = true;
         leftGhost.SetActive(false);

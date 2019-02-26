@@ -11,46 +11,66 @@ public class PlayerPiano : MonoBehaviour
     public Transform snapPoint;
     public VictorConversation victorConvo;
 
+    public GameObject cover;
+
     private bool wallsMoved = false;
 
     void snapCylinder(GameObject insertedCyl)
     {
+        insertedCyl.transform.position = snapPoint.position;
 
-        //insertedCyl.GetComponent<OVRGrabbable>().GrabEnd(Vector3.zero, Vector3.zero);
-       // insertedCyl.transform.parent = transform;
-        
-       // insertedCyl.transform.rotation = Quaternion.Euler(0, transform.rotation.y, 90);
+        //rotate either 0 or 180
 
-
+        if (insertedCyl.transform.localRotation.x > 0 && insertedCyl.transform.rotation.x < 180)
+        {
+            insertedCyl.transform.rotation = new Quaternion(90, 0, 0, 0);
+        }
+        else
+        {
+            insertedCyl.transform.rotation = new Quaternion(-90, 0, 0, 0);
+        }
         
 
     }
 
-    public void InsertCylinder(PianoCylinder inserted)
+   
+    public IEnumerator<WaitForSeconds> ShowCover()
     {
-        
 
+        cover.SetActive(true);
+        yield return new WaitForSeconds(1);
+        cover.SetActive(false);
+
+
+    }
+
+
+    public void InsertCylinder(PianoCartridge inserted)
+    {
+
+        CartridgeDisc[] allChildren = inserted.discs;
+
+        StartCoroutine(ShowCover());
+       // snapCylinder(inserted.gameObject);
         //construct our string
         string s = "";
 
-        PianoCylinder[] allChildren = inserted.GetComponentsInChildren<PianoCylinder>();
-
         //now we gotta sort em
-        List<PianoCylinder> childCyls = new List<PianoCylinder>();
+        List<CartridgeDisc> childCyls = new List<CartridgeDisc>();
 
-        foreach (PianoCylinder pc in allChildren)
+        foreach (CartridgeDisc pc in allChildren)
         {
             childCyls.Add(pc);
         }
 
         int newIndex = 0;
 
-        PianoCylinder[] sorted = new PianoCylinder[allChildren.Length];
+        CartridgeDisc[] sorted = new CartridgeDisc[allChildren.Length];
 
         while (childCyls.Count > 0)
         {
-            PianoCylinder pcLeast = childCyls[0];
-            foreach (PianoCylinder pc in childCyls)
+            CartridgeDisc pcLeast = childCyls[0];
+            foreach (CartridgeDisc pc in childCyls)
             {
                 if (Vector3.Distance(pc.transform.position, leftmost.transform.position) < Vector3.Distance(pcLeast.transform.position, leftmost.transform.position))
                 {
@@ -64,9 +84,9 @@ public class PlayerPiano : MonoBehaviour
             newIndex++;
         }
 
-        foreach (PianoCylinder p in sorted)
+        foreach (CartridgeDisc p in sorted)
         {
-            s += p.color.ToString();
+            s += p.ID.ToString();
         }
 
         snapCylinder(inserted.gameObject);
@@ -91,10 +111,10 @@ public class PlayerPiano : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         //only check the top one in the hierarchy. i'm brilliant
-        if (other.CompareTag("PianoCylinder") &&
-            (other.transform.parent == null || !other.transform.parent.CompareTag("PianoCylinder")))
+        if (other.CompareTag("PianoCartridge"))            
         {
-            InsertCylinder(other.gameObject.GetComponent<PianoCylinder>());
+            InsertCylinder(other.gameObject.GetComponent<PianoCartridge>());
+            
         }
     }
 

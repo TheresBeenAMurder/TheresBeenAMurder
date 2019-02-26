@@ -25,6 +25,7 @@ public class CenterFrameButton : MonoBehaviour
     {
         done = true;
         centerFrame.enabled = false;
+        centerFrame.TurnGhostHandsOff();
         StartCoroutine(Movement.SmoothMove(openPosition.position, moveTime, frame));
         frameAudio.Play();
 
