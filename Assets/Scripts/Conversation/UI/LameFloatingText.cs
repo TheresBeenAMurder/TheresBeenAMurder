@@ -21,7 +21,8 @@ public class LameFloatingText : MonoBehaviour
         this.character = character;
 
         // Then Move it (still no text displayed)
-        transform.localPosition = new Vector3(0, 25, 0);
+        transform.localScale = new Vector3(.05f, .05f, .05f);
+        transform.localPosition = new Vector3(0, .8f, 0);
         ShiftPosition(offset);
 
         // Finally, display the given text

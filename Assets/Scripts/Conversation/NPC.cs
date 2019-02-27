@@ -119,15 +119,16 @@ public class NPC : MonoBehaviour
         conversationUI.ExitConversation(other);
     }
 
+    public int PromptID()
+    {
+        return promptID;
+    }
+
     public void Start()
     {
         accusation = gameObject.GetComponent<Accusation>();
         conversationAudio = gameObject.GetComponent<AudioSource>();
         conversationUI = gameObject.GetComponent<ConversationUI>();
-
-        // Wouldn't normally want to reset on load, only on new game
-        // This reset is for our single scene testing.
-        dbHandler.ResetDatabaseToDefault(id);
     }
 
     public void StartAccusation()
@@ -198,7 +199,8 @@ public class NPC : MonoBehaviour
         relationshipValue = (relationshipValue < RelationshipLowerBound) ? 0 : relationshipValue;
         relationshipValue = (relationshipValue > RelationshipUpperBound) ? 10 : relationshipValue;
 
-        UpdateRelationshipStatus();
+        // Commented out because other NPCs don't have soundtrack layers assigned yet
+        //UpdateRelationshipStatus();
         string update = "UPDATE Characters SET RelationshipValue = " + relationshipValue +
             " WHERE ID ==" + id;
         dbHandler.ExecuteNonQuery(update);

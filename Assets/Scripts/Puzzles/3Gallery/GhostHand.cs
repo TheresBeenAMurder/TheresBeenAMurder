@@ -24,16 +24,15 @@ public class GhostHand : MonoBehaviour {
 
     public Transform startPos;
 
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         prevY = parentHand.transform.localPosition.y;
         prevX = parentHand.transform.localPosition.x;
-
-//        isVertical = true;
+        transform.rotation = new Quaternion(0, 0, 0, 0);
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         float currentY = parentHand.transform.localPosition.y;
         float currentX = parentHand.transform.localPosition.x;
 

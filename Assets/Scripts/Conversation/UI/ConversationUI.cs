@@ -7,6 +7,7 @@ public class ConversationUI : MonoBehaviour
 
     public Camera centerEyeCam;
     public bool inConversation = false;
+    public PlayerConversation playerConversation;
     public GameObject prefab;
 
     private Text displayBox = null;
@@ -84,6 +85,7 @@ public class ConversationUI : MonoBehaviour
     public void EndConversation()
     {
         inConversation = false;
+        playerConversation.inConversation = false;
     }
 
     public void ExitConversation(Collider other)
@@ -94,6 +96,7 @@ public class ConversationUI : MonoBehaviour
             ClearOptions();
             inConversation = false;
             playerNear = false;
+            playerConversation.inConversation = false;
         }
     }
 
@@ -123,7 +126,7 @@ public class ConversationUI : MonoBehaviour
 
     public void PromptForConversation(Collider other, string name)
     {
-        if (!playerNear && !inConversation && other.gameObject.tag == "Player")
+        if (!playerNear && !inConversation && other.gameObject.tag == "Player" && !playerConversation.inConversation)
         {
             displayBox.text = "Press B to speak to " + name;
             playerNear = true;
@@ -135,16 +138,17 @@ public class ConversationUI : MonoBehaviour
         displayBox = gameObject.GetComponentInChildren<Text>();
     }
 
-    public bool StartConversationCheck()
-    {
-        if (!inConversation && playerNear && OVRInput.GetDown(ConversationButton))
-        {
-            inConversation = true;
-            return true;
-        }
+    ////public bool StartConversationCheck()
+    ////{
+    ////    if (!inConversation && playerNear && OVRInput.GetDown(ConversationButton))
+    ////    {
+    ////        inConversation = true;
+    ////        playerConversation.inConversation = true;
+    ////        return true;
+    ////    }
 
-        return false;
-    }
+    ////    return false;
+    ////}
 
     // Determines whether or not to start a conversation
     public void Update()
@@ -152,6 +156,7 @@ public class ConversationUI : MonoBehaviour
         if (!inConversation && playerNear && OVRInput.GetDown(ConversationButton))
         {
             inConversation = true;
+            playerConversation.inConversation = true;
             gameObject.GetComponent<NPC>().StartConversation();
         }
     }
