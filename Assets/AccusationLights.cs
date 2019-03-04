@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AccusationLights : MonoBehaviour {
-
+public class AccusationLights : MonoBehaviour
+{
     public GameObject lights;
-
 
     private void Update()
     {
@@ -13,23 +10,22 @@ public class AccusationLights : MonoBehaviour {
         {
             if (lights.activeSelf)
             {
-                turnOff();
+                TurnOff();
             }
             else
             {
-                turnRed();
+                TurnOn();
             }
         }
     }
 
-    void turnRed()
+    public void TurnOn()
     {
         lights.SetActive(true);
     }
 
-    void turnOff()
+    public void TurnOff()
     {
         lights.SetActive(false);
-
     }
 }

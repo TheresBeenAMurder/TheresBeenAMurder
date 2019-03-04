@@ -37,7 +37,7 @@ public class ConversationUI : MonoBehaviour
                 middleVal = (totalNumOptions / 2) + 1f;
             }
 
-            x = 10 * (numOption - middleVal);
+            x = 1 * (numOption - middleVal);
         }
 
         return new Vector3(x, y, z);
@@ -63,7 +63,7 @@ public class ConversationUI : MonoBehaviour
 
         for (int i = responses.Length - 1; i >= 0; i--)
         {
-            if (responses[i] != "")
+            if (responses[i] != null && responses[i] != "")
             {
                 totalNumOptions = i + 1;
                 break;
@@ -82,13 +82,18 @@ public class ConversationUI : MonoBehaviour
         }
     }
 
-    public void EndConversation()
+    public void EndConversation(bool wasAccusing = false, AccusationLights lights = null)
     {
         inConversation = false;
         playerConversation.inConversation = false;
+
+        if (wasAccusing)
+        {
+            lights.TurnOff();
+        }
     }
 
-    public void ExitConversation(Collider other)
+    public void ExitConversation(Collider other, bool wasAccusing = false, AccusationLights lights = null)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -97,6 +102,11 @@ public class ConversationUI : MonoBehaviour
             inConversation = false;
             playerNear = false;
             playerConversation.inConversation = false;
+
+            if (wasAccusing)
+            {
+                lights.TurnOff();
+            }
         }
     }
 

@@ -33,6 +33,7 @@ public class NPC : MonoBehaviour
 
     // conversation related
     private Accusation accusation;
+    public AccusationLights accusationLights;
     public bool canAccuse = false;
     private int currentAccuseChoice = 0;
     public bool isAccusing = false;
@@ -84,7 +85,7 @@ public class NPC : MonoBehaviour
         isAccusing = accusation.SelectChoice(choice);
         if (!isAccusing)
         {
-            conversationUI.EndConversation();
+            conversationUI.EndConversation(true, accusationLights);
         }
     }
 
@@ -116,7 +117,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        conversationUI.ExitConversation(other);
+        conversationUI.ExitConversation(other, isAccusing, accusationLights);
     }
 
     public int PromptID()
@@ -134,6 +135,7 @@ public class NPC : MonoBehaviour
     public void StartAccusation()
     {
         isAccusing = true;
+        accusationLights.TurnOn();
         accusation.StartAccusation();
     }
 
@@ -236,9 +238,9 @@ public class NPC : MonoBehaviour
                 // Make sure the voice line plays all the way through
                 yield return new WaitForSeconds(conversationAudio.clip.length);
             }
-
-            WriteResponses(addAccuseOpt);
         }
+
+        WriteResponses(addAccuseOpt);
     }
 
     public void WriteResponses(bool addAccuseOpt = false)
@@ -246,24 +248,27 @@ public class NPC : MonoBehaviour
         string[] responseDisplays = new string[5];
         responseDisplays[4] = "";
 
-        int currentDisplay = 0;
-        foreach (int id in responseIDs)
+        if (promptID != -1)
         {
-            if (id > -1)
+            int currentDisplay = 0;
+            foreach (int id in responseIDs)
             {
-                string query = "SELECT DisplayText FROM Responses WHERE ID ==" + id;
-                IDataReader reader = dbHandler.ExecuteQuery(query);
+                if (id > -1)
+                {
+                    string query = "SELECT DisplayText FROM Responses WHERE ID ==" + id;
+                    IDataReader reader = dbHandler.ExecuteQuery(query);
 
-                reader.Read();
-                responseDisplays[currentDisplay] = reader.GetString(0);
-                reader.Close();
-            }
-            else
-            {
-                responseDisplays[currentDisplay] = "";
-            }
+                    reader.Read();
+                    responseDisplays[currentDisplay] = reader.GetString(0);
+                    reader.Close();
+                }
+                else
+                {
+                    responseDisplays[currentDisplay] = "";
+                }
 
-            currentDisplay++;
+                currentDisplay++;
+            }
         }
 
         // Adds an accuse option if the player can now accuse

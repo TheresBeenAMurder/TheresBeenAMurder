@@ -34,6 +34,9 @@ public class PlantWall : MonoBehaviour
             gallery.ActivateImages();
             isSolved = true;
 
+            // Turns on accusations for all NPCs
+            playerConversation.CanAccuse();
+
             if (madelineCurrentPrompt != null)
             {
                 madeline.UpdateNextPrompt((int)madelineCurrentPrompt);

@@ -4,6 +4,7 @@ using UnityEngine;
 public class CenterFrameButton : MonoBehaviour
 {
     public CenterFrame centerFrame;
+    public DatabaseHandler dbHandler;
     private bool done = false;
 
     public GameObject indicator;
@@ -35,6 +36,16 @@ public class CenterFrameButton : MonoBehaviour
 
         // Remove hint conversation with Victor
         victor.UpdateNextPrompt(-1);
+
+        // Testing the updated accusation mechanic
+        dbHandler.FindEvidence("motive", 2, 1);
+        dbHandler.FindEvidence("motive", 2, 5);
+        dbHandler.FindEvidence("opportunity", 3, 12);
+        dbHandler.FindEvidence("alibi", 3, 13);
+        dbHandler.FindEvidence("motive", 3, 8);
+        dbHandler.FindEvidence("motive", 4, 14);
+        dbHandler.FindEvidence("motive", 4, 15);
+        dbHandler.FindEvidence("motive", 4, 16);
     }
 
     public IEnumerator Hint()
