@@ -2,7 +2,7 @@
 
 public abstract class Key : MonoBehaviour
 {
-    public int ID;
+    public string ID;
 
     public abstract Puzzle PuzzleType();
 

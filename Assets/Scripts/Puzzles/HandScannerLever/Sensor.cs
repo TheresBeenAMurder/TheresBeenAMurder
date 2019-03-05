@@ -5,7 +5,7 @@ using UnityEngine;
 public class Sensor : MonoBehaviour
 {
     public Material correctColor;
-    public int[] correctKeyIDs;
+    public string[] correctKeyIDs;
     public Material incorrectColor;
     public Puzzle puzzle;
 

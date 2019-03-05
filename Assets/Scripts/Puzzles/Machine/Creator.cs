@@ -8,21 +8,21 @@ public class Creator : MonoBehaviour
     public ValidKeys[] validKeys;
 
     private GameObject currentCanister;
-    private Dictionary<int, AudioClip> _validKeys = new Dictionary<int, AudioClip>();
+    private Dictionary<string, AudioClip> _validKeys = new Dictionary<string, AudioClip>();
 
     // Returns true if the cannister is empty and can be filled with a new key
     private bool CanisterEmpty()
     {
         if (currentCanister != null)
         {
-            return (currentCanister.GetComponent<ArchiveKey>().ID == 0);
+            return (currentCanister.GetComponent<ArchiveKey>().ID.Equals(""));
         }
 
         return false;
     }
 
     // Returns true if succeeded in creating a key
-    public bool CreateKey(int id)
+    public bool CreateKey(string id)
     {
         AudioClip soundFile;
         if (CanisterEmpty())
@@ -42,18 +42,31 @@ public class Creator : MonoBehaviour
         if (collider.gameObject != null && collider.gameObject == currentCanister)
         {
             currentCanister = null;
+
+            SnapGrabbable canister = collider.gameObject.GetComponent<SnapGrabbable>();
+            if (canister != null)
+            {
+                canister.isInDropZone = false;
+            }
         }
     }
 
-    public void OnTriggerStay(Collider collider)
+    public void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject != null)
+        if (currentCanister == null && collider.gameObject != null)
         {
             ArchiveKey key = collider.gameObject.GetComponent<ArchiveKey>();
             if (key != null)
             {
                 currentCanister = collider.gameObject;
-                combiner.CheckKeys();
+
+                SnapGrabbable canister = collider.gameObject.GetComponent<SnapGrabbable>();
+
+                if (canister != null)
+                {
+                    canister.snapTransform = transform;
+                    canister.isInDropZone = true;
+                }
             }
         }
     }
@@ -71,6 +84,6 @@ public class Creator : MonoBehaviour
 [Serializable]
 public struct ValidKeys
 {
-    public int key;
+    public string key;
     public AudioClip value;
 }
