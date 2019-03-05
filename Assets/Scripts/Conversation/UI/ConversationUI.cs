@@ -5,6 +5,8 @@ public class ConversationUI : MonoBehaviour
 {
     private static OVRInput.Button ConversationButton = OVRInput.Button.Two;
 
+    public NPCAnimator animator;
+
     public Camera centerEyeCam;
     public bool inConversation = false;
     public PlayerConversation playerConversation;
@@ -84,6 +86,7 @@ public class ConversationUI : MonoBehaviour
 
     public void EndConversation(bool wasAccusing = false, AccusationLights lights = null)
     {
+        animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
         inConversation = false;
         playerConversation.inConversation = false;
 
@@ -101,6 +104,7 @@ public class ConversationUI : MonoBehaviour
             ClearOptions();
             inConversation = false;
             playerNear = false;
+            animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
             playerConversation.inConversation = false;
 
             if (wasAccusing)
@@ -167,6 +171,7 @@ public class ConversationUI : MonoBehaviour
         {
             inConversation = true;
             playerConversation.inConversation = true;
+            animator.changeState(NPCAnimator.CHARACTERSTATE.TALKNORMAL);
             gameObject.GetComponent<NPC>().StartConversation();
         }
     }

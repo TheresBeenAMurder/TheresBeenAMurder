@@ -22,7 +22,8 @@ public class NPCAnimator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currentState = CHARACTERSTATE.TALKNORMAL;
-	}
+        animator.SetInteger("state", 5);
+    }
 	
     public void changeState(CHARACTERSTATE newState)
     {
