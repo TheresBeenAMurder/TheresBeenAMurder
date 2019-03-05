@@ -22,6 +22,15 @@ public class DatabaseHandler: MonoBehaviour
         return reader;
     }
 
+    // Update the evidence in the database to found, the evidence is now
+    // accessible through the accusation mechanic
+    public void FindEvidence(string evidenceType, int characterID, int evidenceID)
+    {
+        string update = "UPDATE Evidence SET Found = 1 WHERE CharacterID ==" +
+            characterID + " AND Type == '" + evidenceType + "' AND ID ==" + evidenceID;
+        OpenUpdateClose(update);
+    }
+
     public void OnDestroy()
     {
         // Close the database before ending the scene completely
@@ -76,12 +85,18 @@ public class DatabaseHandler: MonoBehaviour
         ShutDownDatabase();
     }
 
-    public void SetUpDatabase()
+    // Returns false if the database wasn't open already, true if it was
+    public bool SetUpDatabase()
     {
-        string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
-        database = (IDbConnection)new SqliteConnection(connection);
-        database.Open();
-        command = database.CreateCommand();
+        if (database == null)
+        {
+            string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
+            database = (IDbConnection)new SqliteConnection(connection);
+            database.Open();
+            command = database.CreateCommand();
+            return false;
+        }
+        return true;
     }
 
     public void ShutDownDatabase()

@@ -12,7 +12,8 @@ public class Accusation : MonoBehaviour
     private ConversationUI conversationUI;
     private evidenceType currentEvidence;
     public DatabaseHandler dbHandler;
-    private Dictionary<evidenceType, Evidence> evidenceMappings = new Dictionary<evidenceType, Evidence>();
+    private Dictionary<evidenceType, List<Evidence>> evidenceMappings = new Dictionary<evidenceType, List<Evidence>>();
+    private int selectedEvidenceID;
 
     // audio related
     private string audioFolder;
@@ -22,13 +23,19 @@ public class Accusation : MonoBehaviour
 
     public int gameOverScene = 2;
 
-    private void DescribeEvidence()
+    private void ClearLoadedEvidence()
+    {
+        evidenceMappings.Clear();
+    }
+
+    private void DescribeEvidence(int choice)
     {
         string audioPath = "Audio/Player/" + evidenceNotFoundAudio;
+        Evidence chosenEvidence = evidenceMappings[currentEvidence][choice - 1];
 
-        if (evidenceMappings[currentEvidence].found)
+        if (chosenEvidence.found)
         {
-            string evidenceAudio = evidenceMappings[currentEvidence].audioFile;
+            string evidenceAudio = chosenEvidence.audioFile;
             audioPath = "Audio/Player/" + evidenceAudio;
         }
 
@@ -39,23 +46,19 @@ public class Accusation : MonoBehaviour
         }
     }
 
-    // Update the evidence in the database to found, the evidence is now
-    // accessible through the accusation mechanic
-    public void FindEvidence(string evidenceType, int characterID)
-    {
-        string update = "UPDATE Evidence SET Found = 1 WHERE CharacterID ==" + 
-            characterID + " AND Type == '" + evidenceType + "'";
-        dbHandler.OpenUpdateClose(update);
-    }
-
     private void GiveOptions()
     {
-        string[] options = new string[1];
+        string[] options = new string[evidenceMappings[currentEvidence].Count];
         options[0] = "Unknown";
+        int tempOptNum = 0;
 
-        if (evidenceMappings[currentEvidence].found)
+        foreach (Evidence evidence in evidenceMappings[currentEvidence])
         {
-            options[0] = evidenceMappings[currentEvidence].description;
+            if (evidence.found)
+            {
+                options[tempOptNum] = evidence.description;
+                tempOptNum++;
+            }
         }
 
         conversationUI.DisplayResponseOptions(options);
@@ -73,7 +76,7 @@ public class Accusation : MonoBehaviour
     // Gather the evidence against/for a specific character
     private void InitializeEvidence()
     {
-        string query = "SELECT Type, Found, Audio, Description FROM 'Evidence' WHERE CharacterID == " + characterID;
+        string query = "SELECT Type, Found, Audio, Description, ID FROM 'Evidence' WHERE CharacterID == " + characterID;
         IDataReader reader = dbHandler.ExecuteQuery(query);
 
         while (reader.Read())
@@ -82,17 +85,20 @@ public class Accusation : MonoBehaviour
             bool found = reader.GetBoolean(1);
             string audio = reader.IsDBNull(2) ? "" : reader.GetString(2);
             string description = reader.GetString(3);
+            int id = reader.GetInt32(4);
 
             evidenceType evType = (evidenceType)Enum.Parse(typeof(evidenceType), type);
-            Evidence newEvidence = new Evidence(audio, description, found);
+            Evidence newEvidence = new Evidence(audio, description, found, id);
             try
             {
-                evidenceMappings.Add(evType, newEvidence);
+                List<Evidence> newEvidenceSection = new List<Evidence>();
+                newEvidenceSection.Add(newEvidence);
+                evidenceMappings.Add(evType, newEvidenceSection);
             }
             catch (ArgumentException)
             {
-                // Update the value that's already there
-                evidenceMappings[evType] = newEvidence;
+                // Add it to the list that's already there
+                evidenceMappings[evType].Add(newEvidence);
             }
         }
         reader.Close();
@@ -126,7 +132,7 @@ public class Accusation : MonoBehaviour
         }
         else
         {
-            DescribeEvidence();
+            DescribeEvidence(choice);
         }
 
         UpdateNextEvidence();
@@ -150,6 +156,7 @@ public class Accusation : MonoBehaviour
         conversationUI.ClearOptions();
         currentEvidence = evidenceType.initial;
 
+        ClearLoadedEvidence();
         InitializeEvidence();
         StartCoroutine(TalkAbout(currentEvidence));
     }

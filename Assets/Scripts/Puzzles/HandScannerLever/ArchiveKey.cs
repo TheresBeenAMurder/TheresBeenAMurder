@@ -10,12 +10,12 @@ public class ArchiveKey : Key
     // Removes information from archive key cannister
     public void Empty()
     {
-        ID = 0;
+        ID = "";
         audioClip = null;
         GetComponent<Renderer>().material = emptyColor;
     }
 
-    public void Fill(int id, AudioClip audio)
+    public void Fill(string id, AudioClip audio)
     {
         ID = id;
         audioClip = audio;
@@ -33,15 +33,19 @@ public class ArchiveKey : Key
         {
             audioSource.clip = audioClip;
             audioSource.Play();
-            Empty();
+            //Empty();
         }
     }
 
     public void Start()
     {
-        if (ID != 0)
+        if (ID != "")
         {
             GetComponent<Renderer>().material = fullColor;
+        }
+        else
+        {
+            GetComponent<Renderer>().material = emptyColor;
         }
     }
 }

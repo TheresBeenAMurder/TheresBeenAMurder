@@ -1,86 +1,81 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-// Takes 3 objects and combines them to create a key for
+// Takes 4 objects and combines them to create a key for
 // the archives.
 public class Combiner : MonoBehaviour
 {
     public Creator creator;
+    public Material pressedMaterial;
+    public MachineSensor[] sensors = new MachineSensor[4];
 
-    private List<MachineKey> currentKeys = new List<MachineKey>();
+    private MachineKey[] currentKeys = new MachineKey[4];
+    private Material defaultMaterial;
+    private bool isPressed = false;
 
-    public void CheckKeys()
+    // Returns true if all sensors are populated, false otherwise
+    // If true, currentKeys contains the keys on the sensors
+    public bool CheckKeys()
     {
-        if (currentKeys.Count != 3)
+        for (int i = 0; i < 4; i++)
         {
-            return;
-        }
-
-        // Currently has 3 keys, time to combine/create
-        int combined = CombineKeys();
-        StartCoroutine(Clear(combined));
-    }
-
-    private IEnumerator Clear(int combined)
-    {
-        yield return new WaitForSeconds(1);
-
-        if (creator.CreateKey(combined))
-        {
-            foreach (MachineKey key in currentKeys)
+            if (!sensors[i].ContainsKey())
             {
-                // Destroys game object associated
-                key.Solve();
+                return false;
             }
-            currentKeys.Clear();
+
+            currentKeys[i] = sensors[i].currentKey;
         }
+
+        return true;
     }
 
-    private int CombineKeys()
+    // Returns a string comprised of 4 characters
+    private string CombineKeys()
     {
-        List<int> keyIDs = new List<int>();
+        string combined = "";
+
         foreach (MachineKey key in currentKeys)
         {
-            keyIDs.Add(key.ID);
+            combined += key.ID;
         }
 
-        int combined = 0;
-        for (int i = 2; i >= 0; i--)
-        {
-            int min = keyIDs.Min();
-            combined += min * (int)Mathf.Pow(10f, i);
-            keyIDs.Remove(min);
-        }
-
-        // Combined key is 3 digits, smallest number to largest, duplicate
-        // numbers are possible
         return combined;
     }
 
-    public void OnTriggerExit(Collider collider)
+    public void OnTriggerEnter(Collider other)
     {
-        MachineKey key = collider.gameObject.GetComponent<MachineKey>();
-        if (key != null)
+        if (!isPressed && other.gameObject.tag == "Player")
         {
-            if (currentKeys.Contains(key))
-            {
-                currentKeys.Remove(key);
-            }
+            StartCoroutine("PressButton");
         }
     }
 
-    public void OnTriggerEnter(Collider collider)
+    // Makes button unable to be pressed again for 3 seconds after it is
+    // initially pressed. (We can make this the animation time)
+    public IEnumerator PressButton()
     {
-        MachineKey key = collider.gameObject.GetComponent<MachineKey>();
-        if (key != null)
+        Renderer renderer = GetComponent<Renderer>();
+
+        // "Press" the button
+        isPressed = true;
+        renderer.material = pressedMaterial;
+        
+        if (CheckKeys())
         {
-            if (!currentKeys.Contains(key))
-            {
-                currentKeys.Add(key);
-                CheckKeys();
-            }
+            creator.CreateKey(CombineKeys());
         }
+
+        // Wait for animation
+        yield return new WaitForSeconds(3);
+
+        // button is no longer pressed
+        isPressed = false;
+        renderer.material = defaultMaterial;
+    }
+
+    private void Start()
+    {
+        defaultMaterial = GetComponent<Renderer>().material;
     }
 }

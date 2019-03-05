@@ -6,7 +6,8 @@ public class CartridgeSlot : MonoBehaviour {
 
     public PianoCartridge parent;
 
-    bool hasChild = false;
+   public bool hasChild = false;
+    GameObject child;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +25,7 @@ public class CartridgeSlot : MonoBehaviour {
         CartridgeDisc cd = other.GetComponent<CartridgeDisc>();
         if (cd != null)
         {
-            if (cd.grabbedBy != null)
+            if (cd.grabbedBy != null && cd.gameObject.name == child.gameObject.name)
             {
                 other.transform.parent = null;
                 hasChild = false;
@@ -47,6 +48,7 @@ public class CartridgeSlot : MonoBehaviour {
                 cd.isInDropZone = true;
 
                 parent.addDisc(cd, gameObject.name);
+                child = cd.gameObject;
             }
 
 

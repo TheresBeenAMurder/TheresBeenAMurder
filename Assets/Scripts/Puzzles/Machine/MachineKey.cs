@@ -7,6 +7,6 @@
 
     public override void Solve()
     {
-        Destroy(gameObject);
+        // Do nothing
     }
 }

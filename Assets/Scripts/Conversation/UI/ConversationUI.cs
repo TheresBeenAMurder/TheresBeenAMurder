@@ -5,6 +5,8 @@ public class ConversationUI : MonoBehaviour
 {
     private static OVRInput.Button ConversationButton = OVRInput.Button.Two;
 
+    public NPCAnimator animator;
+
     public Camera centerEyeCam;
     public bool inConversation = false;
     public PlayerConversation playerConversation;
@@ -37,7 +39,7 @@ public class ConversationUI : MonoBehaviour
                 middleVal = (totalNumOptions / 2) + 1f;
             }
 
-            x = 10 * (numOption - middleVal);
+            x = 1 * (numOption - middleVal);
         }
 
         return new Vector3(x, y, z);
@@ -63,7 +65,7 @@ public class ConversationUI : MonoBehaviour
 
         for (int i = responses.Length - 1; i >= 0; i--)
         {
-            if (responses[i] != "")
+            if (responses[i] != null && responses[i] != "")
             {
                 totalNumOptions = i + 1;
                 break;
@@ -82,13 +84,19 @@ public class ConversationUI : MonoBehaviour
         }
     }
 
-    public void EndConversation()
+    public void EndConversation(bool wasAccusing = false, AccusationLights lights = null)
     {
+        animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
         inConversation = false;
         playerConversation.inConversation = false;
+
+        if (wasAccusing)
+        {
+            lights.TurnOff();
+        }
     }
 
-    public void ExitConversation(Collider other)
+    public void ExitConversation(Collider other, bool wasAccusing = false, AccusationLights lights = null)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -96,7 +104,13 @@ public class ConversationUI : MonoBehaviour
             ClearOptions();
             inConversation = false;
             playerNear = false;
+            animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
             playerConversation.inConversation = false;
+
+            if (wasAccusing)
+            {
+                lights.TurnOff();
+            }
         }
     }
 
@@ -157,6 +171,7 @@ public class ConversationUI : MonoBehaviour
         {
             inConversation = true;
             playerConversation.inConversation = true;
+            animator.changeState(NPCAnimator.CHARACTERSTATE.TALKNORMAL);
             gameObject.GetComponent<NPC>().StartConversation();
         }
     }
