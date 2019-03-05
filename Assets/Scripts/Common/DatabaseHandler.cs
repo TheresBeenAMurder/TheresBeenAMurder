@@ -85,12 +85,18 @@ public class DatabaseHandler: MonoBehaviour
         ShutDownDatabase();
     }
 
-    public void SetUpDatabase()
+    // Returns false if the database wasn't open already, true if it was
+    public bool SetUpDatabase()
     {
-        string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
-        database = (IDbConnection)new SqliteConnection(connection);
-        database.Open();
-        command = database.CreateCommand();
+        if (database == null)
+        {
+            string connection = "URI=file:" + Application.streamingAssetsPath + "/Database.db";
+            database = (IDbConnection)new SqliteConnection(connection);
+            database.Open();
+            command = database.CreateCommand();
+            return false;
+        }
+        return true;
     }
 
     public void ShutDownDatabase()
