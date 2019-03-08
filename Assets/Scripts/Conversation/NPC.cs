@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
@@ -43,6 +44,16 @@ public class NPC : MonoBehaviour
     // UI related
     private ConversationUI conversationUI;
 
+    // Trying something new
+    private Dictionary<int, int> choiceToPromptID = new Dictionary<int, int>();
+    private int chosenConversationPrompt;
+    private HashSet<int> startingPromptIDs = new HashSet<int>();
+
+    public void AddAvailableConversation(int promptID)
+    {
+        startingPromptIDs.Add(promptID);
+    }
+
     // Gets the relevant information from the database about the chosen
     // response and moves the conversation along
     public void ChooseResponse(int choice)
@@ -68,7 +79,7 @@ public class NPC : MonoBehaviour
         }
 
         UpdateRelationshipValue(relationshipEffect);
-        UpdateNextPrompt(nextPromptID);
+        UpdateNextPrompt(nextPromptID, choice);
 
         if (!end)
         {
@@ -77,6 +88,14 @@ public class NPC : MonoBehaviour
         else
         {
             conversationUI.EndConversation();
+        }
+    }
+
+    private void ClearResponseIDs()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            responseIDs[i] = -1;
         }
     }
 
@@ -125,6 +144,29 @@ public class NPC : MonoBehaviour
         return promptID;
     }
 
+    public void RemoveAvailableConversation(int promptID)
+    {
+        startingPromptIDs.Remove(promptID);
+
+        int newPromptID = -1;
+        if (promptID == this.promptID)
+        {
+            if (startingPromptIDs.Count > 1)
+            {
+                foreach (int id in startingPromptIDs)
+                {
+                    if (id != -1)
+                    {
+                        newPromptID = id;
+                        break;
+                    }
+                }
+            }
+        }
+
+        UpdateNextPrompt(newPromptID);
+    }
+
     public void Start()
     {
         accusation = gameObject.GetComponent<Accusation>();
@@ -143,12 +185,69 @@ public class NPC : MonoBehaviour
     {
         conversationUI.ClearDisplay();
         InitializeConversation();
-        StartCoroutine(WritePrompt(canAccuse));
+        StartConversationPrompt(canAccuse);
     }
 
-    public void UpdateNextPrompt(int promptID)
+    // This will only work if the detective has the first line for every conversation
+    public void StartConversationPrompt(bool addAccuseOpt = false)
     {
+        // Add the current promptID to the starting ID set
+        startingPromptIDs.Add(promptID);
+        ClearResponseIDs();
+        choiceToPromptID.Clear();
+
+        int currentResNum = 0;
+        // Can add up to but no more than 4 separate conversations
+        foreach (int id in startingPromptIDs)
+        {
+            if (id > -1)
+            {
+                string query = "SELECT Response1ID FROM Prompts WHERE ID ==" + id;
+                IDataReader reader = dbHandler.ExecuteQuery(query);
+
+                reader.Read();
+                responseIDs[currentResNum] = reader.GetInt32(0);
+                reader.Close();
+
+                choiceToPromptID.Add(currentResNum, id);
+                currentResNum++;
+            }
+
+            if (currentResNum >= 4)
+            {
+                break;
+            }
+        }
+
+        WriteResponses(addAccuseOpt);
+    }
+
+    public void UpdateNextPrompt(int promptID, int choice = -1)
+    {
+        // Remove the starting prompt for the current conversation and update it
+        if (choice != -1 && choiceToPromptID.ContainsKey(choice - 1))
+        {
+            startingPromptIDs.Remove(choiceToPromptID[choice - 1]);
+        }
+        
+        startingPromptIDs.Add(promptID);
+
+        // This conversation is over but there's still another one they can have
+        if (promptID == -1 && startingPromptIDs.Count > 1)
+        {
+            conversationUI.EndConversation();
+            foreach (int id in startingPromptIDs)
+            {
+                if (id != -1)
+                {
+                    promptID = id;
+                    break;
+                }
+            }
+        }
+
         this.promptID = promptID;
+        
         string update = "UPDATE Characters SET PromptID = " + promptID + " WHERE ID ==" + id;
         dbHandler.OpenUpdateClose(update);
     }
@@ -217,6 +316,7 @@ public class NPC : MonoBehaviour
 
         if (promptID != -1)
         {
+            choiceToPromptID.Clear();
             string query = "SELECT Response1ID, Response2ID, Response3ID, Response4ID, " +
             "AudioFile FROM Prompts WHERE ID ==" + promptID;
             IDataReader reader = dbHandler.ExecuteQuery(query);
@@ -228,6 +328,11 @@ public class NPC : MonoBehaviour
             responseIDs[3] = reader.GetInt32(3);
             string audioFile = reader.IsDBNull(4) ? "" : reader.GetString(4);
             reader.Close();
+
+            choiceToPromptID.Add(0, promptID);
+            choiceToPromptID.Add(1, promptID);
+            choiceToPromptID.Add(2, promptID);
+            choiceToPromptID.Add(3, promptID);
 
             // Play the voice line for the prompt
             if (audioFile != "")

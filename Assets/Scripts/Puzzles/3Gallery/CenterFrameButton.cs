@@ -16,6 +16,7 @@ public class CenterFrameButton : MonoBehaviour
     public AudioSource frameAudio;
 
     // Hint related
+    public NPC madeline;
     public AudioSource playerAudio;
     public PlayerConversation playerConversation;
     public NPC victor;
@@ -36,6 +37,9 @@ public class CenterFrameButton : MonoBehaviour
 
         // Remove hint conversation with Victor
         victor.UpdateNextPrompt(-1);
+
+        // Remove optional conversation with Madeline
+        madeline.RemoveAvailableConversation(25);
 
         // Testing the updated accusation mechanic
         dbHandler.FindEvidence("motive", 2, 1);

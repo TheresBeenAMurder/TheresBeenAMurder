@@ -69,7 +69,7 @@ public class CenterFrame : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && !ghostOn && isGrabbing)
+        if(enabled && other.CompareTag("Player") && !ghostOn && isGrabbing)
         {
             TurnGhostHandsOn();
         }

@@ -44,6 +44,7 @@ public class Door : MonoBehaviour
 
         // Unlock Madeline's piano conversation
         madeline.UpdateNextPrompt(21);
+        madeline.AddAvailableConversation(25);
 
         // Switch the teleportation layer to only allow teleportation inside the room
         // once the door puzzle is solved.
