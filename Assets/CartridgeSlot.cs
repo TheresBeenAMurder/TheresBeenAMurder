@@ -25,7 +25,7 @@ public class CartridgeSlot : MonoBehaviour {
         CartridgeDisc cd = other.GetComponent<CartridgeDisc>();
         if (cd != null)
         {
-            if (cd.grabbedBy != null && cd.gameObject.name == child.gameObject.name)
+            if (cd.grabbedBy != null && cd.gameObject == child)
             {
                 other.transform.parent = null;
                 hasChild = false;
