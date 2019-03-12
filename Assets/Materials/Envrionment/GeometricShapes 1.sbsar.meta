@@ -1,0 +1,361 @@
+fileFormatVersion: 2
+guid: 72530db9f6607204c93d02c5317780d4
+ScriptedImporter:
+  fileIDToRecycleName:
+    100000: GeometricShapes 1/GeometricShapes 1
+    400000: GeometricShapes 1/GeometricShapes 1/Transform
+    2100002: GeoWalls
+    2100004: GeoFloor
+    2100006: HallWayWalls
+    2300000: GeometricShapes 1/GeometricShapes 1/MeshRenderer
+    2800010: GeoWalls - baseColor
+    2800012: GeoWalls - normal
+    2800014: GeoWalls - metallic
+    2800016: GeoWalls - height
+    2800018: GeoWalls - ambientOcclusion
+    2800020: GeoFloor - baseColor
+    2800022: GeoFloor - normal
+    2800024: GeoFloor - metallic
+    2800026: GeoFloor - height
+    2800028: GeoFloor - ambientOcclusion
+    2800030: HallWayWalls - baseColor
+    2800032: HallWayWalls - normal
+    2800034: HallWayWalls - metallic
+    2800036: HallWayWalls - height
+    2800038: HallWayWalls - ambientOcclusion
+    3300000: GeometricShapes 1/GeometricShapes 1/MeshFilter
+    11400000: sbsar
+    11400002: graph0
+    11400004: graph1
+    11400006: graph2
+    13500000: GeometricShapes 1/GeometricShapes 1/SphereCollider
+    100100000: GeometricShapes 1
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
+  version: 17
+  mGraphInstanceData:
+  - graphLabel: GeoWalls
+    prototypeName: TileSampler
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://TileSampler\" label=\"\" >\n  <presetinput
+      identifier=\"$outputsize\" uid=\"1374614234\" type=\"8\" value=\"11,11\" />\n
+      \ <presetinput identifier=\"$randomseed\" uid=\"110945416\" type=\"4\" value=\"6756\"
+      />\n  <presetinput identifier=\"Shape_Pattern_Select\" uid=\"991433729\" type=\"4\"
+      value=\"1\" />\n  <presetinput identifier=\"Diamond_Shapes_X_Amount\" uid=\"991586314\"
+      type=\"4\" value=\"128\" />\n  <presetinput identifier=\"Y_Amount\" uid=\"991586312\"
+      type=\"4\" value=\"72\" />\n  <presetinput identifier=\"Strips_Amounts_X_Amount\"
+      uid=\"991566532\" type=\"4\" value=\"3\" />\n  <presetinput identifier=\"Strips_Amounts_Y_Amount\"
+      uid=\"991566586\" type=\"4\" value=\"70\" />\n  <presetinput identifier=\"Color_ColorTypeSelection\"
+      uid=\"991593311\" type=\"4\" value=\"4\" />\n  <presetinput identifier=\"Color_Grunge_Opacity\"
+      uid=\"991599009\" type=\"0\" value=\"0.302\" />\n  <presetinput identifier=\"Color_CustomColor\"
+      uid=\"991598127\" type=\"3\" value=\"0.235849,0.235849,0.235849,1\" />\n </sbspreset>\n"
+    shaderName: LightweightPipeline/Standard (Physically Based)
+    outputNames: baseColor,normal,metallic,height,ambientOcclusion
+    texturePackingList:
+    - outputName: baseColor
+      alphaSource: baseColor
+    - outputName: normal
+      alphaSource: normal
+    - outputName: roughness
+      alphaSource: roughness
+    - outputName: metallic
+      alphaSource: metallic
+    - outputName: height
+      alphaSource: height
+    - outputName: ambientOcclusion
+      alphaSource: ambientOcclusion
+    textureParameters:
+    - textureName: TileSampler - roughness
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - baseColor
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - normal
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - metallic
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - height
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - ambientOcclusion
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoWalls - baseColor
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoWalls - normal
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoWalls - roughness
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoWalls - metallic
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoWalls - height
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoWalls - ambientOcclusion
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    colorSpaceList:
+    - outputName: baseColor
+      bLinear: 0
+    - outputName: normal
+      bLinear: 1
+    - outputName: roughness
+      bLinear: 1
+    - outputName: metallic
+      bLinear: 1
+    - outputName: height
+      bLinear: 1
+    - outputName: ambientOcclusion
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: 
+      bLockRatio: 1
+      textureWidth: 2048
+      textureHeight: 2048
+      textureFormat: 0
+      bGenerateOnLoad: 1
+    material: {fileID: 2100002, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    generatedTextures:
+    - {fileID: 2800018, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800010, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800016, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800014, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800012, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+  - graphLabel: GeoFloor
+    prototypeName: TileSampler
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://TileSampler\" label=\"\" >\n  <presetinput
+      identifier=\"$outputsize\" uid=\"1374614234\" type=\"8\" value=\"11,11\" />\n
+      \ <presetinput identifier=\"$randomseed\" uid=\"110945416\" type=\"4\" value=\"6756\"
+      />\n  <presetinput identifier=\"Shape_Pattern_Select\" uid=\"991433729\" type=\"4\"
+      value=\"1\" />\n  <presetinput identifier=\"Diamond_Shapes_X_Amount\" uid=\"991586314\"
+      type=\"4\" value=\"128\" />\n  <presetinput identifier=\"Y_Amount\" uid=\"991586312\"
+      type=\"4\" value=\"72\" />\n  <presetinput identifier=\"Strips_Amounts_X_Amount\"
+      uid=\"991566532\" type=\"4\" value=\"3\" />\n  <presetinput identifier=\"Strips_Amounts_Y_Amount\"
+      uid=\"991566586\" type=\"4\" value=\"70\" />\n  <presetinput identifier=\"Color_ColorTypeSelection\"
+      uid=\"991593311\" type=\"4\" value=\"4\" />\n  <presetinput identifier=\"Color_Grunge_Opacity\"
+      uid=\"991599009\" type=\"0\" value=\"0.302\" />\n  <presetinput identifier=\"Color_CustomColor\"
+      uid=\"991598127\" type=\"3\" value=\"0.235849,0.235849,0.235849,1\" />\n </sbspreset>\n"
+    shaderName: LightweightPipeline/Standard (Physically Based)
+    outputNames: baseColor,normal,metallic,height,ambientOcclusion
+    texturePackingList:
+    - outputName: baseColor
+      alphaSource: baseColor
+    - outputName: normal
+      alphaSource: normal
+    - outputName: roughness
+      alphaSource: roughness
+    - outputName: metallic
+      alphaSource: metallic
+    - outputName: height
+      alphaSource: height
+    - outputName: ambientOcclusion
+      alphaSource: ambientOcclusion
+    textureParameters:
+    - textureName: TileSampler - baseColor
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - normal
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - roughness
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - metallic
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - height
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - ambientOcclusion
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoFloor - baseColor
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoFloor - normal
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoFloor - roughness
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoFloor - metallic
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoFloor - height
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: GeoFloor - ambientOcclusion
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    colorSpaceList:
+    - outputName: baseColor
+      bLinear: 0
+    - outputName: normal
+      bLinear: 1
+    - outputName: roughness
+      bLinear: 1
+    - outputName: metallic
+      bLinear: 1
+    - outputName: height
+      bLinear: 1
+    - outputName: ambientOcclusion
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: 
+      bLockRatio: 1
+      textureWidth: 2048
+      textureHeight: 2048
+      textureFormat: 0
+      bGenerateOnLoad: 1
+    material: {fileID: 2100004, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    generatedTextures:
+    - {fileID: 2800028, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800020, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800026, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800024, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    - {fileID: 2800022, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+  - graphLabel: HallWayWalls
+    prototypeName: TileSampler
+    graphDescIndex: 0
+    generateAllOutputs: 0
+    generateMipMaps: 1
+    preset: " <sbspreset pkgurl=\"pkg://TileSampler\" label=\"\" >\n  <presetinput
+      identifier=\"$outputsize\" uid=\"1374614234\" type=\"8\" value=\"11,11\" />\n
+      \ <presetinput identifier=\"$randomseed\" uid=\"110945416\" type=\"4\" value=\"6756\"
+      />\n  <presetinput identifier=\"Shape_Pattern_Select\" uid=\"991433729\" type=\"4\"
+      value=\"4\" />\n  <presetinput identifier=\"Diamond_Shapes_X_Amount\" uid=\"991586314\"
+      type=\"4\" value=\"128\" />\n  <presetinput identifier=\"Y_Amount\" uid=\"991586312\"
+      type=\"4\" value=\"72\" />\n  <presetinput identifier=\"Strips_Amounts_X_Amount\"
+      uid=\"991566532\" type=\"4\" value=\"64\" />\n  <presetinput identifier=\"Strips_Amounts_Y_Amount\"
+      uid=\"991566586\" type=\"4\" value=\"101\" />\n  <presetinput identifier=\"Color_ColorTypeSelection\"
+      uid=\"991593311\" type=\"4\" value=\"4\" />\n  <presetinput identifier=\"Color_Grunge_Opacity\"
+      uid=\"991599009\" type=\"0\" value=\"0.302\" />\n  <presetinput identifier=\"Color_CustomColor\"
+      uid=\"991598127\" type=\"3\" value=\"0.235849,0.235849,0.235849,1\" />\n </sbspreset>\n"
+    shaderName: LightweightPipeline/Standard (Physically Based)
+    outputNames: baseColor,normal,metallic,height,ambientOcclusion
+    texturePackingList:
+    - outputName: baseColor
+      alphaSource: baseColor
+    - outputName: normal
+      alphaSource: normal
+    - outputName: roughness
+      alphaSource: roughness
+    - outputName: metallic
+      alphaSource: metallic
+    - outputName: height
+      alphaSource: height
+    - outputName: ambientOcclusion
+      alphaSource: ambientOcclusion
+    textureParameters:
+    - textureName: TileSampler - baseColor
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - normal
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - roughness
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - metallic
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - height
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: TileSampler - ambientOcclusion
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: HallWayWalls - baseColor
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: HallWayWalls - normal
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: HallWayWalls - roughness
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: HallWayWalls - metallic
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: HallWayWalls - height
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    - textureName: HallWayWalls - ambientOcclusion
+      wrapMode: 0
+      filterMode: 1
+      aniso: 1
+    colorSpaceList:
+    - outputName: baseColor
+      bLinear: 0
+    - outputName: normal
+      bLinear: 1
+    - outputName: roughness
+      bLinear: 1
+    - outputName: metallic
+      bLinear: 1
+    - outputName: height
+      bLinear: 1
+    - outputName: ambientOcclusion
+      bLinear: 1
+    inputTextureMap: []
+    targetSettingList:
+    - label: 
+      bLockRatio: 1
+      textureWidth: 2048
+      textureHeight: 2048
+      textureFormat: 0
+      bGenerateOnLoad: 1
+    material: {fileID: 2100006, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    generatedTextures: []
