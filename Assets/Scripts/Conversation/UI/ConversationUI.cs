@@ -60,27 +60,30 @@ public class ConversationUI : MonoBehaviour
 
     public void DisplayResponseOptions(string[] responses)
     {
-        NPC parent = gameObject.GetComponent<NPC>();
-        int totalNumOptions = 0;
-
-        for (int i = responses.Length - 1; i >= 0; i--)
+        if (inConversation)
         {
-            if (responses[i] != null && responses[i] != "")
+            NPC parent = gameObject.GetComponent<NPC>();
+            int totalNumOptions = 0;
+
+            for (int i = responses.Length - 1; i >= 0; i--)
             {
-                totalNumOptions = i + 1;
-                break;
+                if (responses[i] != null && responses[i] != "")
+                {
+                    totalNumOptions = i + 1;
+                    break;
+                }
             }
-        }
 
-        for (int i = 0; i < totalNumOptions; i++)
-        {
-            // Spawn a prefab and set the event camera to the center eye camera
-            optionObjects[i] = Instantiate(prefab, parent.transform);
-            optionObjects[i].GetComponent<Canvas>().worldCamera = centerEyeCam;
+            for (int i = 0; i < totalNumOptions; i++)
+            {
+                // Spawn a prefab and set the event camera to the center eye camera
+                optionObjects[i] = Instantiate(prefab, parent.transform);
+                optionObjects[i].GetComponent<Canvas>().worldCamera = centerEyeCam;
 
-            // Display the prefab with the option
-            optionDisplays[i] = optionObjects[i].GetComponentInChildren<LameFloatingText>();
-            optionDisplays[i].DisplayOption(i + 1, responses[i], parent, CalculateOffset(i + 1, totalNumOptions));
+                // Display the prefab with the option
+                optionDisplays[i] = optionObjects[i].GetComponentInChildren<LameFloatingText>();
+                optionDisplays[i].DisplayOption(i + 1, responses[i], parent, CalculateOffset(i + 1, totalNumOptions));
+            }
         }
     }
 

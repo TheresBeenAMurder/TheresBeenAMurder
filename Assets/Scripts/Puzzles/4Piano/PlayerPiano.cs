@@ -10,6 +10,7 @@ public class PlayerPiano : MonoBehaviour
     public WallButton[] walls;
     public Transform snapPoint;
     public VictorConversation victorConvo;
+    public AudioSource player;
 
     public GameObject cover;
 
@@ -101,6 +102,7 @@ public class PlayerPiano : MonoBehaviour
             // even if the walls move multiple times
             if (!wallsMoved)
             {
+                player.Play();
                 StartCoroutine(mavisConvo.AfterWalls());
                 StartCoroutine(victorConvo.AfterWalls());
                 wallsMoved = true;
