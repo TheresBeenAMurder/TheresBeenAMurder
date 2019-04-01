@@ -12,6 +12,10 @@ public class Sensor : MonoBehaviour
     private Key currentKey;
     private Material originalColor;
 
+    private bool solved = false;
+
+    public SecretDeskButton deskButton;
+
     private void ChangeColor(Material newColor)
     {
         gameObject.GetComponent<Renderer>().material = newColor;
@@ -22,7 +26,7 @@ public class Sensor : MonoBehaviour
         Key key = other.gameObject.GetComponent<Key>();
 
         // Only change color when key exits, nothing else
-        if (key != null && key == currentKey)
+        if (key != null && key == currentKey && !solved)
         {
             ChangeColor(originalColor);
             currentKey = null;
@@ -40,6 +44,8 @@ public class Sensor : MonoBehaviour
                 //  PUZZLE SOLVED HERE
                 ChangeColor(correctColor);
                 key.Solve();
+                solved = true;
+                deskButton.SolvePuzzle();
             }
             else
             {

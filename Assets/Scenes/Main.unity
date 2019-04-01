@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &750026
 Transform:
   m_ObjectHideFlags: 0
@@ -14165,11 +14165,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 582499d3f9819a94c8c04709f51b7c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctColor: {fileID: 2100000, guid: 9173ec3f85a899548bd2233f41c41eae, type: 2}
+  correctColor: {fileID: 2100000, guid: 3c165641048655d4983b6c969f11a4b2, type: 2}
   correctKeyIDs:
   - EH
-  incorrectColor: {fileID: 2100000, guid: 167df7cdb3f34e54096bb8104028ab7c, type: 2}
+  incorrectColor: {fileID: 2100000, guid: 6296d0395629bf24492deefc84462487, type: 2}
   puzzle: 0
+  deskButton: {fileID: 633901201}
 --- !u!65 &500032464
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17835,6 +17836,51 @@ Transform:
   m_Father: {fileID: 1181822915}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &633901199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 633901200}
+  - component: {fileID: 633901201}
+  m_Layer: 10
+  m_Name: SecretDeskButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &633901200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 633901199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24.8, y: -91.9, z: 128.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1026925386}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &633901201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 633901199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a7635d4faa76ca478db2dace69b8db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  solved: 0
+  archiveLights:
+  - {fileID: 976173110}
+  - {fileID: 130729180}
+  lightBoard: {fileID: 1416833787}
 --- !u!1 &636283815
 GameObject:
   m_ObjectHideFlags: 0
@@ -27097,7 +27143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &847456543
 Transform:
   m_ObjectHideFlags: 0
@@ -33940,6 +33986,7 @@ Transform:
   - {fileID: 1919345322}
   - {fileID: 1446256136}
   - {fileID: 732241909}
+  - {fileID: 633901200}
   m_Father: {fileID: 1709597157}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -37490,6 +37537,10 @@ Prefab:
     - target: {fileID: 188888, guid: ace628cf5078a194eb697a3481f98e4a, type: 2}
       propertyPath: m_Layer
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 105980, guid: ace628cf5078a194eb697a3481f98e4a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ace628cf5078a194eb697a3481f98e4a, type: 2}
@@ -71324,7 +71375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2051486604
 Transform:
   m_ObjectHideFlags: 0
