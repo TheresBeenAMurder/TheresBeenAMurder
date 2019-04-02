@@ -13,8 +13,8 @@ public class SecretDeskButton : MonoBehaviour {
     public void SolvePuzzle()
     {
         lightBoard.TurnOn();
-        
 
+        Debug.Log("solving");
         // Turn on the archive lights
         foreach (Light light in archiveLights)
         {

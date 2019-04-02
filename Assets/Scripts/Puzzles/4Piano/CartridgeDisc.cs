@@ -11,7 +11,7 @@ public class CartridgeDisc : OVRGrabbable {
 
     public int ID;
 
-
+    public CartridgeSlot cs;
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,6 +29,9 @@ public class CartridgeDisc : OVRGrabbable {
                 transform.rotation = snapTransform.rotation;
                 transform.parent = snapTransform;
                 isSnapped = true;
+                cs.child = gameObject;
+                cs.parent.addDisc(this, cs.gameObject.name);
+                Debug.Log(cs.gameObject.name);
             }
         }
         base.GrabEnd(linearVelocity, angularVelocity);

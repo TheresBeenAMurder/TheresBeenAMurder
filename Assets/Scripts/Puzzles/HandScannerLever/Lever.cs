@@ -14,7 +14,7 @@ public class Lever : MonoBehaviour
     // Interface to set spring of lever on/off
     public void SetSpring(bool on)
     {
-        leverHinge.useSpringToMin = on;
+       // leverHinge.useSpringToMin = on;
     }
 
     private void SolvePuzzle()

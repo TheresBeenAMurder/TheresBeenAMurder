@@ -4,21 +4,32 @@
     public CartridgeSlot slotB;
     public CartridgeSlot slotC;
 
-    public CartridgeDisc[] discs = new CartridgeDisc[3];
+    public CartridgeDisc[] discs;
 
     public void addDisc(CartridgeDisc toAdd, string slotName)
-    {   
+    {
         if (slotName.Equals(slotA.name))
         {
-            discs[0] = toAdd;
+            if (slotB.child != toAdd && slotC.child != toAdd)
+            {
+                discs[0] = toAdd;
+            }
         }
         if (slotName.Equals(slotB.name))
         {
-            discs[1] = toAdd;
+            if (slotA.child != toAdd && slotC.child != toAdd)
+            {
+
+                discs[1] = toAdd;
+            }
         }
         if (slotName.Equals(slotC.name))
         {
-            discs[2] = toAdd;
+            if (slotB.child != toAdd && slotA.child != toAdd)
+            {
+
+                discs[2] = toAdd;
+            }
         }
     }
 
