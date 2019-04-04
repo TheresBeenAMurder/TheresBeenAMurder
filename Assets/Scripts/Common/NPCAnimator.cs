@@ -16,7 +16,7 @@ public class NPCAnimator : MonoBehaviour {
     //talk agitated = 6
     //dance = 7
 
-    public enum CHARACTERSTATE { IDLE, WALKLEFT, WALKRIGHT, WALKFORWARD, WALKBACKWARD, TALKNORMAL, TALKAGITATED, DANCE };
+    public enum CHARACTERSTATE { IDLE, WALKLEFT, WALKRIGHT, WALKFORWARD, WALKBACKWARD, TALKNORMAL, TALKAGITATED, DANCE, HAND };
     public CHARACTERSTATE currentState;
 
 	// Use this for initialization
@@ -76,6 +76,12 @@ public class NPCAnimator : MonoBehaviour {
                 {
 
                     animator.SetInteger("state", 7);
+                    break;
+                }
+            case CHARACTERSTATE.HAND:
+                {
+
+                    animator.SetInteger("state", 8);
                     break;
                 }
 
