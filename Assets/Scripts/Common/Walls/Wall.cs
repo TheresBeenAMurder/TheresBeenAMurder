@@ -32,7 +32,8 @@ public class Wall : MonoBehaviour
     // call from the highest wall in the stack
     public IEnumerator MoveDown()
     {
-        float wallHeight = Mathf.Abs(transform.position.y - wallBelow.transform.position.y);
+        //float wallHeight = Mathf.Abs(transform.position.y - wallBelow.transform.position.y);
+        float wallHeight = 3.79f;
         SetCurrentWall(false);
 
         Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
@@ -47,8 +48,6 @@ public class Wall : MonoBehaviour
             corpseDropper.Drop();
             hasDropped = true;
         }
-
-
     }
 
     // call from the lowest wall in the stack
