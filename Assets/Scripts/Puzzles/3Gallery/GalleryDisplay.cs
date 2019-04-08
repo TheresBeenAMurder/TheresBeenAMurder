@@ -2,12 +2,12 @@
 
 public class GalleryDisplay : MonoBehaviour
 {
-    public CenterFrame centerFrame;
     public GameObject[] images;
-    public CenterFrameButton galleryPuzzle;
     public NPC victor;
     public AudioSource victorAudio;
     public AudioClip victorExclamation;
+
+    public GameObject fakeBack;
 
     public void ActivateImages()
     {
@@ -15,9 +15,8 @@ public class GalleryDisplay : MonoBehaviour
         {
             image.SetActive(true);
         }
-
-        // Enable gallery puzzle
-        centerFrame.enabled = true;
+        fakeBack.SetActive(false);
+        
 
         // Play Victor's voiceline
         victorAudio.clip = victorExclamation;
@@ -27,13 +26,13 @@ public class GalleryDisplay : MonoBehaviour
         victor.UpdateNextPrompt(20);
 
         // Start the timer for the gallery puzzle hint
-        StartCoroutine(galleryPuzzle.Hint());
+       // StartCoroutine(galleryPuzzle.Hint());
     }
 
     private void Start()
     {
         // Disable gallery puzzle until paintings are revealed
-        centerFrame.enabled = false;
+       // centerFrame.enabled = false;
     }
 
     private void Update()
