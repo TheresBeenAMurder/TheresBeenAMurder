@@ -8,6 +8,8 @@ public class Invitation : OVRGrabbable
     float[] rotationOffset;
     public bool hasBeenGrabbed = false;
 
+    public NPCAnimator mavisAnimator;
+
 
     protected override void Start()
     {
@@ -48,6 +50,7 @@ public class Invitation : OVRGrabbable
             hasBeenGrabbed = true;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            mavisAnimator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
         }
     }
 

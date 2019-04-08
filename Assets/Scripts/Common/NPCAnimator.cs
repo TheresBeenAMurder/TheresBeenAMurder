@@ -80,7 +80,6 @@ public class NPCAnimator : MonoBehaviour {
                 }
             case CHARACTERSTATE.HAND:
                 {
-
                     animator.SetInteger("state", 8);
                     break;
                 }

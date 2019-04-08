@@ -9,6 +9,10 @@ public class InvitationSpawner : MonoBehaviour
     public GameObject invitationObject;
 
     public NPCAnimator mavisAnimator;
+
+    public NPCAnimator madelineAnimator;
+    public NPCAnimator victorAnimator;
+
 	
 	void Update ()
     {
@@ -21,6 +25,8 @@ public class InvitationSpawner : MonoBehaviour
 
             invitationObject.SetActive(true);
             mavisAnimator.changeState(NPCAnimator.CHARACTERSTATE.HAND);
+            victorAnimator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+            madelineAnimator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
 
             StartCoroutine(doorPuzzle.Hint());
 
