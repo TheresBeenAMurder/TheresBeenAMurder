@@ -10,6 +10,9 @@ public class Invitation : OVRGrabbable
 
     public NPCAnimator mavisAnimator;
 
+    public Rigidbody invitationRigidbody;
+    bool hasBeenReleased = false;
+
 
     protected override void Start()
     {
@@ -42,14 +45,24 @@ public class Invitation : OVRGrabbable
         }
     }
 
+    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    {
+        base.GrabEnd(linearVelocity, angularVelocity);
+        if(!hasBeenReleased)
+        {
+            hasBeenReleased = true;
+
+            invitationRigidbody.useGravity = true;
+        }
+    }
+
     public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
     {
         base.GrabBegin(hand, grabPoint);
         if (!hasBeenGrabbed)
         {
             hasBeenGrabbed = true;
-            gameObject.GetComponent<Rigidbody>().useGravity = true;
-            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            
             mavisAnimator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
         }
     }
