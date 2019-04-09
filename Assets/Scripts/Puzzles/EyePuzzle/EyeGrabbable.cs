@@ -21,6 +21,7 @@ public class EyeGrabbable : OVRGrabbable
         if(!hasBeenGrabbed)
         {
             hasBeenGrabbed = true;
+            GetComponent<Rigidbody>().useGravity = true;
         }
     }
 
