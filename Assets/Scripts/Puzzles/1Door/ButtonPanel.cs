@@ -67,6 +67,24 @@ public class ButtonPanel : MonoBehaviour
         return false;
     }
 
+    public IEnumerator FileIn()
+    {
+        // Characters walk into the room
+        foreach (CharacterNav character in characters)
+        {
+            yield return new WaitForSeconds(0.5f);
+            character.Move();
+        }
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            StartCoroutine(FileIn());
+        }
+    }
+
     // Log the number the user pressed
     public IEnumerator LogChoice(int choice)
     {
@@ -94,6 +112,7 @@ public class ButtonPanel : MonoBehaviour
                 // Characters walk into the room
                 foreach (CharacterNav character in characters)
                 {
+                    yield return new WaitForSeconds(0.5f);
                     character.Move();
                 }
             }

@@ -56,6 +56,7 @@ public class PlayerPiano : MonoBehaviour
     {
         if (other.CompareTag("PianoCartridge"))            
         {
+            Destroy(other.gameObject);
             InsertCylinder();
             
         }
