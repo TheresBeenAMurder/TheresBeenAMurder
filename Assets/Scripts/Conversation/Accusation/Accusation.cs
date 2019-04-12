@@ -13,7 +13,7 @@ public class Accusation : MonoBehaviour
     private evidenceType currentEvidence;
     public DatabaseHandler dbHandler;
     private Dictionary<evidenceType, List<Evidence>> evidenceMappings = new Dictionary<evidenceType, List<Evidence>>();
-    private int selectedEvidenceID;
+    private List<int> selectedEvidenceIDs = new List<int>();
 
     // audio related
     private string audioFolder;
@@ -21,7 +21,7 @@ public class Accusation : MonoBehaviour
     private string evidenceNotFoundAudio;
     private AudioSource playerAudio;
 
-    public int gameOverScene = 2;
+    private int endScene = 2;
 
     private void ClearLoadedEvidence()
     {
@@ -35,6 +35,7 @@ public class Accusation : MonoBehaviour
 
         if (chosenEvidence.found)
         {
+            selectedEvidenceIDs.Add(evidenceMappings[currentEvidence][choice - 1].id);
             string evidenceAudio = chosenEvidence.audioFile;
             audioPath = "Audio/Player/" + evidenceAudio;
         }
@@ -124,7 +125,13 @@ public class Accusation : MonoBehaviour
             if (choice == 1)
             {
                 // END GAME STATE - AN ACCUSATION HAS BEEN MADE
-                UnityEngine.SceneManagement.SceneManager.LoadScene(gameOverScene);
+                EndSceneInfo.characterID = characterID;
+                foreach (int evidence in selectedEvidenceIDs)
+                {
+                    EndSceneInfo.selectedEvidence.Add(evidence);
+                }
+
+                UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
             }
 
             conversationUI.ClearDisplay();

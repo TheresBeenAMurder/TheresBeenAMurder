@@ -2,12 +2,9 @@ fileFormatVersion: 2
 guid: 72530db9f6607204c93d02c5317780d4
 ScriptedImporter:
   fileIDToRecycleName:
-    100000: GeometricShapes 1/GeometricShapes 1
-    400000: GeometricShapes 1/GeometricShapes 1/Transform
     2100002: GeoWalls
     2100004: GeoFloor
     2100006: HallWayWalls
-    2300000: GeometricShapes 1/GeometricShapes 1/MeshRenderer
     2800010: GeoWalls - baseColor
     2800012: GeoWalls - normal
     2800014: GeoWalls - metallic
@@ -23,13 +20,10 @@ ScriptedImporter:
     2800034: HallWayWalls - metallic
     2800036: HallWayWalls - height
     2800038: HallWayWalls - ambientOcclusion
-    3300000: GeometricShapes 1/GeometricShapes 1/MeshFilter
     11400000: sbsar
     11400002: graph0
     11400004: graph1
     11400006: graph2
-    13500000: GeometricShapes 1/GeometricShapes 1/SphereCollider
-    100100000: GeometricShapes 1
   externalObjects: {}
   userData: 
   assetBundleName: 
@@ -54,7 +48,7 @@ ScriptedImporter:
       uid=\"991593311\" type=\"4\" value=\"4\" />\n  <presetinput identifier=\"Color_Grunge_Opacity\"
       uid=\"991599009\" type=\"0\" value=\"0.302\" />\n  <presetinput identifier=\"Color_CustomColor\"
       uid=\"991598127\" type=\"3\" value=\"0.235849,0.235849,0.235849,1\" />\n </sbspreset>\n"
-    shaderName: LightweightPipeline/Standard (Physically Based)
+    shaderName: Standard
     outputNames: baseColor,normal,metallic,height,ambientOcclusion
     texturePackingList:
     - outputName: baseColor
@@ -139,13 +133,8 @@ ScriptedImporter:
       textureHeight: 2048
       textureFormat: 0
       bGenerateOnLoad: 1
-    material: {fileID: 2100002, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    generatedTextures:
-    - {fileID: 2800018, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800010, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800016, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800014, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800012, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    material: {instanceID: 0}
+    generatedTextures: []
   - graphLabel: GeoFloor
     prototypeName: TileSampler
     graphDescIndex: 0
@@ -163,7 +152,7 @@ ScriptedImporter:
       uid=\"991593311\" type=\"4\" value=\"4\" />\n  <presetinput identifier=\"Color_Grunge_Opacity\"
       uid=\"991599009\" type=\"0\" value=\"0.302\" />\n  <presetinput identifier=\"Color_CustomColor\"
       uid=\"991598127\" type=\"3\" value=\"0.235849,0.235849,0.235849,1\" />\n </sbspreset>\n"
-    shaderName: LightweightPipeline/Standard (Physically Based)
+    shaderName: Standard
     outputNames: baseColor,normal,metallic,height,ambientOcclusion
     texturePackingList:
     - outputName: baseColor
@@ -248,13 +237,8 @@ ScriptedImporter:
       textureHeight: 2048
       textureFormat: 0
       bGenerateOnLoad: 1
-    material: {fileID: 2100004, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    generatedTextures:
-    - {fileID: 2800028, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800020, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800026, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800024, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
-    - {fileID: 2800022, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    material: {instanceID: 0}
+    generatedTextures: []
   - graphLabel: HallWayWalls
     prototypeName: TileSampler
     graphDescIndex: 0
@@ -272,7 +256,7 @@ ScriptedImporter:
       uid=\"991593311\" type=\"4\" value=\"4\" />\n  <presetinput identifier=\"Color_Grunge_Opacity\"
       uid=\"991599009\" type=\"0\" value=\"0.302\" />\n  <presetinput identifier=\"Color_CustomColor\"
       uid=\"991598127\" type=\"3\" value=\"0.235849,0.235849,0.235849,1\" />\n </sbspreset>\n"
-    shaderName: LightweightPipeline/Standard (Physically Based)
+    shaderName: Standard
     outputNames: baseColor,normal,metallic,height,ambientOcclusion
     texturePackingList:
     - outputName: baseColor
@@ -357,5 +341,5 @@ ScriptedImporter:
       textureHeight: 2048
       textureFormat: 0
       bGenerateOnLoad: 1
-    material: {fileID: 2100006, guid: 72530db9f6607204c93d02c5317780d4, type: 3}
+    material: {instanceID: 0}
     generatedTextures: []

@@ -13,6 +13,10 @@ public class Combiner : MonoBehaviour
     private Material defaultMaterial;
     private bool isPressed = false;
 
+    public Rigidbody extractorDoor;
+    public Transform doorOpenPos;
+    public Transform doorClosePos;
+
     // Returns true if all sensors are populated, false otherwise
     // If true, currentKeys contains the keys on the sensors
     public bool CheckKeys()
@@ -55,23 +59,28 @@ public class Combiner : MonoBehaviour
     // initially pressed. (We can make this the animation time)
     public IEnumerator PressButton()
     {
+        StartCoroutine(Movement.SmoothMove(doorClosePos.position, 1.5f, extractorDoor));
         Renderer renderer = GetComponent<Renderer>();
 
         // "Press" the button
         isPressed = true;
         renderer.material = pressedMaterial;
-        
+
+
+        // Wait for animation
+        yield return new WaitForSeconds(4);
+
         if (CheckKeys())
         {
             creator.CreateKey(CombineKeys());
         }
 
-        // Wait for animation
-        yield return new WaitForSeconds(3);
 
         // button is no longer pressed
         isPressed = false;
         renderer.material = defaultMaterial;
+
+        StartCoroutine(Movement.SmoothMove(doorOpenPos.position, 2f, extractorDoor));
     }
 
     private void Start()

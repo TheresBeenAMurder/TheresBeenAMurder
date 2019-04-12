@@ -4,6 +4,26 @@ public class EyeGrabbable : OVRGrabbable
 {
     public bool nearCamera = false;
     public PuzzleCamera puzzleCamera;
+    bool hasBeenGrabbed = false;
+    public Transform eyeSpot;
+
+    private void Update()
+    {
+        if(!hasBeenGrabbed)
+        {
+            transform.position = eyeSpot.transform.position;
+        }
+    }
+
+    public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
+    {
+        base.GrabBegin(hand, grabPoint);
+        if(!hasBeenGrabbed)
+        {
+            hasBeenGrabbed = true;
+            GetComponent<Rigidbody>().useGravity = true;
+        }
+    }
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
