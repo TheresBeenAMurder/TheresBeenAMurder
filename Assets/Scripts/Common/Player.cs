@@ -6,22 +6,12 @@ public class Player : MonoBehaviour
     public DatabaseHandler dbHandler;
     public CharacterInfo madelineInfo;
     public CharacterInfo mavisInfo;
-    public AudioSource openingDialogue;
-    public GameObject outsideFloor;
     public GameObject tablet;
     public OVRInput.Button tabletButton;
     public CharacterInfo victorInfo;
 
-    private int outsideFloorLayer;
-    private bool switched = false;
-
     public void Start()
     {
-        outsideFloorLayer = outsideFloor.layer;
-
-        // Switch the outside floor layer so you can't teleport
-        outsideFloor.layer = 0;
-
         ToggleTablet();
     }
 
@@ -37,12 +27,6 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        if (!switched && !openingDialogue.isPlaying)
-        {
-            outsideFloor.layer = outsideFloorLayer;
-            switched = true;
-        }
-
         if (OVRInput.GetDown(tabletButton))
         {
             ToggleTablet();

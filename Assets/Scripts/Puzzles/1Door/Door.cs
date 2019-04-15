@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     public AudioClip mavisHint;
     public Transform moveSpace;
     public float moveTime = 1 / .1f;
+    public AudioSource openingDialogue;
     public PlantWall bioPuzzle;
     public TeleportTargetHandlerPhysical teleportAllowance;
     
@@ -39,6 +40,12 @@ public class Door : MonoBehaviour
     {
         isSolved = true;
 
+        // Kill the opening dialogue if the player solves the door puzzle while they're talking.
+        if (openingDialogue.isPlaying)
+        {
+            openingDialogue.Stop();
+        }
+
         // Remove the unlocked conversation with Mavis
         mavis.UpdateNextPrompt(-1);
 
@@ -55,7 +62,6 @@ public class Door : MonoBehaviour
         // Start the timer for the bio wall hint
         StartCoroutine(bioPuzzle.Hint());
 
-        //Vector3 newPos = new Vector3(transform.localPosition.x + 1.75f, transform.localPosition.y, transform.localPosition.z);
         yield return StartCoroutine(Movement.SmoothMove(moveSpace.position, moveTime, rigidbody));
     }
 }

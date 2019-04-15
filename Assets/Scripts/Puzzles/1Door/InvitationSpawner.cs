@@ -18,11 +18,6 @@ public class InvitationSpawner : MonoBehaviour
     {
 		if (!openingDialogue.isPlaying)
         {
-            //GameObject invite = Instantiate(invitationPrefab, mavis.transform);
-
-            //invite.transform.localPosition = new Vector3(0, 1, .5f);
-            // invite.transform.parent = null;
-
             invitationObject.SetActive(true);
             mavisAnimator.changeState(NPCAnimator.CHARACTERSTATE.HAND);
             victorAnimator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
