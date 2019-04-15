@@ -81,7 +81,7 @@ public class NPC : MonoBehaviour
         UpdateRelationshipValue(relationshipEffect);
         UpdateNextPrompt(nextPromptID, choice);
 
-        if (!end)
+        if (nextPromptID != -1)
         {
             StartCoroutine(WritePrompt());
         }

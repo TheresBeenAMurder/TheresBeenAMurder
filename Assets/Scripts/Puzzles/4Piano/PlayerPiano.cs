@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerPiano : MonoBehaviour
 {
@@ -9,47 +8,28 @@ public class PlayerPiano : MonoBehaviour
     public WallButton wallToMove;
     public Transform snapPoint;
     public VictorConversation victorConvo;
-    public AudioSource player;
+    public AudioSource piano;
+    public PlayerConversation playerConversation;
 
     public GameObject cover;
 
     private bool wallsMoved = false;
 
-    void snapCylinder(GameObject insertedCyl)
-    {
-    
-        
-
-    }
-
-   
-    //public IEnumerator<WaitForSeconds> ShowCover()
-    //{
-
-       
-    //   // yield return new WaitForSeconds(1);
-    //   // cover.SetActive(false);
-
-
-    //}
-
-
     public void InsertCylinder()
     {
         cover.SetActive(true);
-        wallToMove.Move();
-            madeline.UpdateNextPrompt(-1);
 
-            // Makes sure that Mavis' conversation is only accessible once,
-            // even if the walls move multiple times
-            if (!wallsMoved)
-            {
-                player.Play();
-                StartCoroutine(mavisConvo.AfterWalls());
-                StartCoroutine(victorConvo.AfterWalls());
-                wallsMoved = true;
-            }
-        
+        // Makes sure that Mavis' conversation is only accessible once,
+        // even if the walls move multiple times
+        if (!wallsMoved)
+        {
+            wallToMove.Move();
+            piano.Play();
+            playerConversation.CanAccuse();
+            StartCoroutine(mavisConvo.AfterWalls());
+            StartCoroutine(victorConvo.AfterWalls());
+            wallsMoved = true;
+        }
     }
 
     public void OnTriggerEnter(Collider other)
@@ -58,11 +38,6 @@ public class PlayerPiano : MonoBehaviour
         {
             Destroy(other.gameObject);
             InsertCylinder();
-            
         }
     }
-
-    public void Start ()
-    {
-	}
 }

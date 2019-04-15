@@ -16,10 +16,8 @@ public class CenterFrameButton : MonoBehaviour
     public AudioSource frameAudio;
 
     // Hint related
-    public NPC madeline;
     public AudioSource playerAudio;
     public PlayerConversation playerConversation;
-    public NPC victor;
     public AudioSource victorAudio;
     public AudioClip victorHint;
 
@@ -34,22 +32,6 @@ public class CenterFrameButton : MonoBehaviour
         // Ghost hands are no longer needed
         Destroy(centerFrame.leftGhost);
         Destroy(centerFrame.rightGhost);
-
-        // Remove hint conversation with Victor
-        victor.UpdateNextPrompt(-1);
-
-        // Remove optional conversation with Madeline
-        madeline.RemoveAvailableConversation(25);
-
-        // Testing the updated accusation mechanic
-        dbHandler.FindEvidence("motive", 2, 1);
-        dbHandler.FindEvidence("motive", 2, 5);
-        dbHandler.FindEvidence("opportunity", 3, 12);
-        dbHandler.FindEvidence("alibi", 3, 13);
-        dbHandler.FindEvidence("motive", 3, 8);
-        dbHandler.FindEvidence("motive", 4, 14);
-        dbHandler.FindEvidence("motive", 4, 15);
-        dbHandler.FindEvidence("motive", 4, 16);
     }
 
     public IEnumerator Hint()
@@ -67,11 +49,8 @@ public class CenterFrameButton : MonoBehaviour
             }
 
             // Play Victor's voiceline
-            victorAudio.clip = victorHint;
-            victorAudio.Play();
-
-            // Unlock the hint conversation with Victor
-            victor.UpdateNextPrompt(24);
+            //victorAudio.clip = victorHint;
+            //victorAudio.Play();
         }
     }
 

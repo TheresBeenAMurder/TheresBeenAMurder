@@ -9,8 +9,6 @@ public class VictorConversation : MonoBehaviour
     public IEnumerator AfterWalls()
     {
         yield return new WaitForSeconds(65);
-
-        victor.UpdateNextPrompt(23);
     }
 
     public void Start()

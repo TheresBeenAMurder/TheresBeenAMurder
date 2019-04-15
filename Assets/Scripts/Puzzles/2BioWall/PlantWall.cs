@@ -9,7 +9,6 @@ public class PlantWall : MonoBehaviour
     bool isSolved = false;
 
     // Hint related
-    public NPC madeline;
     public AudioSource madelineAudio;
     public AudioClip madelineHint;
     public AudioSource playerAudio;
@@ -33,14 +32,6 @@ public class PlantWall : MonoBehaviour
             win.Play();
             gallery.ActivateImages();
             isSolved = true;
-
-            // Turns on accusations for all NPCs
-            playerConversation.CanAccuse();
-
-            if (madelineCurrentPrompt != null)
-            {
-                madeline.UpdateNextPrompt((int)madelineCurrentPrompt);
-            }
         }
     }
 
@@ -60,12 +51,7 @@ public class PlantWall : MonoBehaviour
 
             // Play Madeline's voiceline
             madelineAudio.clip = madelineHint;
-            madelineAudio.Play();
-
-            madelineCurrentPrompt = madeline.PromptID();
-
-            // Unlock the conversation with Madeline
-            madeline.UpdateNextPrompt(19);
+            //madelineAudio.Play();
         }
     }
 

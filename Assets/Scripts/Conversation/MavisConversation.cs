@@ -11,11 +11,6 @@ public class MavisConversation : MonoBehaviour
     public IEnumerator AfterWalls()
     {
         yield return new WaitForSeconds(60);
-
-        audioSource.clip = callOut;
-        audioSource.Play();
-
-        mavis.UpdateNextPrompt(22);
     }
 
     public void Start()

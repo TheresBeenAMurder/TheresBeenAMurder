@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public NPC madeline;
-    public NPC mavis;
-    public AudioSource mavisAudio;
-    public AudioClip mavisHint;
+    public AudioSource madelineAudio;
+    public AudioClip madelineHint;
     public Transform moveSpace;
     public float moveTime = 1 / .1f;
     public AudioSource openingDialogue;
@@ -23,11 +21,8 @@ public class Door : MonoBehaviour
         if (!isSolved)
         {
             // Play Mavis' voiceline
-            mavisAudio.clip = mavisHint;
-            mavisAudio.Play();
-
-            // Unlock the conversation with Mavis
-            mavis.UpdateNextPrompt(18);
+            madelineAudio.clip = madelineHint;
+            madelineAudio.Play();
         }
     }
 
@@ -45,13 +40,6 @@ public class Door : MonoBehaviour
         {
             openingDialogue.Stop();
         }
-
-        // Remove the unlocked conversation with Mavis
-        mavis.UpdateNextPrompt(-1);
-
-        // Unlock Madeline's piano conversation
-        madeline.UpdateNextPrompt(21);
-        madeline.AddAvailableConversation(25);
 
         // Switch the teleportation layer to only allow teleportation inside the room
         // once the door puzzle is solved.
