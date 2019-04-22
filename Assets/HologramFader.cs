@@ -5,6 +5,11 @@ using UnityEngine;
 public class HologramFader : MonoBehaviour
 {
 
+    public AudioSource originalHum;
+    public AudioSource glitchHum;
+
+    private float blend = 0;
+
     public Material hologramMat;
 
     public GameObject leftHand;
@@ -14,9 +19,12 @@ public class HologramFader : MonoBehaviour
     public float scale;
     public float maxAlpha = 4;
 
+    float soundScale;
+
     private void Start()
     {
         scale = maxAlpha / tolerance;
+        soundScale = 1 / tolerance;
     }
 
     // Update is called once per frame
@@ -36,7 +44,18 @@ public class HologramFader : MonoBehaviour
         {
 
             hologramMat.SetFloat("_OverallAlpha", closestDist * scale);
-
+            blend = closestDist * soundScale;
         }
+        else
+        {
+            blend = 1;
+        }
+        setAudio();
+    }
+
+    void setAudio()
+    {
+        originalHum.volume = (blend);
+        glitchHum.volume = (1- blend) * 1.5f;
     }
 }

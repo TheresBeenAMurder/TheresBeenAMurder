@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class GalleryDisplay : MonoBehaviour
 {
@@ -8,6 +9,11 @@ public class GalleryDisplay : MonoBehaviour
     public AudioClip victorExclamation;
 
     public GameObject fakeBack;
+
+    public AudioSource paintingAudio;
+
+    public AudioClip powerOn;
+    public AudioClip humLoop;
 
     public void ActivateImages()
     {
@@ -27,6 +33,15 @@ public class GalleryDisplay : MonoBehaviour
 
         // Start the timer for the gallery puzzle hint
        // StartCoroutine(galleryPuzzle.Hint());
+    }
+
+    IEnumerator playStartupSounds()
+    {
+        paintingAudio.clip = powerOn;
+        paintingAudio.Play();
+        yield return new WaitForSeconds(powerOn.length);
+        paintingAudio.loop = true;
+        paintingAudio.clip = humLoop;
     }
 
     private void Start()
