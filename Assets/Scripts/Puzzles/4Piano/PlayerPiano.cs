@@ -27,6 +27,19 @@ public class PlayerPiano : MonoBehaviour
         }
     }
 
+    public IEnumerator playPianoSounds()
+    {
+        piano.clip = insertRoll;
+        piano.Play();
+        Debug.Log("Playing clicks");
+
+        yield return new WaitForSeconds(insertRoll.length);
+
+        piano.clip = pianoSound;
+        piano.Play();
+        Debug.Log("Playing music");
+    }
+
     public void InsertCylinder()
     {
         cover.SetActive(true);
@@ -36,19 +49,12 @@ public class PlayerPiano : MonoBehaviour
         if (!wallsMoved)
         {
             wallToMove.Move();
-            //StartCoroutine(playPianoSounds());
+            StartCoroutine(playPianoSounds());
             playerConversation.CanAccuse();
             StartCoroutine(mavisConvo.AfterWalls());
             StartCoroutine(victorConvo.AfterWalls());
             wallsMoved = true;
-            piano.clip = insertRoll;
-            piano.Play();
-
-            while (piano.isPlaying)
-            { }
-
-            piano.clip = pianoSound;
-            piano.Play();
+            
         }
     }
     
