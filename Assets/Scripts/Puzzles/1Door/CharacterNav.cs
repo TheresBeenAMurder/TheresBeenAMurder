@@ -15,7 +15,7 @@ public class CharacterNav : MonoBehaviour
 
     public void Move()
     {
-       // agent.updatePosition = false;
+        agent.updatePosition = false;
         agent.SetDestination(endPos.position);
         animator.changeState(NPCAnimator.CHARACTERSTATE.WALKFORWARD);
         walkStarted = true;
@@ -29,14 +29,16 @@ public class CharacterNav : MonoBehaviour
 
         if(walkStarted)
         {
-
-            agent.speed = animator.animator.deltaPosition.magnitude / Time.deltaTime;
+            agent.nextPosition = transform.position;
+            transform.rotation = agent.transform.rotation;
+            //agent.speed = animator.animator.deltaPosition.magnitude / Time.deltaTime;
             //Debug.Log(Vector3.Distance(animator.transform.position, endPos.position));
             if (Vector3.Distance(animator.transform.position, endPos.position) < distance)
             {
                 agent.speed = 0;
                 walkStarted = false;
                 animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+                //transform.rotation = new Quaternion(0, 0, 0, 0);
             }
         }
     }
