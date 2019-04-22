@@ -31,13 +31,11 @@ public class PlayerPiano : MonoBehaviour
     {
         piano.clip = insertRoll;
         piano.Play();
-        Debug.Log("Playing clicks");
 
         yield return new WaitForSeconds(insertRoll.length);
 
         piano.clip = pianoSound;
         piano.Play();
-        Debug.Log("Playing music");
     }
 
     public void InsertCylinder()
