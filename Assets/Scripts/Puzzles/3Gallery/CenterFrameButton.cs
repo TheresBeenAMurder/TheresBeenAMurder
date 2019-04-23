@@ -18,6 +18,7 @@ public class CenterFrameButton : MonoBehaviour
     // Hint related
     public AudioSource playerAudio;
     public PlayerConversation playerConversation;
+    public NPC victor;
     public AudioSource victorAudio;
     public AudioClip victorHint;
 
@@ -49,8 +50,9 @@ public class CenterFrameButton : MonoBehaviour
             }
 
             // Play Victor's voiceline
-            //victorAudio.clip = victorHint;
-            //victorAudio.Play();
+            victorAudio.clip = victorHint;
+            victorAudio.Play();
+            victor.AddAvailableConversation(66);
         }
     }
 

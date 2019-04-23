@@ -9,6 +9,7 @@ public class PlantWall : MonoBehaviour
     bool isSolved = false;
 
     // Hint related
+    public NPC madeline;
     public AudioSource madelineAudio;
     public AudioClip madelineHint;
     public AudioSource playerAudio;
@@ -32,6 +33,7 @@ public class PlantWall : MonoBehaviour
             win.Play();
             gallery.ActivateImages();
             isSolved = true;
+            madeline.RemoveAvailableConversation(60);
         }
     }
 
@@ -51,7 +53,7 @@ public class PlantWall : MonoBehaviour
 
             // Play Madeline's voiceline
             madelineAudio.clip = madelineHint;
-            //madelineAudio.Play();
+            madelineAudio.Play();
         }
     }
 

@@ -10,7 +10,12 @@ public class MavisConversation : MonoBehaviour
 
     public IEnumerator AfterWalls()
     {
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(120);
+
+        audioSource.clip = callOut;
+        audioSource.Play();
+
+        mavis.AddAvailableConversation(70);
     }
 
     public void Start()

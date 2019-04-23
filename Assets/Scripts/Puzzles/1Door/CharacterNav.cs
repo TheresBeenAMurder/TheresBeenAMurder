@@ -4,9 +4,7 @@ using UnityEngine.AI;
 public class CharacterNav : MonoBehaviour
 {
     public Transform endPos;
-
     public NavMeshAgent agent;
-
     public NPCAnimator animator;
 
     bool walkStarted = false;
@@ -19,14 +17,10 @@ public class CharacterNav : MonoBehaviour
         agent.SetDestination(endPos.position);
         animator.changeState(NPCAnimator.CHARACTERSTATE.WALKFORWARD);
         walkStarted = true;
-        //Debug.Log(agent.destination);
     }
 
     private void Update()
     {
-       
-
-
         if(walkStarted)
         {
             agent.nextPosition = transform.position;
