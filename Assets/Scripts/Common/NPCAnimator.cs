@@ -6,6 +6,7 @@ using UnityEngine;
 public class NPCAnimator : MonoBehaviour {
 
     public Animator animator;
+    public AudioSource footsteps;
 
     //idle = 0
     //left = 1
@@ -33,53 +34,79 @@ public class NPCAnimator : MonoBehaviour {
         {
             case CHARACTERSTATE.IDLE:
                 {
+                    if(footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 0);
                     break;
                 }
             case CHARACTERSTATE.WALKLEFT:
                 {
-
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 1);
                     break;
                 }
             case CHARACTERSTATE.WALKRIGHT:
                 {
-
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 2);
                     break;
                 }
             case CHARACTERSTATE.WALKFORWARD:
                 {
-
+                    footsteps.Play();
                     animator.SetInteger("state", 3);
                     break;
                 }
             case CHARACTERSTATE.WALKBACKWARD:
                 {
-
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 4);
                     break;
                 }
             case CHARACTERSTATE.TALKNORMAL:
                 {
-
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 5);
                     break;
                 }
             case CHARACTERSTATE.TALKAGITATED:
                 {
-
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 6);
                     break;
                 }
             case CHARACTERSTATE.DANCE:
                 {
-
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 7);
                     break;
                 }
             case CHARACTERSTATE.HAND:
                 {
+                    if (footsteps.isPlaying)
+                    {
+                        footsteps.Stop();
+                    }
                     animator.SetInteger("state", 8);
                     break;
                 }

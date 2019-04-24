@@ -17,6 +17,12 @@ public class Combiner : MonoBehaviour
     public Transform doorOpenPos;
     public Transform doorClosePos;
 
+    public AudioSource SFXSource;
+    public AudioSource doorSource;
+    public AudioSource jarFillSource;
+    public AudioClip processingSound;
+    
+
     // Returns true if all sensors are populated, false otherwise
     // If true, currentKeys contains the keys on the sensors
     public bool CheckKeys()
@@ -54,11 +60,21 @@ public class Combiner : MonoBehaviour
             StartCoroutine("PressButton");
         }
     }
+    public IEnumerator ProcessSamples()
+    {
+        SFXSource.clip = processingSound;
+        SFXSource.Play();
+        yield return new WaitForSeconds(processingSound.length);
+
+        jarFillSource.Play();
+
+    }
 
     // Makes button unable to be pressed again for 3 seconds after it is
     // initially pressed. (We can make this the animation time)
     public IEnumerator PressButton()
     {
+        doorSource.Play();
         StartCoroutine(Movement.SmoothMove(doorClosePos.position, 1.5f, extractorDoor));
         Renderer renderer = GetComponent<Renderer>();
 
@@ -70,16 +86,21 @@ public class Combiner : MonoBehaviour
         // Wait for animation
         yield return new WaitForSeconds(4);
 
+
         if (CheckKeys())
         {
             creator.CreateKey(CombineKeys());
+
+            StartCoroutine(ProcessSamples());
+           
+
         }
 
 
         // button is no longer pressed
         isPressed = false;
         renderer.material = defaultMaterial;
-
+        doorSource.Play();
         StartCoroutine(Movement.SmoothMove(doorOpenPos.position, 2f, extractorDoor));
     }
 

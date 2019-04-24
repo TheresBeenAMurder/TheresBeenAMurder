@@ -5,6 +5,8 @@ public class PuzzleCamera : MonoBehaviour
     public Camera cameraView;
     public GameObject snappedEye;
 
+    public AudioSource eyeClick;
+
     [HideInInspector]
     public bool eyeAttached = false;
 
@@ -16,6 +18,7 @@ public class PuzzleCamera : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Eye"))
         {
+            eyeClick.Play();
             SwitchCameraLayers(everythingCameraLayer);
             other.gameObject.GetComponent<EyeGrabbable>().nearCamera = true;
         }

@@ -4,9 +4,7 @@ using UnityEngine.AI;
 public class CharacterNav : MonoBehaviour
 {
     public Transform endPos;
-
-    private NavMeshAgent agent;
-
+    public NavMeshAgent agent;
     public NPCAnimator animator;
 
     bool walkStarted = false;
@@ -15,26 +13,26 @@ public class CharacterNav : MonoBehaviour
 
     public void Move()
     {
+        agent.updatePosition = false;
         agent.SetDestination(endPos.position);
         animator.changeState(NPCAnimator.CHARACTERSTATE.WALKFORWARD);
         walkStarted = true;
-        Debug.Log(agent.destination);
     }
 
     private void Update()
     {
-       
-
-
         if(walkStarted)
         {
-
-            
-
-            if (Vector3.Distance(transform.position, endPos.position) < distance)
+            agent.nextPosition = transform.position;
+            transform.rotation = agent.transform.rotation;
+            //agent.speed = animator.animator.deltaPosition.magnitude / Time.deltaTime;
+            //Debug.Log(Vector3.Distance(animator.transform.position, endPos.position));
+            if (Vector3.Distance(animator.transform.position, endPos.position) < distance)
             {
+                agent.speed = 0;
                 walkStarted = false;
                 animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+                //transform.rotation = new Quaternion(0, 0, 0, 0);
             }
         }
     }

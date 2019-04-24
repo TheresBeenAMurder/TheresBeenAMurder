@@ -72,7 +72,7 @@ public class ButtonPanel : MonoBehaviour
         // Characters walk into the room
         foreach (CharacterNav character in characters)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
             character.Move();
         }
     }

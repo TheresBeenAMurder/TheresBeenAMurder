@@ -11,6 +11,13 @@ public class Extractor : MonoBehaviour {
     public Material machineMaterial;
     bool isOn = false;
 
+    public AudioClip powerOnSound;
+
+    public AudioSource SFXSource;
+    public AudioSource doorSource;
+
+
+    public bool correctCombo = false;
     public float moveTime = 1f;
 
    // public AudioSource machinePowerup;
@@ -31,10 +38,15 @@ public class Extractor : MonoBehaviour {
         }
     }
 
+   
+
     // Update is called once per frame
     public void powerOn()
     {
-
+        SFXSource.clip = powerOnSound;
+        SFXSource.Play();
+        
+        doorSource.Play();
         makeItGlow();
         openDoor();
         //machinePowerup.Play();
@@ -44,12 +56,14 @@ public class Extractor : MonoBehaviour {
     public void closeDoor()
     {
         StartCoroutine(Movement.SmoothMove(closedDoorPos.position, moveTime, door));
+        doorSource.Play();
         //doorClicking.Play();
     }
 
     public void openDoor()
     {
         StartCoroutine(Movement.SmoothMove(openDoorPos.position, moveTime, door));
+        doorSource.Play();
         //doorClicking.Play();
     }
 
