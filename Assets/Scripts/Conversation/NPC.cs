@@ -108,6 +108,11 @@ public class NPC : MonoBehaviour
         }
     }
 
+    public bool HasStartingPrompt(int prompt)
+    {
+        return startingPromptIDs.Contains(prompt);
+    }
+
     public void InitializeConversation()
     {
         dbHandler.SetUpDatabase();
