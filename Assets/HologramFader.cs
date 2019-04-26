@@ -24,7 +24,7 @@ public class HologramFader : MonoBehaviour
     private void Start()
     {
         scale = maxAlpha / tolerance;
-        soundScale = 1 / tolerance;
+        soundScale = .5f/ tolerance;
     }
 
     // Update is called once per frame
@@ -55,7 +55,7 @@ public class HologramFader : MonoBehaviour
 
     void setAudio()
     {
-        originalHum.volume = (blend);
-        glitchHum.volume = (1- blend) * 1.5f;
+        originalHum.volume = (blend * .7f);
+        glitchHum.volume = (1- blend) * .7f;
     }
 }

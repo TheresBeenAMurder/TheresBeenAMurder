@@ -83,8 +83,6 @@ public class Combiner : MonoBehaviour
         renderer.material = pressedMaterial;
 
 
-        // Wait for animation
-        yield return new WaitForSeconds(4);
 
 
         if (CheckKeys())
@@ -96,6 +94,8 @@ public class Combiner : MonoBehaviour
 
         }
 
+        // Wait for animation
+        yield return new WaitForSeconds(processingSound.length + jarFillSource.clip.length);
 
         // button is no longer pressed
         isPressed = false;

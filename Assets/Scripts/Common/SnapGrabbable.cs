@@ -29,6 +29,7 @@ public class SnapGrabbable : OVRGrabbable
                 transform.position = snapTransform.position;
                 transform.rotation = snapTransform.rotation;
                 isSnapped = true;
+                thisRB.isKinematic = true;
             }
             else
             {
@@ -37,6 +38,7 @@ public class SnapGrabbable : OVRGrabbable
         }
         else if(!isSnapped)
         {
+            thisRB.isKinematic = true;
             //thisRB.useGravity = true;
         }
 

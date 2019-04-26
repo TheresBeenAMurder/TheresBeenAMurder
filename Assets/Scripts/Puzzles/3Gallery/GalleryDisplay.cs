@@ -24,6 +24,7 @@ public class GalleryDisplay : MonoBehaviour
 
         // Start the timer for the gallery puzzle hint
         StartCoroutine(piano.Hint());
+        StartCoroutine(playStartupSounds());
     }
 
     IEnumerator playStartupSounds()
