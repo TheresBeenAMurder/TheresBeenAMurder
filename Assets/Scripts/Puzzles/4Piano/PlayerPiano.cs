@@ -3,16 +3,12 @@ using System.Collections;
 
 public class PlayerPiano : MonoBehaviour
 {
+    public ConversationUpdater conversationUpdater;
     public Transform leftmost;
-    public NPC madeline;
-    public MavisConversation mavisConvo;
-    public AudioSource playerAudio;
+    public AudioClip mavisCallOut;
     public WallButton wallToMove;
     public Transform snapPoint;
-    public NPC victor;
-    public AudioSource victorAudio;
     public AudioClip victorHint;
-    public VictorConversation victorConvo;
     public AudioSource piano;
     public PlayerConversation playerConversation;
 
@@ -23,6 +19,14 @@ public class PlayerPiano : MonoBehaviour
 
     private bool wallsMoved = false;
 
+    private IEnumerator AfterWalls()
+    {
+        yield return new WaitForSeconds(120);
+        yield return playerConversation.WaitToTalk();
+        conversationUpdater.TriggerVoiceLine(ConversationUpdater.Character.Mavis, mavisCallOut);
+        conversationUpdater.OpenConversation(5);
+    }
+
     public IEnumerator Hint()
     {
         // Wait for 1 min after the gallery is revealed to play hint
@@ -30,17 +34,9 @@ public class PlayerPiano : MonoBehaviour
 
         if (!wallsMoved)
         {
-            while (playerConversation.inConversation || playerAudio.isPlaying)
-            {
-                // prevents updating victor's voiceline while the player
-                // is actively in a conversation with him
-                yield return new WaitForSeconds(10);
-            }
-
-            // Play Victor's voiceline
-            victorAudio.clip = victorHint;
-            victorAudio.Play();
-            victor.AddAvailableConversation(66);
+            yield return playerConversation.WaitToTalk();
+            conversationUpdater.TriggerVoiceLine(ConversationUpdater.Character.Victor, victorHint);
+            conversationUpdater.OpenConversation(3);
         }
     }
 
@@ -74,13 +70,15 @@ public class PlayerPiano : MonoBehaviour
             wallToMove.Move();
             StartCoroutine(playPianoSounds());
             playerConversation.CanAccuse();
-            StartCoroutine(mavisConvo.AfterWalls());
 
-            victor.RemoveAvailableConversation(66);
-            victor.RemoveAvailableConversation(64);
-            madeline.RemoveAvailableConversation(68);
+            conversationUpdater.CloseConversation(2, true);
+            conversationUpdater.CloseConversation(3, true);
+            conversationUpdater.CloseConversation(4, true);
+            conversationUpdater.OpenConversation(6);
+            conversationUpdater.OpenConversation(7);
 
-            victor.AddAvailableConversation(74);
+            StartCoroutine(AfterWalls());
+
             wallsMoved = true;
         }
     }  

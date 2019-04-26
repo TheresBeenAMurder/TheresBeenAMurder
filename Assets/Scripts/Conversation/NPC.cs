@@ -49,9 +49,24 @@ public class NPC : MonoBehaviour
     private int chosenConversationPrompt;
     private HashSet<int> startingPromptIDs = new HashSet<int>();
 
+    public PromptHandler promptHandler;
+
     public void AddAvailableConversation(int promptID)
     {
         startingPromptIDs.Add(promptID);
+    }
+
+    public bool CanTalk()
+    {
+        foreach (int startingPrompt in startingPromptIDs)
+        {
+            if (startingPrompt != -1)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Gets the relevant information from the database about the chosen
@@ -229,6 +244,9 @@ public class NPC : MonoBehaviour
 
     public void UpdateNextPrompt(int promptID, int choice = -1)
     {
+        // In charge of "finding" evidence and opening conversations at specific points
+        promptHandler.DealWithPromptID(this.promptID, id);
+
         // Remove the starting prompt for the current conversation and update it
         if (choice != -1 && choiceToPromptID.ContainsKey(choice - 1))
         {
