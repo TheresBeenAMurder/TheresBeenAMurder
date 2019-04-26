@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ConversationUI : MonoBehaviour
 {
-    private static OVRInput.Button ConversationButton = OVRInput.Button.Two;
+    private static OVRInput.Button ConversationButton = OVRInput.Button.SecondaryIndexTrigger;
 
     public NPCAnimator animator;
 
@@ -145,7 +145,7 @@ public class ConversationUI : MonoBehaviour
     {
         if (!playerNear && !inConversation && other.gameObject.tag == "Player" && !playerConversation.inConversation)
         {
-            displayBox.text = "Press B to speak to " + name;
+            displayBox.text = "Press right trigger to speak to " + name;
             playerNear = true;
         }
     }

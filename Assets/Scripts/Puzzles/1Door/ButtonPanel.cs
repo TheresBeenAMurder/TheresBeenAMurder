@@ -107,14 +107,15 @@ public class ButtonPanel : MonoBehaviour
             {
                 audioSource.clip = correct;
                 audioSource.Play();
+                StartCoroutine(FileIn());
                 yield return StartCoroutine(door.Open());
 
                 // Characters walk into the room
-                foreach (CharacterNav character in characters)
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    character.Move();
-                }
+                //foreach (CharacterNav character in characters)
+                //{
+                //    yield return new WaitForSeconds(0.5f);
+                //    character.Move();
+                //}
             }
             else
             {

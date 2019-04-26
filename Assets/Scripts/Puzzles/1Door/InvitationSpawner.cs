@@ -17,7 +17,7 @@ public class InvitationSpawner : MonoBehaviour
 
     public void StopOpeningDialogue()
     {
-        StopCoroutine(autoConversation.PlayDialogue());
+        autoConversation.StopDialogue();
     }
 
     public void Update ()

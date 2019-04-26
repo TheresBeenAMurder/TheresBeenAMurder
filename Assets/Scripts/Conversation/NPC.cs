@@ -54,6 +54,11 @@ public class NPC : MonoBehaviour
     public void AddAvailableConversation(int promptID)
     {
         startingPromptIDs.Add(promptID);
+
+        if (this.promptID < 60)
+        {
+            UpdateNextPrompt(promptID);
+        }
     }
 
     public bool CanTalk()

@@ -35,8 +35,6 @@ public class Door : MonoBehaviour
 
 	public IEnumerator Open()
     {
-        
-
         isSolved = true;
 
         conversationUpdater.OpenConversation(1);
