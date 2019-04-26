@@ -7,7 +7,7 @@ public class PlantWall : MonoBehaviour
     public GalleryDisplay gallery;
     private PlantPot[] plants;
     public AudioClip victorReact;
-    public AudioSource win;
+   // public AudioSource win;
     bool isSolved = false;
 
     // Hint related
@@ -29,7 +29,7 @@ public class PlantWall : MonoBehaviour
                 }
             }
 
-            win.Play();
+            //win.Play();
             gallery.ActivateImages();
             isSolved = true;
             conversationUpdater.CloseConversation(1, true);
