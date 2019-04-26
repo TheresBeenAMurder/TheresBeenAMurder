@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerPiano : MonoBehaviour
 {
+    public AutoConversation autoConversation;
     public ConversationUpdater conversationUpdater;
     public Transform leftmost;
     public AudioClip mavisCallOut;
@@ -70,6 +71,8 @@ public class PlayerPiano : MonoBehaviour
             wallToMove.Move();
             StartCoroutine(playPianoSounds());
             playerConversation.CanAccuse();
+
+            StartCoroutine(autoConversation.PlayDialogue());
 
             conversationUpdater.CloseConversation(2, true);
             conversationUpdater.CloseConversation(3, true);
