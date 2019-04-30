@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ConversationUpdater : MonoBehaviour
 {
+    public AudioSource chiefAudio;
     public NPC madeline;
     public AudioSource madelineAudio;
     public NPC mavis;
@@ -66,6 +67,12 @@ public class ConversationUpdater : MonoBehaviour
             npc = victor,
             audio = victorAudio
         };
+
+        characterInfos[Character.Chief] = new CharacterInfo
+        {
+            npc = null,
+            audio = chiefAudio
+        };
     }
 
     public void TriggerVoiceLine(Character character,  AudioClip clip)
@@ -85,7 +92,8 @@ public class ConversationUpdater : MonoBehaviour
         Detective,
         Madeline,
         Mavis,
-        Victor
+        Victor,
+        Chief
     }
 
     public struct CharacterInfo

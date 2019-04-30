@@ -21,7 +21,7 @@ public class Accusation : MonoBehaviour
     private string evidenceNotFoundAudio;
     private AudioSource playerAudio;
 
-    private int endScene = 2;
+    private int endScene = 3;
 
     private void ClearLoadedEvidence()
     {

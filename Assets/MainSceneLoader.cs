@@ -15,6 +15,7 @@ public class MainSceneLoader : MonoBehaviour
     void Start()
     {
         StartCoroutine(LoadNext());
+        StartCoroutine(chiefConvo.PlayDialogue());
     }
 
     // Update is called once per frame
