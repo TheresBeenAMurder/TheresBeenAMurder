@@ -60,9 +60,8 @@ public class Accusation : MonoBehaviour
         }
 
         yield return new WaitForSeconds(characterAudio.clip.length - characterAudio.time);
-
         conversationUI.PlayAudio(playerAudio, playerLine);
-        yield return new WaitForSeconds(playerAudio.clip.length + 1);
+        yield return new WaitForSeconds(playerAudio.clip.length);
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
     }
@@ -139,11 +138,11 @@ public class Accusation : MonoBehaviour
                 conversationUI.ClearDisplay();
                 return false;
             }
-
-            StartCoroutine(TalkAbout(currentEvidence));
         }
         else if (currentEvidence == evidenceType.done)
         {
+            conversationUI.ClearDisplay();
+
             if (choice == 1)
             {
                 // END GAME STATE - AN ACCUSATION HAS BEEN MADE
@@ -153,52 +152,51 @@ public class Accusation : MonoBehaviour
                     EndSceneInfo.selectedEvidence.Add(evidence);
                 }
 
-                if (characterID == 4)
-                {
-                    string mavisLine = "Audio/Mavis/";
+                ////if (characterID == 4)
+                ////{
+                ////    string mavisLine = "Audio/Mavis/";
 
-                    if (EndScene.CorrectEnding(characterID, selectedEvidenceIDs))
-                    {
-                        mavisLine += "MF_26";
-                    }
-                    else
-                    {
-                        mavisLine += "MF_25";
-                    }
+                ////    if (EndScene.CorrectEnding(characterID, selectedEvidenceIDs))
+                ////    {
+                ////        mavisLine += "MF_26";
+                ////    }
+                ////    else
+                ////    {
+                ////        mavisLine += "MF_25";
+                ////    }
 
-                    // Accusing Mavis, one last conversation.
-                    conversationUI.PlayAudio(characterAudio, mavisLine);
+                ////    // Accusing Mavis, one last conversation.
+                ////    conversationUI.PlayAudio(characterAudio, mavisLine);
 
-                    string[] options =
-                    {
-                        "Indifferent",
-                        "Sympathetic"
-                    };
-                    conversationUI.DisplayResponseOptions(options);
-                }
-                else
-                {
+                ////    string[] options =
+                ////    {
+                ////        "Indifferent",
+                ////        "Sympathetic"
+                ////    };
+                ////    conversationUI.DisplayResponseOptions(options);
+                ////    return true;
+                ////}
+                ////else
+                ////{
                     UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
-                }
+                ////}
             }
 
             // Chose not to accuse
-            conversationUI.ClearDisplay();
             return false;
         }
         else if (currentEvidence == evidenceType.Mavis)
         {
             StartCoroutine(FinalConversation(choice));
-            conversationUI.ClearDisplay();
             return false;
         }
         else
         {
-            DescribeEvidence(choice);
-            StartCoroutine(TalkAbout(currentEvidence));
+            DescribeEvidence(choice); 
         }
 
         UpdateNextEvidence();
+        StartCoroutine(TalkAbout(currentEvidence));
         return true;
     }
 
@@ -278,9 +276,6 @@ public class Accusation : MonoBehaviour
                 break;
             case evidenceType.alibi:
                 currentEvidence = evidenceType.done;
-                break;
-            case evidenceType.done:
-                currentEvidence = evidenceType.Mavis;
                 break;
         }
     }

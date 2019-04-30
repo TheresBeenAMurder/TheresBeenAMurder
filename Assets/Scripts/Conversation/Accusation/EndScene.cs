@@ -4,11 +4,12 @@ using UnityEngine;
 public class EndScene : MonoBehaviour
 {
     public AudioSource audioSource;
-    public static int correctCharacterID;
-    public static List<int> correctEvidenceIDs = new List<int>();
     public AudioClip endSceneCorrect;
     public AudioClip endScenePartiallyCorrect;
     public AudioClip endSceneWrong;
+
+    private static int correctCharacterID = 4;
+    private static List<int> correctEvidenceIDs = new List<int> { 9, 11, 12, 13 };
 
     public static bool CorrectEnding(int accusedCharacter, List<int> utilizedEvidence)
     {

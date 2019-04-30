@@ -26,24 +26,24 @@ public class PromptHandler : MonoBehaviour
 
         // Madline
         actionHandler[2] = new Dictionary<int, Action>();
-        actionHandler[2].Add(88, this.dbHandler.FindEvidence(2, 3));
-        actionHandler[2].Add(90, this.dbHandler.FindEvidence(6));
+        actionHandler[2].Add(88, () => this.dbHandler.FindEvidence(new int[] {2, 3}));
+        actionHandler[2].Add(90, () => this.dbHandler.FindEvidence(new int[] { 6 }));
 
         // Victor
         actionHandler[3] = new Dictionary<int, Action>();
         actionHandler[3].Add(79, this.UpdateMadelineVictorConvo);
         actionHandler[3].Add(93, this.UnlockMavisConvo);
-        actionHandler[3].Add(78, this.dbHandler.FindEvidence(1));
-        actionHandler[3].Add(94, this.dbHandler.FindEvidence(7));
-        actionHandler[3].Add(95, this.dbHandler.FindEvidence(8));
+        actionHandler[3].Add(78, () => this.dbHandler.FindEvidence(new int[] { 1 }));
+        actionHandler[3].Add(94, () => this.dbHandler.FindEvidence(new int[] { 7 }));
+        actionHandler[3].Add(95, () => this.dbHandler.FindEvidence(new int[] { 8 }));
 
         // Mavis
         actionHandler[4] = new Dictionary<int, Action>();
         actionHandler[4].Add(72, this.UnlockHumanExperimentsConversation);
-        actionHandler[4].Add(111, this.dbHandler.FindEvidence(9));
-        actionHandler[4].Add(112, this.dbHandler.FindEvidence(10));
-        actionHandler[4].Add(114, this.dbHandler.FindEvidence(13));
-        actionHandler[4].Add(115, this.dbHandler.FindEvidence(12));
+        actionHandler[4].Add(111, () => this.dbHandler.FindEvidence(new int[] { 9 }));
+        actionHandler[4].Add(112, () => this.dbHandler.FindEvidence(new int[] { 10 }));
+        actionHandler[4].Add(114, () => this.dbHandler.FindEvidence(new int[] { 13 }));
+        actionHandler[4].Add(115, () => this.dbHandler.FindEvidence(new int[] { 12 }));
     }
 
     public void Start()
@@ -74,7 +74,7 @@ public class PromptHandler : MonoBehaviour
     // Unlocks the conversation with Madeline about Victor.
     private void UpdateMadelineVictorConvo()
     {
-        this.dbHandler.FindEvidence(5);
+        this.dbHandler.FindEvidence(new int[] { 5 });
 
         string update = "UPDATE Prompts SET Response1ID = 87 WHERE ID == 88";
         dbHandler.OpenUpdateClose(update);

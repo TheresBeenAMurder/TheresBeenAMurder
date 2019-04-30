@@ -6,6 +6,7 @@ public class SecretDeskButton : MonoBehaviour {
 
     public bool solved = false;
 
+    public Combiner archive;
     public Light[] archiveLights;
     public LightBoard lightBoard;
     public Extractor extractor;
@@ -23,6 +24,7 @@ public class SecretDeskButton : MonoBehaviour {
             light.gameObject.SetActive(true);
         }
 
+        archive.isActive = true;
         solved = true;
     }
 

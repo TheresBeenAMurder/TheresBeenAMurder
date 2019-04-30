@@ -5,6 +5,8 @@ using UnityEngine;
 // Used for all necessary database interactions
 public class DatabaseHandler: MonoBehaviour
 {
+    public AudioSource scribbleAudio;
+
     private IDbCommand command = null;
     private IDbConnection database = null;
     private IDataReader reader = null;
@@ -28,9 +30,11 @@ public class DatabaseHandler: MonoBehaviour
     {
         foreach (int id in evidenceIDs)
         {
-            string update = "UPDATE Evidence SET Found = 1 WHERE ID ==" + evidenceID;
+            string update = "UPDATE Evidence SET Found = 1 WHERE ID ==" + id;
             OpenUpdateClose(update);
         }
+
+        scribbleAudio.Play();
     }
 
     public void OnDestroy()

@@ -78,15 +78,14 @@ public class NPC : MonoBehaviour
     {
         conversationUI.ClearOptions();
 
-        string query = "SELECT NextPromptID, End, AudioFile, RelationshipEffect" +
+        string query = "SELECT NextPromptID, AudioFile, RelationshipEffect" +
                 " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
         IDataReader reader = dbHandler.ExecuteQuery(query);
 
         reader.Read();
         int nextPromptID = reader.GetInt32(0);
-        bool end = reader.GetBoolean(1);
-        string responseAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
-        int relationshipEffect = reader.GetInt32(3);
+        string responseAudio = reader.IsDBNull(1) ? "" : reader.GetString(1);
+        int relationshipEffect = reader.GetInt32(2);
         reader.Close();
 
         // Play the voice line for the response
@@ -154,7 +153,10 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        conversationUI.PromptForConversation(other, characterName);
+        if (CanTalk())
+        {
+            conversationUI.PromptForConversation(other, characterName);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -247,9 +249,6 @@ public class NPC : MonoBehaviour
 
     public void UpdateNextPrompt(int promptID, int choice = -1)
     {
-        // In charge of "finding" evidence and opening conversations at specific points
-        promptHandler.DealWithPromptID(this.promptID, id);
-
         // Remove the starting prompt for the current conversation and update it
         if (choice != -1 && choiceToPromptID.ContainsKey(choice - 1))
         {
@@ -369,6 +368,9 @@ public class NPC : MonoBehaviour
                 // Make sure the voice line plays all the way through
                 yield return new WaitForSeconds(conversationAudio.clip.length);
             }
+
+            // In charge of "finding" evidence and opening conversations at specific points
+            promptHandler.DealWithPromptID(this.promptID, id);
         }
 
         WriteResponses();
