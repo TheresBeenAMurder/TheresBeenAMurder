@@ -68,11 +68,9 @@ public class PlayerPiano : MonoBehaviour
         // even if the walls move multiple times
         if (!wallsMoved)
         {
-            wallToMove.Move();
+            wallToMove.Move(autoConversation);
             StartCoroutine(playPianoSounds());
             playerConversation.AddAccusationConversations();
-
-            StartCoroutine(autoConversation.PlayDialogue());
 
             conversationUpdater.CloseConversation(2, true);
             conversationUpdater.CloseConversation(3, true);

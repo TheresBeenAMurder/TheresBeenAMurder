@@ -30,7 +30,7 @@ public class Wall : MonoBehaviour
     }
 
     // call from the highest wall in the stack
-    public IEnumerator MoveDown()
+    public IEnumerator MoveDown(AutoConversation autoConvo)
     {
         //float wallHeight = Mathf.Abs(transform.position.y - wallBelow.transform.position.y);
         float wallHeight = 3.79f;
@@ -47,6 +47,8 @@ public class Wall : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             corpseDropper.Drop();
             hasDropped = true;
+
+            yield return autoConvo.PlayDialogue();
         }
     }
 
