@@ -21,9 +21,11 @@ public class MainSceneLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if(!nextSceneLoaded)
         {
-            if(async.isDone)
+            if(async.progress >= 0.9f)
             {
                 nextSceneLoaded = true;
             }
