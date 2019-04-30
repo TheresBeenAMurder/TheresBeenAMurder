@@ -19,8 +19,7 @@ public class ConversationUpdater : MonoBehaviour
         Conversation convo = ConversationMapper.GetConversation(convoNum);
         characterInfos[convo.character].npc.RemoveAvailableConversation(convo.startingPrompt);
 
-        // Removes a conversation even if the player is halfway through. Relies on the fact that
-        // we won't be removing the last three conversations in this manner (since they're accusations).
+        // Removes a conversation even if the player is halfway through.
         if (removeMidIfPossible)
         {
             int nextConvoPrompt = ConversationMapper.GetConversation(convoNum + 1).startingPrompt;
@@ -216,6 +215,14 @@ public class ConversationUpdater : MonoBehaviour
                 {
                     character = Character.Mavis,
                     startingPrompt = 124
+                }
+            },
+            { // NOT A REAL CONVERSATION, NEEDED FOR OTHER LOGIC
+                15,
+                new Conversation
+                {
+                    character = Character.Detective,
+                    startingPrompt = 127
                 }
             }
         };

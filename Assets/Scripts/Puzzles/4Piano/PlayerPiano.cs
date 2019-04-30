@@ -70,7 +70,7 @@ public class PlayerPiano : MonoBehaviour
         {
             wallToMove.Move();
             StartCoroutine(playPianoSounds());
-            playerConversation.CanAccuse();
+            playerConversation.AddAccusationConversations();
 
             StartCoroutine(autoConversation.PlayDialogue());
 

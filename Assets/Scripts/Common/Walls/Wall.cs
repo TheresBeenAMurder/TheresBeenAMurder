@@ -12,7 +12,7 @@ public class Wall : MonoBehaviour
     bool hasDropped = false;
     public CorpseDrop corpseDropper;
 
-    private float moveTime = .2f / .1f;
+    private float moveTime = .1f / .1f;
 
     public bool CanMoveDown()
     {

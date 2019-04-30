@@ -59,7 +59,7 @@ public class SoundtrackLayer : MonoBehaviour
     {
         fadingIn = true;
         audioSource = GetComponent<AudioSource>();
-        audioSource.clip = tracks[trackNumber];
+        //audioSource.clip = tracks[trackNumber];
         audioSource.Play();
         audioSource.volume = 0;
         currentTrack = trackNumber;

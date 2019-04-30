@@ -6,16 +6,21 @@ using UnityEngine;
 // of multiple NPCs.
 public class PlayerConversation : MonoBehaviour
 {
+    public ConversationUpdater conversationUpdater;
     public bool inConversation = false;
-    public NPC[] npcs;
     public AudioSource playerAudio;
 
-    public void CanAccuse()
+    // Re-adds the accusation conversation for each character
+    // Highly inefficient, probably needs to be fixed later.
+    public void AddAccusationConversations()
     {
-        foreach (NPC npc in npcs)
-        {
-            npc.canAccuse = true;
-        }
+        conversationUpdater.CloseConversation(12, true);
+        conversationUpdater.CloseConversation(13, true);
+        conversationUpdater.CloseConversation(14, true);
+
+        conversationUpdater.OpenConversation(12);
+        conversationUpdater.OpenConversation(13);
+        conversationUpdater.OpenConversation(14);
     }
 
     public IEnumerator WaitToTalk()

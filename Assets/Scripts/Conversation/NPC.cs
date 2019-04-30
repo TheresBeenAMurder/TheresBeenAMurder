@@ -35,8 +35,6 @@ public class NPC : MonoBehaviour
     // conversation related
     private Accusation accusation;
     public AccusationLights accusationLights;
-    public bool canAccuse = false;
-    private int currentAccuseChoice = 0;
     public bool isAccusing = false;
     private int promptID;
     private int[] responseIDs = new int[4];
@@ -210,11 +208,11 @@ public class NPC : MonoBehaviour
     {
         conversationUI.ClearDisplay();
         InitializeConversation();
-        StartConversationPrompt(canAccuse);
+        StartConversationPrompt();
     }
 
     // This will only work if the detective has the first line for every conversation
-    public void StartConversationPrompt(bool addAccuseOpt = false)
+    public void StartConversationPrompt()
     {
         // Add the current promptID to the starting ID set
         startingPromptIDs.Add(promptID);
@@ -244,7 +242,7 @@ public class NPC : MonoBehaviour
             }
         }
 
-        WriteResponses(addAccuseOpt);
+        WriteResponses();
     }
 
     public void UpdateNextPrompt(int promptID, int choice = -1)
@@ -373,10 +371,10 @@ public class NPC : MonoBehaviour
             }
         }
 
-        WriteResponses(addAccuseOpt);
+        WriteResponses();
     }
 
-    public void WriteResponses(bool addAccuseOpt = false)
+    public void WriteResponses()
     {
         string[] responseDisplays = new string[5];
         responseDisplays[4] = "";
@@ -402,24 +400,6 @@ public class NPC : MonoBehaviour
 
                 currentDisplay++;
             }
-        }
-
-        // Adds an accuse option if the player can now accuse
-        if (addAccuseOpt)
-        {
-            for (int i = 0; i < responseDisplays.Length; i++)
-            {
-                if (responseDisplays[i] == null || responseDisplays[i] == "")
-                {
-                    responseDisplays[i] = "Accuse";
-                    currentAccuseChoice = i + 1;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            currentAccuseChoice = 0;
         }
 
         conversationUI.DisplayResponseOptions(responseDisplays);

@@ -95,6 +95,7 @@ public class ConversationUI : MonoBehaviour
 
         if (wasAccusing)
         {
+            playerConversation.AddAccusationConversations();
             lights.TurnOff();
         }
     }
@@ -112,6 +113,7 @@ public class ConversationUI : MonoBehaviour
 
             if (wasAccusing)
             {
+                playerConversation.AddAccusationConversations();
                 lights.TurnOff();
             }
         }
@@ -154,18 +156,6 @@ public class ConversationUI : MonoBehaviour
     {
         displayBox = gameObject.GetComponentInChildren<Text>();
     }
-
-    ////public bool StartConversationCheck()
-    ////{
-    ////    if (!inConversation && playerNear && OVRInput.GetDown(ConversationButton))
-    ////    {
-    ////        inConversation = true;
-    ////        playerConversation.inConversation = true;
-    ////        return true;
-    ////    }
-
-    ////    return false;
-    ////}
 
     // Determines whether or not to start a conversation
     public void Update()
