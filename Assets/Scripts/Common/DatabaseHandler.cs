@@ -24,11 +24,13 @@ public class DatabaseHandler: MonoBehaviour
 
     // Update the evidence in the database to found, the evidence is now
     // accessible through the accusation mechanic
-    public void FindEvidence(string evidenceType, int characterID, int evidenceID)
+    public void FindEvidence(int[] evidenceIDs)
     {
-        string update = "UPDATE Evidence SET Found = 1 WHERE CharacterID ==" +
-            characterID + " AND Type == '" + evidenceType + "' AND ID ==" + evidenceID;
-        OpenUpdateClose(update);
+        foreach (int id in evidenceIDs)
+        {
+            string update = "UPDATE Evidence SET Found = 1 WHERE ID ==" + evidenceID;
+            OpenUpdateClose(update);
+        }
     }
 
     public void OnDestroy()

@@ -4,11 +4,29 @@ using UnityEngine;
 public class EndScene : MonoBehaviour
 {
     public AudioSource audioSource;
-    public int correctCharacterID;
-    public List<int> correctEvidenceIDs = new List<int>();
+    public static int correctCharacterID;
+    public static List<int> correctEvidenceIDs = new List<int>();
     public AudioClip endSceneCorrect;
     public AudioClip endScenePartiallyCorrect;
     public AudioClip endSceneWrong;
+
+    public static bool CorrectEnding(int accusedCharacter, List<int> utilizedEvidence)
+    {
+        if (EndScene.correctCharacterID == accusedCharacter)
+        {
+            foreach (int evidence in EndScene.correctEvidenceIDs)
+            {
+                if (!utilizedEvidence.Contains(evidence))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 
     public void Start()
     {
@@ -21,17 +39,14 @@ public class EndScene : MonoBehaviour
     private void TriggerEndDialogue(int accusedCharacter, List<int> utilizedEvidence)
     {
         AudioClip endScene = endSceneWrong;
-        if (correctCharacterID == accusedCharacter)
+        
+        if (CorrectEnding(accusedCharacter, utilizedEvidence))
         {
             endScene = endSceneCorrect;
-            foreach (int evidence in correctEvidenceIDs)
-            {
-                if (!utilizedEvidence.Contains(evidence))
-                {
-                    endScene = endScenePartiallyCorrect;
-                    break;
-                }
-            }
+        }
+        else if (correctCharacterID == 4)
+        {
+            endScene = endScenePartiallyCorrect;
         }
 
         audioSource.clip = endScene;
