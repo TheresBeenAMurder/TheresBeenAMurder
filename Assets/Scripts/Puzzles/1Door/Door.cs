@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     public ConversationUpdater conversationUpdater;
     public IdleConversation idleConversation;
     public InvitationSpawner invitationSpawner;
+    public bool everyoneInRoom = false;
 
     public Transform moveSpace;
     public float moveTime = 1 / .1f;
@@ -16,6 +17,18 @@ public class Door : MonoBehaviour
     public TeleportTargetHandlerPhysical teleportAllowance;
     
     private bool isSolved = false;
+    private Transform originalPos;
+
+    private IEnumerator CloseAfter()
+    {
+        while (!everyoneInRoom)
+        {
+            yield return new WaitForSeconds(3);
+        }
+
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        yield return StartCoroutine(Movement.SmoothMove(originalPos.position, moveTime, rigidbody));
+    }
 
     public IEnumerator Hint()
     {
@@ -33,7 +46,7 @@ public class Door : MonoBehaviour
         return isSolved;
     }
 
-	public IEnumerator Open()
+    public IEnumerator Open()
     {
         isSolved = true;
 
@@ -60,5 +73,12 @@ public class Door : MonoBehaviour
         yield return new WaitForSeconds(30);
 
         yield return firstIdleConvo.PlayDialogue();
+
+        yield return StartCoroutine(CloseAfter());
+    }
+
+    public void Start()
+    {
+        this.originalPos = GetComponent<Rigidbody>().transform;
     }
 }
