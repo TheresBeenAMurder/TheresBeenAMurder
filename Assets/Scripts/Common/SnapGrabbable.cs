@@ -15,7 +15,7 @@ public class SnapGrabbable : OVRGrabbable
     {
         base.Start();
         thisRB = GetComponent<Rigidbody>();
-        thisRB.isKinematic = true;
+       // thisRB.isKinematic = true;
 
     }
 
@@ -32,15 +32,19 @@ public class SnapGrabbable : OVRGrabbable
             }
             else
             {
-               // thisRB.useGravity = true;
+                
+                // thisRB.useGravity = true;
             }
         }
         else if(!isSnapped)
         {
+            thisRB.isKinematic = true;
             //thisRB.useGravity = true;
         }
 
         base.GrabEnd(Vector3.zero, Vector3.zero);
+
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public override void GrabBegin(OVRGrabber hand, Collider grabPoint)

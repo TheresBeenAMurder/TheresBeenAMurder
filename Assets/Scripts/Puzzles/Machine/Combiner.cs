@@ -6,6 +6,7 @@ using UnityEngine;
 public class Combiner : MonoBehaviour
 {
     public Creator creator;
+    public bool isActive = false;
     public Material pressedMaterial;
     public MachineSensor[] sensors = new MachineSensor[4];
 
@@ -55,11 +56,12 @@ public class Combiner : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (!isPressed && other.gameObject.tag == "Player")
+        if (isActive && !isPressed && other.gameObject.tag == "Player")
         {
             StartCoroutine("PressButton");
         }
     }
+
     public IEnumerator ProcessSamples()
     {
         SFXSource.clip = processingSound;
@@ -67,7 +69,6 @@ public class Combiner : MonoBehaviour
         yield return new WaitForSeconds(processingSound.length);
 
         jarFillSource.Play();
-
     }
 
     // Makes button unable to be pressed again for 3 seconds after it is
@@ -82,11 +83,6 @@ public class Combiner : MonoBehaviour
         isPressed = true;
         renderer.material = pressedMaterial;
 
-
-        // Wait for animation
-        yield return new WaitForSeconds(4);
-
-
         if (CheckKeys())
         {
             creator.CreateKey(CombineKeys());
@@ -96,6 +92,8 @@ public class Combiner : MonoBehaviour
 
         }
 
+        // Wait for animation
+        yield return new WaitForSeconds(processingSound.length + jarFillSource.clip.length);
 
         // button is no longer pressed
         isPressed = false;

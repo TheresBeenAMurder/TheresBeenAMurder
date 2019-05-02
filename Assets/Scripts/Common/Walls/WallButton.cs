@@ -13,12 +13,12 @@ public class WallButton : MonoBehaviour
 
     private bool goingUp = false;
 
-    public void Move()
+    public void Move(AutoConversation autoConvo)
     {
-        StartCoroutine(MoveWalls());
+        StartCoroutine(MoveWalls(autoConvo));
     }
 
-    private IEnumerator MoveWalls()
+    private IEnumerator MoveWalls(AutoConversation autoConvo)
     {
         sfx.Play();
 
@@ -40,7 +40,7 @@ public class WallButton : MonoBehaviour
             }
             else
             {
-                yield return walls[0].MoveDown();
+                yield return walls[0].MoveDown(autoConvo);
                 goingUp = false;
             }
         }
@@ -48,7 +48,7 @@ public class WallButton : MonoBehaviour
         {
             if (walls[0].CanMoveDown())
             {
-                yield return walls[0].MoveDown();
+                yield return walls[0].MoveDown(autoConvo);
             }
             else
             {

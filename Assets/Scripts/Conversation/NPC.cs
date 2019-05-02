@@ -35,8 +35,6 @@ public class NPC : MonoBehaviour
     // conversation related
     private Accusation accusation;
     public AccusationLights accusationLights;
-    public bool canAccuse = false;
-    private int currentAccuseChoice = 0;
     public bool isAccusing = false;
     private int promptID;
     private int[] responseIDs = new int[4];
@@ -49,9 +47,29 @@ public class NPC : MonoBehaviour
     private int chosenConversationPrompt;
     private HashSet<int> startingPromptIDs = new HashSet<int>();
 
+    public PromptHandler promptHandler;
+
     public void AddAvailableConversation(int promptID)
     {
         startingPromptIDs.Add(promptID);
+
+        if (this.promptID < 60)
+        {
+            UpdateNextPrompt(promptID);
+        }
+    }
+
+    public bool CanTalk()
+    {
+        foreach (int startingPrompt in startingPromptIDs)
+        {
+            if (startingPrompt != -1)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // Gets the relevant information from the database about the chosen
@@ -60,15 +78,14 @@ public class NPC : MonoBehaviour
     {
         conversationUI.ClearOptions();
 
-        string query = "SELECT NextPromptID, End, AudioFile, RelationshipEffect" +
+        string query = "SELECT NextPromptID, AudioFile, RelationshipEffect" +
                 " FROM Responses WHERE ID ==" + responseIDs[choice - 1];
         IDataReader reader = dbHandler.ExecuteQuery(query);
 
         reader.Read();
         int nextPromptID = reader.GetInt32(0);
-        bool end = reader.GetBoolean(1);
-        string responseAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
-        int relationshipEffect = reader.GetInt32(3);
+        string responseAudio = reader.IsDBNull(1) ? "" : reader.GetString(1);
+        int relationshipEffect = reader.GetInt32(2);
         reader.Close();
 
         // Play the voice line for the response
@@ -108,6 +125,11 @@ public class NPC : MonoBehaviour
         }
     }
 
+    public bool HasStartingPrompt(int prompt)
+    {
+        return startingPromptIDs.Contains(prompt);
+    }
+
     public void InitializeConversation()
     {
         dbHandler.SetUpDatabase();
@@ -131,7 +153,10 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        conversationUI.PromptForConversation(other, characterName);
+        if (CanTalk())
+        {
+            conversationUI.PromptForConversation(other, characterName);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -185,11 +210,11 @@ public class NPC : MonoBehaviour
     {
         conversationUI.ClearDisplay();
         InitializeConversation();
-        StartConversationPrompt(canAccuse);
+        StartConversationPrompt();
     }
 
     // This will only work if the detective has the first line for every conversation
-    public void StartConversationPrompt(bool addAccuseOpt = false)
+    public void StartConversationPrompt()
     {
         // Add the current promptID to the starting ID set
         startingPromptIDs.Add(promptID);
@@ -219,7 +244,7 @@ public class NPC : MonoBehaviour
             }
         }
 
-        WriteResponses(addAccuseOpt);
+        WriteResponses();
     }
 
     public void UpdateNextPrompt(int promptID, int choice = -1)
@@ -343,12 +368,15 @@ public class NPC : MonoBehaviour
                 // Make sure the voice line plays all the way through
                 yield return new WaitForSeconds(conversationAudio.clip.length);
             }
+
+            // In charge of "finding" evidence and opening conversations at specific points
+            promptHandler.DealWithPromptID(this.promptID, id);
         }
 
-        WriteResponses(addAccuseOpt);
+        WriteResponses();
     }
 
-    public void WriteResponses(bool addAccuseOpt = false)
+    public void WriteResponses()
     {
         string[] responseDisplays = new string[5];
         responseDisplays[4] = "";
@@ -374,24 +402,6 @@ public class NPC : MonoBehaviour
 
                 currentDisplay++;
             }
-        }
-
-        // Adds an accuse option if the player can now accuse
-        if (addAccuseOpt)
-        {
-            for (int i = 0; i < responseDisplays.Length; i++)
-            {
-                if (responseDisplays[i] == null || responseDisplays[i] == "")
-                {
-                    responseDisplays[i] = "Accuse";
-                    currentAccuseChoice = i + 1;
-                    break;
-                }
-            }
-        }
-        else
-        {
-            currentAccuseChoice = 0;
         }
 
         conversationUI.DisplayResponseOptions(responseDisplays);

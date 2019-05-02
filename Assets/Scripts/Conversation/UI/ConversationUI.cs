@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ConversationUI : MonoBehaviour
 {
-    private static OVRInput.Button ConversationButton = OVRInput.Button.Two;
+    private static OVRInput.Button ConversationButton = OVRInput.Button.SecondaryIndexTrigger;
 
     public NPCAnimator animator;
 
@@ -95,6 +95,7 @@ public class ConversationUI : MonoBehaviour
 
         if (wasAccusing)
         {
+            playerConversation.AddAccusationConversations();
             lights.TurnOff();
         }
     }
@@ -112,6 +113,7 @@ public class ConversationUI : MonoBehaviour
 
             if (wasAccusing)
             {
+                playerConversation.AddAccusationConversations();
                 lights.TurnOff();
             }
         }
@@ -145,7 +147,7 @@ public class ConversationUI : MonoBehaviour
     {
         if (!playerNear && !inConversation && other.gameObject.tag == "Player" && !playerConversation.inConversation)
         {
-            displayBox.text = "Press B to speak to " + name;
+            displayBox.text = "Press right trigger to speak to " + name;
             playerNear = true;
         }
     }
@@ -154,18 +156,6 @@ public class ConversationUI : MonoBehaviour
     {
         displayBox = gameObject.GetComponentInChildren<Text>();
     }
-
-    ////public bool StartConversationCheck()
-    ////{
-    ////    if (!inConversation && playerNear && OVRInput.GetDown(ConversationButton))
-    ////    {
-    ////        inConversation = true;
-    ////        playerConversation.inConversation = true;
-    ////        return true;
-    ////    }
-
-    ////    return false;
-    ////}
 
     // Determines whether or not to start a conversation
     public void Update()

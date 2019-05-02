@@ -5,6 +5,8 @@ using UnityEngine;
 // Used for all necessary database interactions
 public class DatabaseHandler: MonoBehaviour
 {
+    public AudioSource scribbleAudio;
+
     private IDbCommand command = null;
     private IDbConnection database = null;
     private IDataReader reader = null;
@@ -24,11 +26,15 @@ public class DatabaseHandler: MonoBehaviour
 
     // Update the evidence in the database to found, the evidence is now
     // accessible through the accusation mechanic
-    public void FindEvidence(string evidenceType, int characterID, int evidenceID)
+    public void FindEvidence(int[] evidenceIDs)
     {
-        string update = "UPDATE Evidence SET Found = 1 WHERE CharacterID ==" +
-            characterID + " AND Type == '" + evidenceType + "' AND ID ==" + evidenceID;
-        OpenUpdateClose(update);
+        foreach (int id in evidenceIDs)
+        {
+            string update = "UPDATE Evidence SET Found = 1 WHERE ID ==" + id;
+            OpenUpdateClose(update);
+        }
+
+        scribbleAudio.Play();
     }
 
     public void OnDestroy()
@@ -61,6 +67,11 @@ public class DatabaseHandler: MonoBehaviour
     //      RelationshipValue -> DefaultRelValue
     // In Evidence:
     //      Found -> 0 for all character-related evidence
+    // In Prompts:
+    //      Madeline conversation about Victor unavailable
+    //      Victor conversation about human experiments unavailable
+    // In Responses: 
+    //      Victor conversation about human experiments unavailable
     public void ResetDatabaseToDefault(int id)
     {
         SetUpDatabase();
@@ -80,6 +91,15 @@ public class DatabaseHandler: MonoBehaviour
         ExecuteNonQuery(update);
 
         update = "UPDATE Evidence SET Found = 0 WHERE CharacterID == " + id;
+        ExecuteNonQuery(update);
+
+        update = "UPDATE Prompts SET Response1ID = -1 WHERE ID == 88";
+        ExecuteNonQuery(update);
+
+        update = "UPDATE Responses SET NextPromptID = 97 WHERE ID == 89";
+        ExecuteNonQuery(update);
+
+        update = "UPDATE Prompts SET Response2ID = -1 WHERE ID == 97";
         ExecuteNonQuery(update);
 
         ShutDownDatabase();

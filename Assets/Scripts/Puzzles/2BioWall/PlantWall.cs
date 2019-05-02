@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class PlantWall : MonoBehaviour
 {
+    public ConversationUpdater conversationUpdater;
     public GalleryDisplay gallery;
     private PlantPot[] plants;
-    public AudioSource win;
+    public AudioClip victorReact;
+   // public AudioSource win;
     bool isSolved = false;
 
     // Hint related
-    public NPC madeline;
-    public AudioSource madelineAudio;
     public AudioClip madelineHint;
-    public AudioSource playerAudio;
     public PlayerConversation playerConversation;
 
     private int? madelineCurrentPrompt;
@@ -30,10 +29,13 @@ public class PlantWall : MonoBehaviour
                 }
             }
 
-            win.Play();
+            //win.Play();
             gallery.ActivateImages();
             isSolved = true;
-            madeline.RemoveAvailableConversation(60);
+            conversationUpdater.CloseConversation(1, true);
+            conversationUpdater.TriggerVoiceLine(ConversationUpdater.Character.Victor, victorReact);
+            conversationUpdater.OpenConversation(2);
+            conversationUpdater.OpenConversation(4);
         }
     }
 
@@ -44,16 +46,8 @@ public class PlantWall : MonoBehaviour
 
         if (!isSolved)
         {
-            while (playerConversation.inConversation || playerAudio.isPlaying)
-            {
-                // prevents updating madeline's voiceline while the player
-                // is actively in a conversation with her
-                yield return new WaitForSeconds(10);
-            }
-
-            // Play Madeline's voiceline
-            madelineAudio.clip = madelineHint;
-            madelineAudio.Play();
+            yield return playerConversation.WaitToTalk();
+            conversationUpdater.TriggerVoiceLine(ConversationUpdater.Character.Madeline, madelineHint);
         }
     }
 

@@ -4,10 +4,6 @@ using System.Collections;
 public class GalleryDisplay : MonoBehaviour
 {
     public GameObject[] images;
-    public NPC madeline;
-    public NPC victor;
-    public AudioSource victorAudio;
-    public AudioClip victorExclamation;
 
     public GameObject fakeBack;
 
@@ -25,20 +21,10 @@ public class GalleryDisplay : MonoBehaviour
             image.SetActive(true);
         }
         fakeBack.SetActive(false);
-        
-
-        // Play Victor's voiceline
-        victorAudio.clip = victorExclamation;
-        victorAudio.Play();
-
-        // Unlock the conversation with Victor
-        victor.AddAvailableConversation(64);
-
-        // Unlock the conversation with Madeline
-        madeline.AddAvailableConversation(68);
 
         // Start the timer for the gallery puzzle hint
         StartCoroutine(piano.Hint());
+        StartCoroutine(playStartupSounds());
     }
 
     IEnumerator playStartupSounds()

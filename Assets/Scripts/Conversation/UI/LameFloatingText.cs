@@ -33,7 +33,7 @@ public class LameFloatingText : MonoBehaviour
     public void OnClick()
     {
         // player decides to accuse NPC
-        if (text.text == "Accuse")
+        if (text.text == "Final Accusation")
         {
             character.StartAccusation();
         }
