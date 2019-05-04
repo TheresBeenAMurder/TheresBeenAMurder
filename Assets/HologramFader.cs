@@ -15,7 +15,7 @@ public class HologramFader : MonoBehaviour
     public GameObject leftHand;
     public GameObject rightHand;
 
-    public float tolerance = 5f;
+    public float tolerance = 15f;
     public float scale;
     public float maxAlpha = 4;
 
