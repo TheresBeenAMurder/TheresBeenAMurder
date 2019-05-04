@@ -12,6 +12,7 @@ public class EyeGrabbable : OVRGrabbable
         if(!hasBeenGrabbed)
         {
             transform.position = eyeSpot.transform.position;
+            transform.rotation = eyeSpot.transform.rotation;
         }
     }
 
