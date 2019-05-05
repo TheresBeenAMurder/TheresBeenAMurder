@@ -18,6 +18,11 @@ public class Combiner : MonoBehaviour
     public Transform doorOpenPos;
     public Transform doorClosePos;
 
+
+    public Rigidbody smallDoor;
+    public Transform smallDoorOpen;
+    public Transform smallDoorClosed;
+
     public AudioSource SFXSource;
     public AudioSource doorSource;
     public AudioSource jarFillSource;
@@ -77,12 +82,18 @@ public class Combiner : MonoBehaviour
     {
         doorSource.Play();
         StartCoroutine(Movement.SmoothMove(doorClosePos.position, 1.5f, extractorDoor));
+        StartCoroutine(Movement.SmoothRotate(doorClosePos.rotation, 1.5f, extractorDoor));
+
+        StartCoroutine(Movement.SmoothMove(smallDoorClosed.position, 1.5f, smallDoor));
+        StartCoroutine(Movement.SmoothRotate(smallDoorClosed.rotation, 1.5f, smallDoor));
         Renderer renderer = GetComponent<Renderer>();
 
         // "Press" the button
         isPressed = true;
         renderer.material = pressedMaterial;
 
+        // Wait for animation
+        yield return new WaitForSeconds(processingSound.length + jarFillSource.clip.length);
         if (CheckKeys())
         {
             creator.CreateKey(CombineKeys());
@@ -92,14 +103,18 @@ public class Combiner : MonoBehaviour
 
         }
 
-        // Wait for animation
-        yield return new WaitForSeconds(processingSound.length + jarFillSource.clip.length);
 
         // button is no longer pressed
         isPressed = false;
         renderer.material = defaultMaterial;
         doorSource.Play();
         StartCoroutine(Movement.SmoothMove(doorOpenPos.position, 2f, extractorDoor));
+
+        StartCoroutine(Movement.SmoothRotate(doorOpenPos.rotation, 2f, extractorDoor));
+
+
+        StartCoroutine(Movement.SmoothMove(smallDoorOpen.position, 1.5f, smallDoor));
+        StartCoroutine(Movement.SmoothRotate(smallDoorOpen.rotation, 1.5f, smallDoor));
     }
 
     private void Start()

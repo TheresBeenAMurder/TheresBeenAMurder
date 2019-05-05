@@ -8,6 +8,7 @@ public static class Movement
         return (rigidbody.transform.position - end).sqrMagnitude;
     }
 
+   
     // Smoothly moves an object from its current position to the end position in moveTime
     public static IEnumerator SmoothMove(Vector3 end, float moveTime, Rigidbody rigidbody)
     {
@@ -23,5 +24,19 @@ public static class Movement
 
             yield return null;
         }
+    }
+
+    public static IEnumerator SmoothRotate(Quaternion end, float moveTime, Rigidbody rigidbody)
+    {
+
+        while (rigidbody.transform.rotation != end)
+        {
+            Quaternion newPosition = Quaternion.RotateTowards(rigidbody.rotation, end, 5);
+
+            rigidbody.transform.rotation = newPosition;
+        }
+
+            yield return null;
+        
     }
 }
