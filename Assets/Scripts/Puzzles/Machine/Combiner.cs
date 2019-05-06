@@ -27,7 +27,14 @@ public class Combiner : MonoBehaviour
     public AudioSource doorSource;
     public AudioSource jarFillSource;
     public AudioClip processingSound;
-    
+
+
+    public AudioSource extractorVox;
+
+    public AudioClip processingLine;
+    public AudioClip successLine;
+    public AudioClip insufficientDataLine;
+
 
     // Returns true if all sensors are populated, false otherwise
     // If true, currentKeys contains the keys on the sensors
@@ -66,21 +73,14 @@ public class Combiner : MonoBehaviour
             StartCoroutine("PressButton");
         }
     }
-
-    public IEnumerator ProcessSamples()
-    {
-        SFXSource.clip = processingSound;
-        SFXSource.Play();
-        yield return new WaitForSeconds(processingSound.length);
-
-        jarFillSource.Play();
-    }
+    
 
     // Makes button unable to be pressed again for 3 seconds after it is
     // initially pressed. (We can make this the animation time)
     public IEnumerator PressButton()
     {
         doorSource.Play();
+
         StartCoroutine(Movement.SmoothMove(doorClosePos.position, 1.5f, extractorDoor));
         StartCoroutine(Movement.SmoothRotate(doorClosePos.rotation, 1.5f, extractorDoor));
 
@@ -88,20 +88,34 @@ public class Combiner : MonoBehaviour
         StartCoroutine(Movement.SmoothRotate(smallDoorClosed.rotation, 1.5f, smallDoor));
         Renderer renderer = GetComponent<Renderer>();
 
+
+        extractorVox.clip = processingLine;
+        extractorVox.Play();
+
+        SFXSource.clip = processingSound;
+        SFXSource.Play();
+
         // "Press" the button
         isPressed = true;
         renderer.material = pressedMaterial;
 
         // Wait for animation
-        yield return new WaitForSeconds(processingSound.length + jarFillSource.clip.length);
+        yield return new WaitForSeconds(processingSound.length);
         if (CheckKeys())
         {
             creator.CreateKey(CombineKeys());
 
-            StartCoroutine(ProcessSamples());
-           
+            jarFillSource.Play();
+            extractorVox.clip = successLine;
+            
 
         }
+        else
+        {
+            extractorVox.clip = insufficientDataLine;
+        }
+        yield return new WaitForSeconds(jarFillSource.clip.length);
+        extractorVox.Play();
 
 
         // button is no longer pressed

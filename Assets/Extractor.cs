@@ -26,6 +26,11 @@ public class Extractor : MonoBehaviour {
     public Transform smallDoorOpen;
     public Transform smallDoorClosed;
 
+
+    public AudioSource extractorVox;
+
+    public AudioClip powerUpLine;
+
    // public AudioSource machinePowerup;
     //public AudioSource doorClicking;
 
@@ -51,7 +56,8 @@ public class Extractor : MonoBehaviour {
     {
         SFXSource.clip = powerOnSound;
         SFXSource.Play();
-        
+        extractorVox.clip = powerUpLine;
+        extractorVox.Play();
         doorSource.Play();
         makeItGlow();
         openDoor();

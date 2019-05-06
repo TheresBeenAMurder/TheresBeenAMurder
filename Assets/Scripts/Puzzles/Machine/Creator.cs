@@ -10,6 +10,8 @@ public class Creator : MonoBehaviour
     private GameObject currentCanister;
     private Dictionary<string, AudioClip> _validKeys = new Dictionary<string, AudioClip>();
 
+    public AudioSource containerSnap;
+
     // Returns true if the cannister is empty and can be filled with a new key
     private bool CanisterEmpty()
     {
@@ -66,6 +68,7 @@ public class Creator : MonoBehaviour
                 {
                     canister.snapTransform = transform;
                     canister.isInDropZone = true;
+                    containerSnap.Play();
                 }
             }
         }
