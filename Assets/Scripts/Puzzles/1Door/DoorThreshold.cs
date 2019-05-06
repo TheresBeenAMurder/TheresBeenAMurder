@@ -31,6 +31,7 @@ public class DoorThreshold : MonoBehaviour
         if (EveryoneInRoom())
         {
             door.everyoneInRoom = true;
+            Destroy(this.gameObject);
         }
     }
 
