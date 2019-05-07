@@ -1,15 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class ArchiveReceiver : MonoBehaviour
 {
-    public ArchiveGrabbable doorHandle;
-
     private GameObject currentKey;
-
-    private bool DoorLocked()
-    {
-        return doorHandle.isBeingSolved;
-    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -43,22 +37,18 @@ public class ArchiveReceiver : MonoBehaviour
 
     public void Solve()
     {
-        // Door locking still doesn't work
-        //ToggleDoorLock();
-        currentKey.GetComponent<ArchiveKey>().Solve();
+        if (currentKey != null)
+        {
+            currentKey.GetComponent<ArchiveKey>().Solve();
+            StartCoroutine(UnlockDoor(currentKey.GetComponent<ArchiveKey>().audioSource));
+        }
     }
 
-    private void ToggleDoorLock()
+    private IEnumerator UnlockDoor(AudioSource audio)
     {
-        doorHandle.isBeingSolved = !doorHandle.isBeingSolved;
-    }
-
-    public void Update()
-    {
-        // key is done playing, unlock the door
-        ////if (DoorLocked() && !currentKey.GetComponent<ArchiveKey>().audioSource.isPlaying)
-        ////{
-        ////    ToggleDoorLock();
-        ////}
+        while (audio.isPlaying)
+        {
+            yield return new WaitForSeconds(audio.clip.length - audio.time);
+        }
     }
 }
