@@ -22,6 +22,9 @@ public class WallButton : MonoBehaviour
     {
         sfx.Play();
 
+        // Pause the walls moving to give the player time to look
+        yield return new WaitForSeconds(2);
+
         // need to set walls to active to move them
         foreach (Wall wall in walls)
         {

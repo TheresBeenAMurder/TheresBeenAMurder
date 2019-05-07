@@ -16,12 +16,6 @@ public class GalleryDisplay : MonoBehaviour
     
     public void ActivateImages()
     {
-        foreach(GameObject image in images)
-        {
-            image.SetActive(true);
-        }
-        fakeBack.SetActive(false);
-
         // Start the timer for the gallery puzzle hint
         StartCoroutine(piano.Hint());
         StartCoroutine(playStartupSounds());
@@ -32,14 +26,15 @@ public class GalleryDisplay : MonoBehaviour
         paintingAudio.clip = powerOn;
         paintingAudio.Play();
         yield return new WaitForSeconds(powerOn.length);
+
+        foreach (GameObject image in images)
+        {
+            image.SetActive(true);
+        }
+        fakeBack.SetActive(false);
+
         paintingAudio.loop = true;
         paintingAudio.clip = humLoop;
-    }
-
-    private void Start()
-    {
-        // Disable gallery puzzle until paintings are revealed
-       // centerFrame.enabled = false;
     }
 
     private void Update()

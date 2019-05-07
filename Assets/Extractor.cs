@@ -49,22 +49,25 @@ public class Extractor : MonoBehaviour {
         }
     }
 
-   
-
-    // Update is called once per frame
-    public void powerOn()
+    public IEnumerator powerOn()
     {
         SFXSource.clip = powerOnSound;
         SFXSource.Play();
+
+        yield return new WaitForSeconds(SFXSource.clip.length);
+
         extractorVox.clip = powerUpLine;
         extractorVox.Play();
+
+        yield return new WaitForSeconds(extractorVox.clip.length);
+
         doorSource.Play();
+
+        yield return new WaitForSeconds(doorSource.clip.length);
+
         makeItGlow();
         openDoor();
         button.isActive = true;
-        //machinePowerup.Play();
-        
-    
     }
     public void closeDoor()
     {
