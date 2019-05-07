@@ -19,7 +19,7 @@ public class AutoConversation : MonoBehaviour
 
     public IEnumerator PlayDialogue()
     {
-        yield return playerConversation.WaitToTalk();
+        yield return StartCoroutine(playerConversation.WaitToTalk());
 
         if (!isFinished && !isStopped)
         {
@@ -33,7 +33,7 @@ public class AutoConversation : MonoBehaviour
                 }
 
                 convoUpdater.TriggerVoiceLine(line.character, line.voiceLine);
-                yield return convoUpdater.WaitForVoiceLine(line.character);
+                yield return StartCoroutine(convoUpdater.WaitForVoiceLine(line.character));
                 yield return new WaitForSeconds(pauseTime);
             }
 

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    public AudioSource doorSound;
     public AutoConversation autoConversation1;
     public AutoConversation autoConversation2;
     public AutoConversation firstIdleConvo;
@@ -17,7 +18,7 @@ public class Door : MonoBehaviour
     public TeleportTargetHandlerPhysical teleportAllowance;
     
     private bool isSolved = false;
-    private Transform originalPos;
+    private Vector3 originalPos;
 
     private IEnumerator CloseAfter()
     {
@@ -27,7 +28,8 @@ public class Door : MonoBehaviour
         }
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-        yield return StartCoroutine(Movement.SmoothMove(originalPos.position, moveTime, rigidbody));
+        doorSound.Play();
+        yield return StartCoroutine(Movement.SmoothMove(originalPos, moveTime, rigidbody));
     }
 
     public IEnumerator Hint()
@@ -65,6 +67,8 @@ public class Door : MonoBehaviour
         StartCoroutine(bioPuzzle.Hint());
         // Start the idle conversation coroutine
         StartCoroutine(idleConversation.PlayIdleConversations());
+        // Start the coroutine to close the door after everyone is in the room.
+        StartCoroutine(CloseAfter());
 
         yield return StartCoroutine(Movement.SmoothMove(moveSpace.position, moveTime, rigidbody));
 
@@ -73,12 +77,10 @@ public class Door : MonoBehaviour
         yield return new WaitForSeconds(30);
 
         yield return firstIdleConvo.PlayDialogue();
-
-        yield return StartCoroutine(CloseAfter());
     }
 
     public void Start()
     {
-        this.originalPos = GetComponent<Rigidbody>().transform;
+        this.originalPos = GetComponent<Rigidbody>().transform.position;
     }
 }

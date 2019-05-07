@@ -210,6 +210,12 @@ public class NPC : MonoBehaviour
     {
         conversationUI.ClearDisplay();
         InitializeConversation();
+
+        if (conversationAudio.isPlaying)
+        {
+            conversationAudio.Stop();
+        }
+
         StartConversationPrompt();
     }
 
