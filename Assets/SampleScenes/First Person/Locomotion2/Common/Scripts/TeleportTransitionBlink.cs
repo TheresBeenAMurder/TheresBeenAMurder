@@ -86,4 +86,27 @@ public class TeleportTransitionBlink : TeleportTransition
 
 		LocomotionTeleport.IsTransitioning = false;
 	}
+
+    // Used to force the player back to a reasonable spot after falling out of the room,
+    // hopefully without making anyone sick.
+    public IEnumerator BlinkCoroutineForce(Vector3 newPos, CharacterController character)
+    {
+        float elapsedTime = 0;
+        var teleportTime = TransitionDuration * TeleportDelay;
+        var teleported = false;
+        while (elapsedTime < TransitionDuration)
+        {
+            yield return null;
+            elapsedTime += Time.deltaTime;
+            if (!teleported && elapsedTime >= teleportTime)
+            {
+                teleported = true;
+                character.transform.position = newPos;
+            }
+            float fadeLevel = FadeLevels.Evaluate(elapsedTime / TransitionDuration);
+            OVRInspector.instance.fader.SetFadeLevel(fadeLevel);
+        }
+
+        OVRInspector.instance.fader.SetFadeLevel(0);
+    }
 }
