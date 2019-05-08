@@ -11,8 +11,8 @@ public class SecretDeskButton : MonoBehaviour
  
     public void SolvePuzzle()
     {
-        lightBoard.TurnOn();
-        extractor.powerOn();
+        StartCoroutine(lightBoard.TurnOn());
+        StartCoroutine(extractor.powerOn());
 
         Debug.Log("solving");
         // Turn on the archive lights

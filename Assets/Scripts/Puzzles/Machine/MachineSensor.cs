@@ -7,7 +7,7 @@ public class MachineSensor : MonoBehaviour
     public Transform snapTransformSpot;
     public AudioSource snapSound;
 
-    [HideInInspector]
+   // [HideInInspector]
     public MachineKey currentKey;
 
 

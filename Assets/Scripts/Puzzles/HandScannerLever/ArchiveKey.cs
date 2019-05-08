@@ -33,7 +33,6 @@ public class ArchiveKey : Key
         {
             audioSource.clip = audioClip;
             audioSource.Play();
-            //Empty();
         }
     }
 

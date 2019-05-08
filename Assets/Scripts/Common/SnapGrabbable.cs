@@ -38,7 +38,7 @@ public class SnapGrabbable : OVRGrabbable
         }
         else if(!isSnapped)
         {
-            thisRB.isKinematic = true;
+            GetComponent<Rigidbody>().isKinematic = true;
             //thisRB.useGravity = true;
         }
 

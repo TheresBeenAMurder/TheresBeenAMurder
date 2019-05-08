@@ -40,6 +40,8 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public class LocomotionTeleport : MonoBehaviour
 {
+    public bool canceled = false;
+
 	/// <summary>
 	/// The process of teleporting is represented by a simple state machine, and each of the 
 	/// possible states are represented by this enum.
@@ -465,6 +467,8 @@ public class LocomotionTeleport : MonoBehaviour
 	{
 		LogState("ReadyState: Start");
 
+        canceled = false;
+
 		// yield once so that all the components will have time to process their OnEnable message before this 
 		// does work that relies on the events being hooked up.
 		yield return null;
@@ -543,8 +547,13 @@ public class LocomotionTeleport : MonoBehaviour
 	{
 		if (UpdateAimData != null)
 		{
-			UpdateAimData(aimData);
-		}
+            if (canceled)
+            {
+                aimData.Reset();
+            }
+
+            UpdateAimData(aimData);
+        }
 	}
 
 	/// <summary>
@@ -577,7 +586,7 @@ public class LocomotionTeleport : MonoBehaviour
 		}
 
 		LogState("AimState: End. Intention: " + CurrentIntention);
-		if (ExitStateAim != null)
+		if (ExitStateAim != null || canceled)
 		{
 			ExitStateAim();
 		}
@@ -587,7 +596,9 @@ public class LocomotionTeleport : MonoBehaviour
 
 		// If target is valid, enter pre-teleport otherwise cancel the teleport.
 		LogState("AimState: Switch state. Intention: " + CurrentIntention);
-		if ((CurrentIntention == TeleportIntentions.PreTeleport || CurrentIntention == TeleportIntentions.Teleport) && _teleportDestination.IsValidDestination)
+		if ((CurrentIntention == TeleportIntentions.PreTeleport || CurrentIntention == TeleportIntentions.Teleport) && 
+            _teleportDestination.IsValidDestination &&
+            !canceled)
 		{
 			StartCoroutine(PreTeleportStateCoroutine());
 		}
@@ -868,4 +879,15 @@ public class LocomotionTeleport : MonoBehaviour
 
 		LocomotionController.PlayerController.Teleported = true;
 	}
+
+    public void Update()
+    {
+        // If the player is currently aiming and they press either of the thumbsticks.
+        if (CurrentState == LocomotionTeleport.States.Aim &&
+            (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick) ||
+            OVRInput.GetDown(OVRInput.Button.SecondaryThumbstick)))
+        {
+            canceled = true;
+        }
+    }
 }

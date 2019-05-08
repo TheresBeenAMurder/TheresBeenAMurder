@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ConversationUI : MonoBehaviour
@@ -63,18 +64,17 @@ public class ConversationUI : MonoBehaviour
         if (inConversation)
         {
             NPC parent = gameObject.GetComponent<NPC>();
-            int totalNumOptions = 0;
 
-            for (int i = responses.Length - 1; i >= 0; i--)
+            List<string> realResponses = new List<string>();
+            foreach (string response in responses)
             {
-                if (responses[i] != null && responses[i] != "")
+                if (!string.IsNullOrEmpty(response))
                 {
-                    totalNumOptions = i + 1;
-                    break;
+                    realResponses.Add(response);
                 }
             }
 
-            for (int i = 0; i < totalNumOptions; i++)
+            for (int i = 0; i < realResponses.Count; i++)
             {
                 // Spawn a prefab and set the event camera to the center eye camera
                 optionObjects[i] = Instantiate(prefab, parent.transform);
@@ -82,7 +82,7 @@ public class ConversationUI : MonoBehaviour
 
                 // Display the prefab with the option
                 optionDisplays[i] = optionObjects[i].GetComponentInChildren<LameFloatingText>();
-                optionDisplays[i].DisplayOption(i + 1, responses[i], parent, CalculateOffset(i + 1, totalNumOptions));
+                optionDisplays[i].DisplayOption(i + 1, realResponses[i], parent, CalculateOffset(i + 1, realResponses.Count));
             }
         }
     }
@@ -90,6 +90,9 @@ public class ConversationUI : MonoBehaviour
     public void EndConversation(bool wasAccusing = false, AccusationLights lights = null)
     {
         animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+        ClearDisplay();
+        ClearOptions();
+        
         inConversation = false;
         playerConversation.inConversation = false;
 
@@ -102,7 +105,7 @@ public class ConversationUI : MonoBehaviour
 
     public void ExitConversation(Collider other, bool wasAccusing = false, AccusationLights lights = null)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             ClearDisplay();
             ClearOptions();
@@ -164,7 +167,10 @@ public class ConversationUI : MonoBehaviour
         {
             inConversation = true;
             playerConversation.inConversation = true;
-            animator.changeState(NPCAnimator.CHARACTERSTATE.TALKNORMAL);
+            if (animator.currentState != NPCAnimator.CHARACTERSTATE.HAND)
+            {
+                animator.changeState(NPCAnimator.CHARACTERSTATE.TALKNORMAL);
+            }
             gameObject.GetComponent<NPC>().StartConversation();
         }
     }

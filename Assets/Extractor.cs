@@ -18,7 +18,18 @@ public class Extractor : MonoBehaviour {
 
 
     public bool correctCombo = false;
-    public float moveTime = 1f;
+    public float moveTime = 3f;
+
+    public Combiner button;
+
+    public Rigidbody smallDoor;
+    public Transform smallDoorOpen;
+    public Transform smallDoorClosed;
+
+
+    public AudioSource extractorVox;
+
+    public AudioClip powerUpLine;
 
    // public AudioSource machinePowerup;
     //public AudioSource doorClicking;
@@ -38,20 +49,25 @@ public class Extractor : MonoBehaviour {
         }
     }
 
-   
-
-    // Update is called once per frame
-    public void powerOn()
+    public IEnumerator powerOn()
     {
         SFXSource.clip = powerOnSound;
         SFXSource.Play();
-        
+
+        yield return new WaitForSeconds(SFXSource.clip.length);
+
+        extractorVox.clip = powerUpLine;
+        extractorVox.Play();
+
+        yield return new WaitForSeconds(extractorVox.clip.length);
+
         doorSource.Play();
+
+        yield return new WaitForSeconds(doorSource.clip.length);
+
         makeItGlow();
         openDoor();
-        //machinePowerup.Play();
-        
-    
+        button.isActive = true;
     }
     public void closeDoor()
     {
@@ -63,10 +79,15 @@ public class Extractor : MonoBehaviour {
     public void openDoor()
     {
         StartCoroutine(Movement.SmoothMove(openDoorPos.position, moveTime, door));
+        StartCoroutine(Movement.SmoothRotate(openDoorPos.rotation, moveTime, door));
+
+        StartCoroutine(Movement.SmoothMove(smallDoorOpen.position, moveTime, smallDoor));
+        StartCoroutine(Movement.SmoothRotate(smallDoorOpen.rotation, moveTime, smallDoor));
         doorSource.Play();
         //doorClicking.Play();
     }
 
+    
     public void makeItGlow()
     {
         machineMaterial.EnableKeyword("_EMISSION");

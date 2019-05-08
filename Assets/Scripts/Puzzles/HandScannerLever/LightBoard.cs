@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class LightBoard : MonoBehaviour
 {
@@ -15,9 +16,11 @@ public class LightBoard : MonoBehaviour
         }
     }
 
-    public void TurnOn()
+    public IEnumerator TurnOn()
     {
         powerUpSound.Play();
+        yield return new WaitForSeconds(powerUpSound.clip.length);
+
         foreach (GameObject light in lights)
         {
             light.GetComponent<Renderer>().material = lightsOn;

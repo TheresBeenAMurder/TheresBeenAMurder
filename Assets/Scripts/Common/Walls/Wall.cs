@@ -48,6 +48,8 @@ public class Wall : MonoBehaviour
             corpseDropper.Drop();
             hasDropped = true;
 
+            // Give the boi time to fall
+            yield return new WaitForSeconds(.5f);
             yield return autoConvo.PlayDialogue();
         }
     }

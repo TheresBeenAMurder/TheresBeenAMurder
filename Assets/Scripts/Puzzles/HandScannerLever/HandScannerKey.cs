@@ -2,8 +2,6 @@
 
 public class HandScannerKey : Key
 {
-    public Lever lever;
-
     private bool solved;
 
     public override Puzzle PuzzleType()
@@ -15,8 +13,6 @@ public class HandScannerKey : Key
     {
         if (!solved)
         {
-            // Allow the lever to be moved
-            lever.SetSpring(false);
             solved = true;
         }
     }
