@@ -214,7 +214,7 @@ public class Accusation : MonoBehaviour
     public void StartAccusation()
     {
         conversationUI.ClearOptions();
-        currentEvidence = evidenceType.initial;
+        currentEvidence = evidenceType.motive;
 
         ClearLoadedEvidence();
         InitializeEvidence();
