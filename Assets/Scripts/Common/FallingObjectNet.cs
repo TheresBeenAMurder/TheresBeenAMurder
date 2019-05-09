@@ -24,6 +24,11 @@ public class FallingObjectNet : MonoBehaviour
         else
         {
             other.transform.position = newPosition;
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
     }
 }
