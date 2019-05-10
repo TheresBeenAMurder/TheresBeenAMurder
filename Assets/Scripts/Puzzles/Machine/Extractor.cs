@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Extractor : MonoBehaviour {
-
-    
+public class Extractor : MonoBehaviour
+{ 
     public Transform openDoorPos;
     public Transform closedDoorPos;
     public Rigidbody door;
@@ -12,10 +10,8 @@ public class Extractor : MonoBehaviour {
     bool isOn = false;
 
     public AudioClip powerOnSound;
-
     public AudioSource SFXSource;
     public AudioSource doorSource;
-
 
     public bool correctCombo = false;
     public float moveTime = 3f;
@@ -26,19 +22,19 @@ public class Extractor : MonoBehaviour {
     public Transform smallDoorOpen;
     public Transform smallDoorClosed;
 
-
     public AudioSource extractorVox;
 
     public AudioClip powerUpLine;
+    public GameObject[] insideObjs;
 
-   // public AudioSource machinePowerup;
-    //public AudioSource doorClicking;
-
-
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		machineMaterial.DisableKeyword("_EMISSION");
-    
+
+        foreach (GameObject obj in insideObjs)
+        {
+            obj.SetActive(false);
+        }
     }
 
     private void Update()
@@ -65,15 +61,20 @@ public class Extractor : MonoBehaviour {
 
         yield return new WaitForSeconds(doorSource.clip.length);
 
+        foreach (GameObject obj in insideObjs)
+        {
+            obj.SetActive(true);
+        }
+
         makeItGlow();
         openDoor();
         button.isActive = true;
     }
+
     public void closeDoor()
     {
         StartCoroutine(Movement.SmoothMove(closedDoorPos.position, moveTime, door));
         doorSource.Play();
-        //doorClicking.Play();
     }
 
     public void openDoor()
@@ -84,9 +85,7 @@ public class Extractor : MonoBehaviour {
         StartCoroutine(Movement.SmoothMove(smallDoorOpen.position, moveTime, smallDoor));
         StartCoroutine(Movement.SmoothRotate(smallDoorOpen.rotation, moveTime, smallDoor));
         doorSource.Play();
-        //doorClicking.Play();
     }
-
     
     public void makeItGlow()
     {
