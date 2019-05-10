@@ -72,6 +72,21 @@ public class NPC : MonoBehaviour
         return false;
     }
 
+    // Returns true if there are options after the current prompt, false if not.
+    private bool CheckCurrentPrompt()
+    {
+        foreach (int id in responseIDs)
+        {
+            if (id > -1)
+            {
+                return true;
+            }
+        }
+
+        RemoveAvailableConversation(promptID);
+        return false;
+    }
+
     // Gets the relevant information from the database about the chosen
     // response and moves the conversation along
     public void ChooseResponse(int choice)
@@ -379,7 +394,14 @@ public class NPC : MonoBehaviour
             promptHandler.DealWithPromptID(this.promptID, id);
         }
 
-        WriteResponses();
+        if (CheckCurrentPrompt())
+        {
+            WriteResponses();
+        }
+        else
+        {
+            conversationUI.EndConversation();
+        }
     }
 
     public void WriteResponses()
