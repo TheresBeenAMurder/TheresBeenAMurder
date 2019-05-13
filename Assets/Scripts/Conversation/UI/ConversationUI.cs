@@ -111,7 +111,10 @@ public class ConversationUI : MonoBehaviour
             ClearOptions();
             inConversation = false;
             playerNear = false;
-            animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+            if (animator.currentState != NPCAnimator.CHARACTERSTATE.HAND)
+            {
+                animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+            }
             playerConversation.inConversation = false;
 
             if (wasAccusing)
