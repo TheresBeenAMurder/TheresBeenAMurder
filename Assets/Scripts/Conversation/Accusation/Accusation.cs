@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Accusation : MonoBehaviour
 {
-    private enum evidenceType { motive, means, opportunity, alibi, initial, done, Mavis };
+    private enum evidenceType { initial, motive, means, opportunity, alibi, done, Mavis, MavisDone };
 
     private int characterID;
     private ConversationUI conversationUI;
@@ -59,7 +59,6 @@ public class Accusation : MonoBehaviour
             playerLine += "D_68";
         }
 
-        yield return new WaitForSeconds(characterAudio.clip.length - characterAudio.time);
         conversationUI.PlayAudio(playerAudio, playerLine);
         yield return new WaitForSeconds(playerAudio.clip.length);
 
@@ -152,50 +151,34 @@ public class Accusation : MonoBehaviour
                     EndSceneInfo.selectedEvidence.Add(evidence);
                 }
 
-                ////if (characterID == 4)
-                ////{
-                ////    string mavisLine = "Audio/Mavis/";
-
-                ////    if (EndScene.CorrectEnding(characterID, selectedEvidenceIDs))
-                ////    {
-                ////        mavisLine += "MF_26";
-                ////    }
-                ////    else
-                ////    {
-                ////        mavisLine += "MF_25";
-                ////    }
-
-                ////    // Accusing Mavis, one last conversation.
-                ////    conversationUI.PlayAudio(characterAudio, mavisLine);
-
-                ////    string[] options =
-                ////    {
-                ////        "Indifferent",
-                ////        "Sympathetic"
-                ////    };
-                ////    conversationUI.DisplayResponseOptions(options);
-                ////    return true;
-                ////}
-                ////else
-                ////{
+                // If character isn't Mavis - Mavis has a final conversation.
+                if (characterID != 4)
+                {
                     UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
-                ////}
+                }
             }
-
-            // Chose not to accuse
-            return false;
+            else
+            {
+                // Chose not to accuse
+                return false;
+            }
         }
         else if (currentEvidence == evidenceType.Mavis)
         {
             StartCoroutine(FinalConversation(choice));
-            return false;
+            return true;
+        }
+        else if (currentEvidence == evidenceType.MavisDone)
+        {
+            // Keep blocking until they finish the rest of the conversation
+            return true;
         }
         else
         {
             DescribeEvidence(choice); 
         }
 
-        UpdateNextEvidence();
+        currentEvidence++;
         StartCoroutine(TalkAbout(currentEvidence));
         return true;
     }
@@ -208,6 +191,7 @@ public class Accusation : MonoBehaviour
         characterAudio = character.conversationAudio;
         playerAudio = character.playerAudio;
         conversationUI = gameObject.GetComponent<ConversationUI>();
+        conversationUI.endScene = endScene;
     }
 
     // Initialize character-related values and begin accusation
@@ -228,55 +212,60 @@ public class Accusation : MonoBehaviour
             yield return new WaitForSeconds(playerAudio.clip.length - playerAudio.time);
         }
 
-        string query = "SELECT Response, ResAudio, NotFoundAudio FROM 'Accusations' WHERE CharacterID == "
-                + characterID + " " + "AND Type == '" + evidenceType.ToString() + "'";
-        IDataReader reader = dbHandler.ExecuteQuery(query);
-
-        reader.Read();
-        conversationUI.UpdateDisplay(reader.GetString(0));
-        string resAudio = reader.IsDBNull(1) ? "" : reader.GetString(1);
-        evidenceNotFoundAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
-        reader.Close();
-
-        if (evidenceType == evidenceType.initial || evidenceType == evidenceType.done)
+        if (evidenceType == evidenceType.Mavis)
         {
-            GiveYesNo();
+            conversationUI.accused = true;
+            string mavisLine = "Audio/Mavis/";
+
+            if (EndScene.CorrectEnding(characterID, selectedEvidenceIDs))
+            {
+                mavisLine += "MF_26";
+            }
+            else
+            {
+                mavisLine += "MF_25";
+            }
+
+            //Accusing Mavis, one last conversation.
+            conversationUI.PlayAudio(characterAudio, mavisLine);
+            yield return new WaitForSeconds(characterAudio.clip.length);
+
+            string[] options =
+            {
+                    "Indifferent",
+                    "Sympathetic"
+            };
+            conversationUI.DisplayResponseOptions(options);
         }
         else
         {
-            GiveOptions();
-        }
+            string query = "SELECT Response, ResAudio, NotFoundAudio FROM 'Accusations' WHERE CharacterID == "
+                    + characterID + " " + "AND Type == '" + evidenceType.ToString() + "'";
+            IDataReader reader = dbHandler.ExecuteQuery(query);
 
-        if (resAudio != "")
-        {
-            string audioPath = "Audio/" + audioFolder + "/" + resAudio;
-            conversationUI.PlayAudio(characterAudio, audioPath);
+            reader.Read();
+            conversationUI.UpdateDisplay(reader.GetString(0));
+            string resAudio = reader.IsDBNull(1) ? "" : reader.GetString(1);
+            evidenceNotFoundAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
+            reader.Close();
 
-            // Let audio play all the way through
-            yield return new WaitForSeconds(characterAudio.clip.length);
-        }
-    }
+            if (evidenceType == evidenceType.initial || evidenceType == evidenceType.done)
+            {
+                GiveYesNo();
+            }
+            else
+            {
+                GiveOptions();
+            }
 
-    // Makes sure we go through each kind of evidence when accusing someone.
-    private void UpdateNextEvidence()
-    {
-        switch (currentEvidence)
-        {
-            case evidenceType.initial:
-                currentEvidence = evidenceType.motive;
-                break;
-            case evidenceType.motive:
-                currentEvidence = evidenceType.means;
-                break;
-            case evidenceType.means:
-                currentEvidence = evidenceType.opportunity;
-                break;
-            case evidenceType.opportunity:
-                currentEvidence = evidenceType.alibi;
-                break;
-            case evidenceType.alibi:
-                currentEvidence = evidenceType.done;
-                break;
+            if (resAudio != "")
+            {
+                string audioPath = "Audio/" + audioFolder + "/" + resAudio;
+                conversationUI.PlayAudio(characterAudio, audioPath);
+
+                // Let audio play all the way through
+                yield return new WaitForSeconds(characterAudio.clip.length);
+            }
         }
     }
 }

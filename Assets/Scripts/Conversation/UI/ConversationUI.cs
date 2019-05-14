@@ -21,6 +21,10 @@ public class ConversationUI : MonoBehaviour
     private LameFloatingText[] optionDisplays = new LameFloatingText[5];
     private GameObject[] optionObjects = new GameObject[5];
 
+    [HideInInspector]
+    public bool accused = false;
+    public int endScene;
+
     // Figures out where in space to place the spawned option object
     private Vector3 CalculateOffset(int numOption, int totalNumOptions)
     {
@@ -107,6 +111,13 @@ public class ConversationUI : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            if (accused)
+            {
+                // Player left during the post-accusation conversation with Mavis, launch them bodily
+                // into the game over scene.
+                UnityEngine.SceneManagement.SceneManager.LoadScene(endScene);
+            }
+
             ClearDisplay();
             ClearOptions();
             inConversation = false;
