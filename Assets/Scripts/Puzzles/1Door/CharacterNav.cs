@@ -25,17 +25,18 @@ public class CharacterNav : MonoBehaviour
     {
         if(walkStarted)
         {
-            agent.nextPosition = transform.position;
+           // agent.nextPosition = transform.position;
            // transform.rotation = agent.transform.rotation;
 
-            if (Vector3.Distance(animator.transform.position, endPos.position) < distance)
+            if (Vector3.Distance(transform.position, endPos.position) < distance)
             {
                 agent.speed = 0;
                 walkStarted = false;
                 animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
+
+                walkEnded = true;
             }
 
-            walkEnded = true;
         }
     }
 

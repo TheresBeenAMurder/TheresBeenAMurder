@@ -122,7 +122,7 @@ public class ConversationUI : MonoBehaviour
             ClearOptions();
             inConversation = false;
             playerNear = false;
-            if (animator.currentState != NPCAnimator.CHARACTERSTATE.HAND)
+            if (animator.currentState != NPCAnimator.CHARACTERSTATE.HAND && animator.currentState != NPCAnimator.CHARACTERSTATE.WALKFORWARD)
             {
                 animator.changeState(NPCAnimator.CHARACTERSTATE.IDLE);
             }
