@@ -15,7 +15,7 @@ public class CharacterNav : MonoBehaviour
 
     public void Move()
     {
-        agent.updatePosition = false;
+       // agent.updatePosition = false;
         agent.SetDestination(endPos.position);
         animator.changeState(NPCAnimator.CHARACTERSTATE.WALKFORWARD);
         walkStarted = true;
@@ -26,7 +26,7 @@ public class CharacterNav : MonoBehaviour
         if(walkStarted)
         {
             agent.nextPosition = transform.position;
-            transform.rotation = agent.transform.rotation;
+           // transform.rotation = agent.transform.rotation;
 
             if (Vector3.Distance(animator.transform.position, endPos.position) < distance)
             {
