@@ -45,7 +45,7 @@ public class Invitation : OVRGrabbable
         }
     }
 
-    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity, bool useGravity = false)
     {
         base.GrabEnd(linearVelocity, angularVelocity);
         if(!hasBeenReleased)
@@ -56,7 +56,7 @@ public class Invitation : OVRGrabbable
         }
     }
 
-    public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
+    public override void GrabBegin(OVRGrabber hand, Collider grabPoint, bool useGravity = false)
     {
         base.GrabBegin(hand, grabPoint);
         if (!hasBeenGrabbed)

@@ -14,7 +14,7 @@ public class LabelGrabbable : SnapGrabbable
     }
 
 
-    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity, bool useGravity = false)
     {
         base.GrabEnd(linearVelocity, angularVelocity);
         if(isInDropZone)
