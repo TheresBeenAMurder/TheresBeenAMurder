@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Accusation : MonoBehaviour
 {
-    private enum evidenceType { initial, motive, means, opportunity, alibi, done, Mavis, MavisDone };
+    private enum evidenceType { motive, means, opportunity, alibi, done, Mavis, MavisDone };
 
     private int characterID;
     private ConversationUI conversationUI;
@@ -128,17 +128,7 @@ public class Accusation : MonoBehaviour
     {
         conversationUI.ClearOptions();
 
-        // Options for first two are yes to accuse, no to leave conversation
-        if (currentEvidence == evidenceType.initial)
-        {
-            // chose to not accuse, no longer in accusation
-            if (choice == 2)
-            {
-                conversationUI.ClearDisplay();
-                return false;
-            }
-        }
-        else if (currentEvidence == evidenceType.done)
+        if (currentEvidence == evidenceType.done)
         {
             conversationUI.ClearDisplay();
 
@@ -249,7 +239,7 @@ public class Accusation : MonoBehaviour
             evidenceNotFoundAudio = reader.IsDBNull(2) ? "" : reader.GetString(2);
             reader.Close();
 
-            if (evidenceType == evidenceType.initial || evidenceType == evidenceType.done)
+            if (evidenceType == evidenceType.done)
             {
                 GiveYesNo();
             }
