@@ -43,6 +43,12 @@ public class ArchiveKey : Key
                 meansFound = true;
             }
         }
+
+        // EASTER EGG BOI
+        if (ID == "EGG")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(4);
+        }
     }
 
     public void Start()
