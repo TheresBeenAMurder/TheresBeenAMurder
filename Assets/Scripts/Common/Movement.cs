@@ -25,12 +25,13 @@ public static class Movement
         }
     }
 
-    public static IEnumerator SmoothRotate(Quaternion end, float moveTime, Rigidbody rigidbody)
+    public static IEnumerator SmoothRotate(Quaternion end, float speed, Rigidbody rigidbody)
     {
+        //this is very dirty and only used once. @self maybe clean this up eventually. - erin
 
-        while (rigidbody.transform.rotation != end)
+        while (rigidbody.transform.rotation.x > end.x)
         {
-            Quaternion newPosition = Quaternion.RotateTowards(rigidbody.rotation, end, 5);
+            Quaternion newPosition = Quaternion.RotateTowards(rigidbody.rotation, end, Time.deltaTime * speed);
 
             rigidbody.transform.rotation = newPosition;
         }
@@ -43,6 +44,7 @@ public static class Movement
         Quaternion from = rigidbody.transform.rotation;
         Quaternion to = rigidbody.transform.rotation;
         to *= Quaternion.Euler(end * angle);
+
 
         float elapsed = 0.0f;
         while (elapsed < moveTime)
