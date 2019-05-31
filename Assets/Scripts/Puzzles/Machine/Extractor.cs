@@ -41,7 +41,8 @@ public class Extractor : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.M))
         {
-            powerOn();
+            StartCoroutine(powerOn());
+            Debug.Log("Power On");
         }
     }
 
@@ -80,10 +81,10 @@ public class Extractor : MonoBehaviour
     public void openDoor()
     {
         StartCoroutine(Movement.SmoothMove(openDoorPos.position, moveTime, door));
-        StartCoroutine(Movement.SmoothRotate(openDoorPos.rotation, moveTime, door));
+        StartCoroutine(Movement.SmoothRotate(openDoorPos.rotation, 5, door));
 
         StartCoroutine(Movement.SmoothMove(smallDoorOpen.position, moveTime, smallDoor));
-        StartCoroutine(Movement.SmoothRotate(smallDoorOpen.rotation, moveTime, smallDoor));
+        StartCoroutine(Movement.SmoothRotate(smallDoorOpen.rotation, 5, smallDoor));
         doorSource.Play();
     }
     

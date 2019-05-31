@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerTablet : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class PlayerTablet : MonoBehaviour
     float prevX;
     float currentX;
     public float multiplier;
+
+    public float averageDelta = 0;
+    int framesPassed = 0;
+
+    public float momentumFalloff = 0.8f;
+    public float momentumTolerance = 0.05f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -43,7 +50,37 @@ public class PlayerTablet : MonoBehaviour
         if ((other.name == "LeftHandAnchor" || other.name == "RightHandAnchor") && activeHand != null)
         {
             activeHand = null;
+            framesPassed = 0;
+            StartCoroutine(ScrollMomentum(averageDelta));
+            averageDelta = 0;
         }
+    }
+
+    public IEnumerator ScrollMomentum(float avgDelta)
+    {
+        float tempE = momentumFalloff;
+
+
+
+        while(tempE > momentumTolerance)
+        {
+
+            float distDelta = avgDelta * tempE;
+
+            if (content.position.x + distDelta < maxX && content.position.x + distDelta > minX)
+            {
+                content.position = new Vector3(content.position.x + distDelta, content.position.y, content.position.z);
+            }
+            else
+            {
+                break;
+            }
+
+            tempE *= momentumFalloff;
+
+        }
+
+        yield return null;
     }
 
     void Update()
@@ -54,6 +91,15 @@ public class PlayerTablet : MonoBehaviour
 
             float difference = currentX - prevX;
             difference *= multiplier;
+            framesPassed += 1;
+            if(averageDelta == 0)
+            {
+                averageDelta = difference;
+            }
+            else
+            {
+                averageDelta = (averageDelta + difference) / framesPassed;
+                    }
 
             prevX = currentX;
 

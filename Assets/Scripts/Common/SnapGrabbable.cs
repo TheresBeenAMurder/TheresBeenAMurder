@@ -10,18 +10,15 @@ public class SnapGrabbable : OVRGrabbable
 
     private bool isSnapped = false;
 
-
     protected override void Start()
     {
         base.Start();
         thisRB = GetComponent<Rigidbody>();
-       // thisRB.isKinematic = true;
-
     }
 
-    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity, bool useGravity = false)
     {
-        if(!isSnapped && isInDropZone)
+        if (!isSnapped && isInDropZone)
         {
             //snap it
             if (snapTransform != null)
@@ -29,31 +26,20 @@ public class SnapGrabbable : OVRGrabbable
                 transform.position = snapTransform.position;
                 transform.rotation = snapTransform.rotation;
                 isSnapped = true;
-            }
-            else
-            {
-                
-                // thisRB.useGravity = true;
+
+                base.GrabEnd(linearVelocity, angularVelocity, false);
+                return;
             }
         }
-        else if(!isSnapped)
-        {
-            GetComponent<Rigidbody>().isKinematic = true;
-            //thisRB.useGravity = true;
-        }
 
-        base.GrabEnd(Vector3.zero, Vector3.zero);
-
-        GetComponent<Rigidbody>().isKinematic = true;
+        base.GrabEnd(linearVelocity, angularVelocity, true);
     }
 
-    public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
+    public override void GrabBegin(OVRGrabber hand, Collider grabPoint, bool useGravity = false)
     {
         if (!isSnapped || isUnsnappable) // can only be grabbed if hasn't been snapped OR if it's unsnappable
         {
-            //thisRB.useGravity = false;
-            //thisRB.isKinematic = true;
-            base.GrabBegin(hand, grabPoint);
+            base.GrabBegin(hand, grabPoint, true);
             isSnapped = false;
         }
     }

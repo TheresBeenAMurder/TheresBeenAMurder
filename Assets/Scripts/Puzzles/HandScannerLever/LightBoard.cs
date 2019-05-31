@@ -20,10 +20,12 @@ public class LightBoard : MonoBehaviour
     {
         powerUpSound.Play();
         yield return new WaitForSeconds(powerUpSound.clip.length);
+        
 
         foreach (GameObject light in lights)
         {
             light.GetComponent<Renderer>().material = lightsOn;
+           
         }
     }
 }

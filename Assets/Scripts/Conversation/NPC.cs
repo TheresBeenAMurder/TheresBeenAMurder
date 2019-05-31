@@ -19,7 +19,7 @@ public class NPC : MonoBehaviour
     private int likeThreshold;
     private int neutralThreshold;
     private relationshipStatus relStat;
-    private int relationshipValue;
+    private double relationshipValue;
 
     // audio related
     [HideInInspector]
@@ -27,7 +27,7 @@ public class NPC : MonoBehaviour
 
     public AudioSource conversationAudio;
     public AudioSource playerAudio;
-    public SoundtrackLayer soundtrackLayer;
+    public SoundtrackManager soundtrackManager;
 
     // database related
     public DatabaseHandler dbHandler;
@@ -100,7 +100,7 @@ public class NPC : MonoBehaviour
         reader.Read();
         int nextPromptID = reader.GetInt32(0);
         string responseAudio = reader.IsDBNull(1) ? "" : reader.GetString(1);
-        int relationshipEffect = reader.GetInt32(2);
+        double relationshipEffect = reader.GetDouble(2);
         reader.Close();
 
         // Play the voice line for the response
@@ -157,7 +157,7 @@ public class NPC : MonoBehaviour
         reader.Read();
         promptID = reader.GetInt32(0);
         audioFolder = reader.GetString(1);
-        relationshipValue = reader.GetInt32(2);
+        relationshipValue = reader.GetDouble(2);
         dislikeThreshold = reader.GetInt32(3);
         neutralThreshold = reader.GetInt32(4);
         likeThreshold = reader.GetInt32(5);
@@ -298,47 +298,47 @@ public class NPC : MonoBehaviour
         dbHandler.OpenUpdateClose(update);
     }
 
-    private void UpdateRelationshipStatus()
-    {
-        if (relationshipValue <= dislikeThreshold)
-        {
-            relStat = relationshipStatus.dislike;
-        }
-        else if (relationshipValue <= neutralThreshold)
-        {
-            relStat = relationshipStatus.neutral;
-        }
-        else
-        {
-            relStat = relationshipStatus.like;
-        }
+    //private void UpdateRelationshipStatus()
+    //{
+    //    if (relationshipValue <= dislikeThreshold)
+    //    {
+    //        relStat = relationshipStatus.dislike;
+    //    }
+    //    else if (relationshipValue <= neutralThreshold)
+    //    {
+    //        relStat = relationshipStatus.neutral;
+    //    }
+    //    else
+    //    {
+    //        relStat = relationshipStatus.like;
+    //    }
 
-        switch (relStat)
-        {
-            case (relationshipStatus.hate):
-                {
-                    soundtrackLayer.SwitchTrack(0);
-                    break;
-                }
-            case (relationshipStatus.dislike):
-                {
-                    soundtrackLayer.SwitchTrack(1);
-                    break;
-                }
-            case (relationshipStatus.neutral):
-                {
-                    soundtrackLayer.SwitchTrack(2);
-                    break;
-                }
-            case (relationshipStatus.like):
-                {
-                    soundtrackLayer.SwitchTrack(3);
-                    break;
-                }
-        }
-    }
+    //    switch (relStat)
+    //    {
+    //        case (relationshipStatus.hate):
+    //            {
+    //                soundtrackLayer.SwitchTrack(0);
+    //                break;
+    //            }
+    //        case (relationshipStatus.dislike):
+    //            {
+    //                soundtrackLayer.SwitchTrack(1);
+    //                break;
+    //            }
+    //        case (relationshipStatus.neutral):
+    //            {
+    //                soundtrackLayer.SwitchTrack(2);
+    //                break;
+    //            }
+    //        case (relationshipStatus.like):
+    //            {
+    //                soundtrackLayer.SwitchTrack(3);
+    //                break;
+    //            }
+    //    }
+    //}
 
-    private void UpdateRelationshipValue(int relationshipEffect)
+    private void UpdateRelationshipValue(double relationshipEffect)
     {
         relationshipValue += relationshipEffect;
 
@@ -351,6 +351,8 @@ public class NPC : MonoBehaviour
         string update = "UPDATE Characters SET RelationshipValue = " + relationshipValue +
             " WHERE ID ==" + id;
         dbHandler.ExecuteNonQuery(update);
+
+        soundtrackManager.updateRelationship(characterName, (float)relationshipValue);
     }
 
     public IEnumerator WritePrompt(bool addAccuseOpt = false)

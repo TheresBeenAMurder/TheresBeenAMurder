@@ -16,33 +16,33 @@ public class SoundtrackLayer : MonoBehaviour
 
     public void Update ()
     {
-        if(fadingIn)
-        {
-            if (audioSource.volume + (maxFade / fadeTime * Time.deltaTime) < maxFade)
-            {
-                audioSource.volume += (maxFade / fadeTime * Time.deltaTime);
-            }
-            else //reach max volume & we're done fading in
-            {
-                audioSource.volume = maxFade;
-                fadingIn = false;
-            }
+        //if(fadingIn)
+        //{
+        //    if (audioSource.volume + (maxFade / fadeTime * Time.deltaTime) < maxFade)
+        //    {
+        //        audioSource.volume += (maxFade / fadeTime * Time.deltaTime);
+        //    }
+        //    else //reach max volume & we're done fading in
+        //    {
+        //        audioSource.volume = maxFade;
+        //        fadingIn = false;
+        //    }
             
                 
-        }
+        //}
 
-        if(fadingOut)
-        {
-            if (audioSource.volume - (maxFade / fadeTime * Time.deltaTime) > 0)
-            {
-                audioSource.volume -= (maxFade / fadeTime * Time.deltaTime);
-            }
-            else //reach 0 volume & we're done fading out
-            {
-                audioSource.volume = 0;
-                fadingOut = false;
-            }
-        }
+        //if(fadingOut)
+        //{
+        //    if (audioSource.volume - (maxFade / fadeTime * Time.deltaTime) > 0)
+        //    {
+        //        audioSource.volume -= (maxFade / fadeTime * Time.deltaTime);
+        //    }
+        //    else //reach 0 volume & we're done fading out
+        //    {
+        //        audioSource.volume = 0;
+        //        fadingOut = false;
+        //    }
+        //}
         
 	}
 	
@@ -61,7 +61,7 @@ public class SoundtrackLayer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         //audioSource.clip = tracks[trackNumber];
         audioSource.Play();
-        audioSource.volume = 0;
+       // audioSource.volume = 0;
         currentTrack = trackNumber;
     }
 

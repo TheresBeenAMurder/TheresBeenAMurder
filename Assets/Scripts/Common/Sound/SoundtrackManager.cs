@@ -6,24 +6,35 @@ public class SoundtrackManager : MonoBehaviour
 
     public int currentTrack = 0;
 
-    public int madelineRelationship;
-    public int mavisRelationship;
-    public int victorRelationship;
+   public float madelineRelationship;
+   public float mavisRelationship;
+  public float victorRelationship;
 
     public void Start()
     {
         soundtrackTracks[currentTrack].startTrack();
+        soundtrackTracks[currentTrack].layers[4].audioSource.volume = 0;
+
+        soundtrackTracks[currentTrack].layers[2].audioSource.volume = 0;
+
+        soundtrackTracks[currentTrack].layers[3].audioSource.volume = 0;
     }
 
     public void nextTrack()
     {
-        soundtrackTracks[currentTrack].Fade();
-        currentTrack += 1;
-        soundtrackTracks[currentTrack].startTrack();
-
+        playTrack(currentTrack + 1);
     }
 
-    public void updateRelationship(string characterName, int relVal)
+    public void playTrack(int trackToPlay)
+    {
+        currentTrack = trackToPlay;
+        soundtrackTracks[currentTrack].startTrack();
+        soundtrackTracks[currentTrack].layers[4].audioSource.volume = madelineRelationship / 10f;
+        soundtrackTracks[currentTrack].layers[2].audioSource.volume = mavisRelationship / 10f;
+        soundtrackTracks[currentTrack].layers[3].audioSource.volume = victorRelationship / 10f;
+    }
+
+    public void updateRelationship(string characterName, float value)
     {
         int updateLayerNumber = 0;
 
@@ -33,19 +44,19 @@ public class SoundtrackManager : MonoBehaviour
        
                 {
                     updateLayerNumber = 4;
-                    madelineRelationship = relVal;
+                    madelineRelationship = value;
                     break;
                 }
             case "Mavis":
                 {
                     updateLayerNumber = 2;
-                    mavisRelationship = relVal;
+                    mavisRelationship = value;
                     break;
                 }
             case "Victor":
                 {
                     updateLayerNumber = 3;
-                    victorRelationship = relVal;
+                    victorRelationship = value;
                     break;
                 }
             default:
@@ -56,7 +67,7 @@ public class SoundtrackManager : MonoBehaviour
         }
 
         //update it in the track
-        soundtrackTracks[currentTrack].updateLayer(updateLayerNumber, relVal);
+        soundtrackTracks[currentTrack].layers[updateLayerNumber].audioSource.volume = value/10f;
 
     }
 }

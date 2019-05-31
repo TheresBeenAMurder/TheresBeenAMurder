@@ -4,8 +4,11 @@ public class ArchiveKey : Key
 {
     public AudioClip audioClip;
     public AudioSource audioSource;
+    public DatabaseHandler dbHandler;
     public Material emptyColor;
     public Material fullColor;
+
+    private bool meansFound = false;
 
     // Removes information from archive key cannister
     public void Empty()
@@ -33,6 +36,18 @@ public class ArchiveKey : Key
         {
             audioSource.clip = audioClip;
             audioSource.Play();
+
+            if (!meansFound && audioClip.name.Equals("MavisMeans"))
+            {
+                dbHandler.FindEvidence(new int[] { 11 });
+                meansFound = true;
+            }
+        }
+
+        // EASTER EGG BOI
+        if (ID == "EGG")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(4);
         }
     }
 

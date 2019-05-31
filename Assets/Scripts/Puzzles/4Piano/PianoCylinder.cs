@@ -45,7 +45,7 @@ public class PianoCylinder : OVRGrabbable
         toAttach.GetComponent<PianoCylinder>().attached[otherIndex] = this;
     }
 
-    public override void GrabBegin(OVRGrabber hand, Collider grabPoint)
+    public override void GrabBegin(OVRGrabber hand, Collider grabPoint, bool useGravity = false)
     {
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
@@ -97,7 +97,7 @@ public class PianoCylinder : OVRGrabbable
 
     
     // Notifies the object that it has been released.
-    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+    public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity, bool useGravity = false)
     {
 
 
