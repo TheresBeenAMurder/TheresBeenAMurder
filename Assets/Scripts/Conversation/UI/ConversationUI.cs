@@ -9,6 +9,7 @@ public class ConversationUI : MonoBehaviour
     public NPCAnimator animator;
 
     public Camera centerEyeCam;
+    public ImageSelector imgSelector;
     public bool inConversation = false;
     public PlayerConversation playerConversation;
     public GameObject prefab;
@@ -78,11 +79,15 @@ public class ConversationUI : MonoBehaviour
                 }
             }
 
+            int[] imgOrder = imgSelector.GenerateSpriteOrder(realResponses.Count);
             for (int i = 0; i < realResponses.Count; i++)
             {
                 // Spawn a prefab and set the event camera to the center eye camera
                 optionObjects[i] = Instantiate(prefab, parent.transform);
                 optionObjects[i].GetComponent<Canvas>().worldCamera = centerEyeCam;
+
+                // Give the prefab the correct image
+                optionObjects[i].GetComponentInChildren<Image>().sprite = imgSelector.sprites[imgOrder[i]];
 
                 // Display the prefab with the option
                 optionDisplays[i] = optionObjects[i].GetComponentInChildren<LameFloatingText>();
