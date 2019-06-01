@@ -226,6 +226,8 @@ ModelImporter:
     2000024: System:Vantage_5_2106424
     2000026: System:Vantage_5_2106430
     2000028: System:Vantage_5_2106433
+    7400000: SP_Talking_neutral__01_x2d
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -247,14 +249,42 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: SP_Talking_neutral__01_x2d
+      takeName: SP_Talking_neutral__01_x2d
+      firstFrame: 224
+      lastFrame: 2540
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -279,8 +309,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -293,8 +323,680 @@ ModelImporter:
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
-    human: []
-    skeleton: []
+    human:
+    - boneName: SP:Solving:Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SP:Solving:RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: SP_Talking(neutral)_01(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System
+      parentName: SP_Talking(neutral)_01(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106423
+      parentName: System
+      position: {x: 3.483952, y: 3.39025, z: 4.9545155}
+      rotation: {x: 0.8016385, y: 0.4774139, z: -0.35472402, w: 0.060188815}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106430
+      parentName: System
+      position: {x: 4.654778, y: 2.599392, z: 3.2291994}
+      rotation: {x: 0.8055677, y: 0.31513277, z: -0.49226558, w: 0.09709122}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:T20_S_26488
+      parentName: System
+      position: {x: 4.515427, y: 2.5573704, z: -0.05926722}
+      rotation: {x: 0.70582247, y: 0.17123769, z: -0.66542244, w: 0.17235239}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106401
+      parentName: System
+      position: {x: 4.576362, y: 2.5220287, z: -2.6044135}
+      rotation: {x: 0.5691323, y: 0.19147438, z: -0.7836124, w: 0.15930346}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106412
+      parentName: System
+      position: {x: 2.387038, y: 3.040823, z: -5.1056046}
+      rotation: {x: 0.21256316, y: 0.2662065, z: -0.9290451, w: 0.14431284}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:T20_15998
+      parentName: System
+      position: {x: 0.09956012, y: 3.0001278, z: -5.038353}
+      rotation: {x: 0.006704569, y: -0.23146343, z: 0.9728135, w: -0.0036937296}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106393
+      parentName: System
+      position: {x: -2.6683512, y: 3.043285, z: -5.1187406}
+      rotation: {x: 0.26739827, y: -0.2727382, z: 0.91795933, w: 0.10706463}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106415
+      parentName: System
+      position: {x: -5.4214573, y: 2.6200879, z: -5.320491}
+      rotation: {x: 0.28925678, y: 0.3691302, z: 0.18404955, w: 0.86382824}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106414
+      parentName: System
+      position: {x: -5.2583127, y: 2.6223896, z: -3.4433632}
+      rotation: {x: 0.113731965, y: 0.5174895, z: -0.18186243, w: 0.8283693}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:T20_S_26489
+      parentName: System
+      position: {x: -5.1006365, y: 2.5900345, z: -0.079962}
+      rotation: {x: 0.15542413, y: 0.69138575, z: -0.17400329, w: 0.6837777}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106409
+      parentName: System
+      position: {x: -5.0083437, y: 2.6432095, z: 2.6120596}
+      rotation: {x: 0.20260175, y: 0.8047263, z: -0.15900029, w: 0.53487116}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106404
+      parentName: System
+      position: {x: -3.6256073, y: 2.7041485, z: 4.1669283}
+      rotation: {x: 0.8314068, y: -0.40222964, z: 0.37612405, w: 0.07419484}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106424
+      parentName: System
+      position: {x: -2.4048967, y: 3.0528607, z: 5.41693}
+      rotation: {x: 0.1464068, y: -0.9437152, z: 0.2612907, w: -0.14033459}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:T20_15966
+      parentName: System
+      position: {x: -0.037853856, y: 3.0346758, z: 5.420956}
+      rotation: {x: 0.940208, y: 0.2903631, z: -0.034082804, w: 0.17474703}
+      scale: {x: 1, y: 1, z: 1}
+    - name: System:Vantage_5_2106433
+      parentName: System
+      position: {x: 2.1088738, y: 3.0064723, z: 5.452449}
+      rotation: {x: 0.9523006, y: 0.019943297, z: -0.19592415, w: 0.23310861}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP
+      parentName: SP_Talking(neutral)_01(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:ARIEL
+      parentName: SP
+      position: {x: 0.016644256, y: 1.5742567, z: -0.76472026}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LFHD
+      parentName: SP
+      position: {x: -0.0537114, y: 1.550184, z: -0.6506525}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LBHD
+      parentName: SP
+      position: {x: -0.08713166, y: 1.4526473, z: -0.7495404}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RFHD
+      parentName: SP
+      position: {x: 0.08466487, y: 1.5289754, z: -0.666854}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RBHD
+      parentName: SP
+      position: {x: 0.07553575, y: 1.4299039, z: -0.76507175}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:C7
+      parentName: SP
+      position: {x: 0.009862844, y: 1.3026943, z: -0.79755753}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:T10
+      parentName: SP
+      position: {x: 0.011654043, y: 1.0462788, z: -0.79933417}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:CLAV
+      parentName: SP
+      position: {x: 0.002055679, y: 1.2728337, z: -0.59578925}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:STRN
+      parentName: SP
+      position: {x: 0.005894987, y: 1.0471668, z: -0.5439039}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LFSH
+      parentName: SP
+      position: {x: -0.08320394, y: 1.295564, z: -0.64725834}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LBSH
+      parentName: SP
+      position: {x: -0.09383257, y: 1.2855409, z: -0.7980743}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LUPA
+      parentName: SP
+      position: {x: -0.28109264, y: 1.2920712, z: -0.7539749}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LELB
+      parentName: SP
+      position: {x: -0.38948372, y: 1.2674845, z: -0.74972564}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LIEL
+      parentName: SP
+      position: {x: -0.3895129, y: 1.2010331, z: -0.68784463}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LOWR
+      parentName: SP
+      position: {x: -0.6416567, y: 1.316394, z: -0.7071198}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LIWR
+      parentName: SP
+      position: {x: -0.6314862, y: 1.339484, z: -0.6660861}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LWRE
+      parentName: SP
+      position: {x: -0.4946456, y: 1.3172536, z: -0.71477735}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LIHAND
+      parentName: SP
+      position: {x: -0.7054438, y: 1.337246, z: -0.66351324}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LOHAND
+      parentName: SP
+      position: {x: -0.7076975, y: 1.3194911, z: -0.7017939}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RFSH
+      parentName: SP
+      position: {x: 0.102065, y: 1.2765299, z: -0.6198618}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RBSH
+      parentName: SP
+      position: {x: 0.091346316, y: 1.2887363, z: -0.7966619}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RUPA
+      parentName: SP
+      position: {x: 0.26164183, y: 1.2856272, z: -0.7573011}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RELB
+      parentName: SP
+      position: {x: 0.39674118, y: 1.2540241, z: -0.7555872}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RIEL
+      parentName: SP
+      position: {x: 0.40004352, y: 1.1919998, z: -0.6904125}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:ROWR
+      parentName: SP
+      position: {x: 0.6259593, y: 1.298013, z: -0.720637}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RIWR
+      parentName: SP
+      position: {x: 0.62627465, y: 1.3191899, z: -0.6868463}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RWRE
+      parentName: SP
+      position: {x: 0.52944684, y: 1.2572589, z: -0.745196}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RIHAND
+      parentName: SP
+      position: {x: 0.7167575, y: 1.3278568, z: -0.7084452}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:ROHAND
+      parentName: SP
+      position: {x: 0.69913983, y: 1.2928576, z: -0.7297606}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LFWT
+      parentName: SP
+      position: {x: -0.13733587, y: 0.88000417, z: -0.59947455}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LMWT
+      parentName: SP
+      position: {x: -0.16921018, y: 0.8869378, z: -0.7190342}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LBWT
+      parentName: SP
+      position: {x: -0.08197192, y: 0.90432256, z: -0.8132147}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RFWT
+      parentName: SP
+      position: {x: 0.13823809, y: 0.8911569, z: -0.5898293}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RMWT
+      parentName: SP
+      position: {x: 0.178225, y: 0.8992213, z: -0.71819264}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RBWT
+      parentName: SP
+      position: {x: 0.044851545, y: 0.89684224, z: -0.8260925}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LHIP
+      parentName: SP
+      position: {x: -0.13116755, y: 0.61666673, z: -0.5905782}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LKNE
+      parentName: SP
+      position: {x: -0.13176884, y: 0.41611534, z: -0.6530882}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LKNI
+      parentName: SP
+      position: {x: -0.06048436, y: 0.4136724, z: -0.6407007}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LSHN
+      parentName: SP
+      position: {x: -0.11908564, y: 0.25277326, z: -0.6648302}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LANK
+      parentName: SP
+      position: {x: -0.14294113, y: 0.0956434, z: -0.74620503}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LHEL
+      parentName: SP
+      position: {x: -0.0860627, y: 0.052941315, z: -0.80175656}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LMT5
+      parentName: SP
+      position: {x: -0.13948415, y: 0.034731727, z: -0.586069}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LMT1
+      parentName: SP
+      position: {x: -0.037512466, y: 0.025292652, z: -0.5838379}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:LTOE
+      parentName: SP
+      position: {x: -0.07788324, y: 0.044779796, z: -0.5302587}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RHIP
+      parentName: SP
+      position: {x: 0.17493618, y: 0.63361716, z: -0.61196965}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RKNE
+      parentName: SP
+      position: {x: 0.12469674, y: 0.37222132, z: -0.64966124}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RKNI
+      parentName: SP
+      position: {x: 0.05859835, y: 0.37540874, z: -0.65273434}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RSHN
+      parentName: SP
+      position: {x: 0.122860566, y: 0.22988003, z: -0.66204685}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RANK
+      parentName: SP
+      position: {x: 0.14786118, y: 0.08952503, z: -0.73715824}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RHEL
+      parentName: SP
+      position: {x: 0.09114844, y: 0.07683107, z: -0.79594916}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RMT5
+      parentName: SP
+      position: {x: 0.15511009, y: 0.028772533, z: -0.5858909}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RMT1
+      parentName: SP
+      position: {x: 0.042993713, y: 0.031320885, z: -0.5912128}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:RTOE
+      parentName: SP
+      position: {x: 0.08890033, y: 0.046253398, z: -0.528516}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving
+      parentName: SP
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:Hips
+      parentName: SP:Solving
+      position: {x: -0.0036253633, y: 0.81995326, z: 0}
+      rotation: {x: -0.026133627, y: -0.03572949, z: -0.022249667, w: 0.99877197}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:Spine
+      parentName: SP:Solving:Hips
+      position: {x: -0, y: 0.092154615, z: 0}
+      rotation: {x: 0.04848475, y: -0.032004006, z: 0.01431854, w: 0.9982084}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:Head
+      parentName: SP:Solving:Spine
+      position: {x: -0, y: 0.40214553, z: 0}
+      rotation: {x: -0.18804418, y: 0.12244597, z: 0.003447057, w: 0.97449195}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:Head_End
+      parentName: SP:Solving:Head
+      position: {x: -0, y: 0.114999995, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftShoulder
+      parentName: SP:Solving:Spine
+      position: {x: -0, y: 0.28398493, z: 0}
+      rotation: {x: -0.060661476, y: 0.080327615, z: 0.58451796, w: 0.80511266}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftArm
+      parentName: SP:Solving:LeftShoulder
+      position: {x: -0, y: 0.16553293, z: 0}
+      rotation: {x: -0.030070007, y: 0.32047847, z: 0.1853316, w: 0.9284619}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftForeArm
+      parentName: SP:Solving:LeftArm
+      position: {x: -0, y: 0.2578023, z: 0}
+      rotation: {x: 0.028347088, y: -0.15548058, z: -0.025521606, w: 0.98710227}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftHand
+      parentName: SP:Solving:LeftForeArm
+      position: {x: -0, y: 0.238721, z: 0}
+      rotation: {x: -0.07064893, y: -0.009954524, z: 0.13916752, w: 0.98769534}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftHandThumb1
+      parentName: SP:Solving:LeftHand
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.21767214, y: -0.27779627, z: -0.06478247, w: 0.93340844}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftHandThumb2
+      parentName: SP:Solving:LeftHandThumb1
+      position: {x: -0, y: 0, z: 0.099999994}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftHandEnd
+      parentName: SP:Solving:LeftHand
+      position: {x: -0, y: 0.099999994, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightShoulder
+      parentName: SP:Solving:Spine
+      position: {x: -0, y: 0.28398493, z: 0}
+      rotation: {x: 0.012520941, y: 0.1464419, z: -0.58708006, w: 0.7960747}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightArm
+      parentName: SP:Solving:RightShoulder
+      position: {x: -0, y: 0.16553293, z: 0}
+      rotation: {x: -0.04168744, y: -0.53055245, z: -0.1830069, w: 0.8266104}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightForeArm
+      parentName: SP:Solving:RightArm
+      position: {x: -0, y: 0.2578023, z: 0}
+      rotation: {x: 0.06670253, y: 0.087183736, z: 0.011273679, w: 0.99389267}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightHand
+      parentName: SP:Solving:RightForeArm
+      position: {x: -0, y: 0.238721, z: 0}
+      rotation: {x: -0.20432621, y: 0.0023156425, z: -0.011093228, w: 0.97883725}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightHandThumb1
+      parentName: SP:Solving:RightHand
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.2020969, y: 0.27651268, z: 0.059599727, w: 0.9376276}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightHandThumb2
+      parentName: SP:Solving:RightHandThumb1
+      position: {x: -0, y: 0, z: 0.099999994}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightHandEnd
+      parentName: SP:Solving:RightHand
+      position: {x: -0, y: 0.099999994, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftUpLeg
+      parentName: SP:Solving:Hips
+      position: {x: -0.16261633, y: 0, z: 0}
+      rotation: {x: 0.035912607, y: -0.025174083, z: 0.06985744, w: 0.99659246}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftLeg
+      parentName: SP:Solving:LeftUpLeg
+      position: {x: -0, y: -0.42830345, z: 0}
+      rotation: {x: 0.030255137, y: -0, z: -0, w: 0.99954224}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftFoot
+      parentName: SP:Solving:LeftLeg
+      position: {x: -0, y: -0.35093394, z: 0}
+      rotation: {x: 0.039615326, y: 0.054711565, z: -0.10974582, w: 0.99166185}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftToeBase
+      parentName: SP:Solving:LeftFoot
+      position: {x: -0, y: 0, z: 0.14885312}
+      rotation: {x: -0.22713973, y: 0, z: -0, w: 0.9738622}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:LeftToeEnd
+      parentName: SP:Solving:LeftToeBase
+      position: {x: -0, y: 0, z: 0.074999996}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightUpLeg
+      parentName: SP:Solving:Hips
+      position: {x: 0.16261633, y: 0, z: 0}
+      rotation: {x: 0.024700861, y: 0.055190902, z: -0.0039081313, w: 0.9981626}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightLeg
+      parentName: SP:Solving:RightUpLeg
+      position: {x: -0, y: -0.42830345, z: 0}
+      rotation: {x: 0.08171197, y: -0, z: -0, w: 0.996656}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightFoot
+      parentName: SP:Solving:RightLeg
+      position: {x: -0, y: -0.35093394, z: 0}
+      rotation: {x: -0.045025785, y: -0.07202869, z: 0.02030334, w: 0.99617887}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightToeBase
+      parentName: SP:Solving:RightFoot
+      position: {x: -0, y: 0, z: 0.14885312}
+      rotation: {x: -0.16580795, y: 0, z: -0, w: 0.9861581}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SP:Solving:RightToeEnd
+      parentName: SP:Solving:RightToeBase
+      position: {x: -0, y: 0, z: 0.074999996}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Unlabeled_Markers
+      parentName: SP_Talking(neutral)_01(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Unlabeled_Markers:_57
+      parentName: Unlabeled_Markers
+      position: {x: -0.029862724, y: 1.0224464, z: 0.07230408}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Unlabeled_Markers:_58
+      parentName: Unlabeled_Markers
+      position: {x: -0.012099517, y: 1.0787328, z: 0.119558744}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Unlabeled_Markers:_59
+      parentName: Unlabeled_Markers
+      position: {x: 0.00023682363, y: 1.0798036, z: 0.12683848}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -304,10 +1006,10 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 3
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
