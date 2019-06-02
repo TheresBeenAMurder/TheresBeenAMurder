@@ -12,12 +12,8 @@ public class SoundtrackManager : MonoBehaviour
 
     public void Start()
     {
-        soundtrackTracks[currentTrack].startTrack();
-        soundtrackTracks[currentTrack].layers[4].audioSource.volume = 0;
-
-        soundtrackTracks[currentTrack].layers[2].audioSource.volume = 0;
-
-        soundtrackTracks[currentTrack].layers[3].audioSource.volume = 0;
+        soundtrackTracks[currentTrack].startTrack(new float[5] { 10, 10, mavisRelationship, victorRelationship, madelineRelationship });
+      
     }
 
     public void nextTrack()
@@ -27,11 +23,33 @@ public class SoundtrackManager : MonoBehaviour
 
     public void playTrack(int trackToPlay)
     {
+        soundtrackTracks[currentTrack].fadeOut();
         currentTrack = trackToPlay;
-        soundtrackTracks[currentTrack].startTrack();
-        soundtrackTracks[currentTrack].layers[4].audioSource.volume = madelineRelationship / 10f;
-        soundtrackTracks[currentTrack].layers[2].audioSource.volume = mavisRelationship / 10f;
-        soundtrackTracks[currentTrack].layers[3].audioSource.volume = victorRelationship / 10f;
+        soundtrackTracks[currentTrack].startTrack(new float[5] { 10,10,mavisRelationship,victorRelationship,madelineRelationship});
+        //soundtrackTracks[currentTrack].layers[4].audioSource.volume = madelineRelationship / 10f * soundtrackTracks[currentTrack].layers[4].maxFade;
+        //soundtrackTracks[currentTrack].layers[2].audioSource.volume = mavisRelationship / 10f * soundtrackTracks[currentTrack].layers[2].maxFade;
+       // soundtrackTracks[currentTrack].layers[3].audioSource.volume = victorRelationship / 10f * soundtrackTracks[currentTrack].layers[3].maxFade;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            updateRelationship("Madeline", madelineRelationship + 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            updateRelationship("Mavis", mavisRelationship + 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            updateRelationship("Victor", victorRelationship + 1);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            nextTrack();
+        }
     }
 
     public void updateRelationship(string characterName, float value)
@@ -67,7 +85,7 @@ public class SoundtrackManager : MonoBehaviour
         }
 
         //update it in the track
-        soundtrackTracks[currentTrack].layers[updateLayerNumber].audioSource.volume = value/10f;
+        soundtrackTracks[currentTrack].layers[updateLayerNumber].audioSource.volume = value/ 10f * soundtrackTracks[currentTrack].layers[updateLayerNumber].maxFade;
 
     }
 }
