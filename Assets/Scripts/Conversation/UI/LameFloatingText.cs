@@ -26,7 +26,7 @@ public class LameFloatingText : MonoBehaviour
         ShiftPosition(offset);
 
         // Finally, display the given text
-        text.text = display;
+        text.text = display.ToUpper();
     }
 
     // Gives the selected option back to the NPC script

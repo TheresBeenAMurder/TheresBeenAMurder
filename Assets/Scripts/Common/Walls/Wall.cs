@@ -5,6 +5,7 @@ public class Wall : MonoBehaviour
 {
     public bool isCurrentWall = false;
     public string pianoKey;
+    public SceneSwitcher sceneSwitcher;
     public Wall wallAbove;
     public Wall wallBelow;
 
@@ -51,6 +52,10 @@ public class Wall : MonoBehaviour
             // Give the boi time to fall
             yield return new WaitForSeconds(.5f);
             yield return autoConvo.PlayDialogue();
+
+            // FOR SENIOR SHOWCASE, LAUNCH INTO CREDITS
+            yield return new WaitForSeconds(3);
+            sceneSwitcher.SwitchScene("Credits");
         }
     }
 
