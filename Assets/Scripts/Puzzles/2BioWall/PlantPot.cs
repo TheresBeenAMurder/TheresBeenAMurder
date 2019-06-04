@@ -21,7 +21,7 @@ public class PlantPot : MonoBehaviour
         {
             currentLabel = other.gameObject;
             containsLabel = true;
-            SnapGrabbable label = other.gameObject.GetComponent<SnapGrabbable>();
+            LabelGrabbable label = other.gameObject.GetComponent<LabelGrabbable>();
      
             if(label != null)
             { 
@@ -37,7 +37,7 @@ public class PlantPot : MonoBehaviour
     {
         if (other.gameObject != null && other.gameObject == currentLabel)
         {
-            SnapGrabbable label = other.gameObject.GetComponent<SnapGrabbable>();
+            LabelGrabbable label = other.gameObject.GetComponent<LabelGrabbable>();
             if (label != null)
             {
                 label.isInDropZone = false;
